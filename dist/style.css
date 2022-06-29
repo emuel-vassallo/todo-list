@@ -3,6 +3,8 @@
   --header-icon-color: #fff;
   --header-icon-hover-color: #e27065;
   --bg: #fff;
+  --header-icon-tooltip-bg: #444;
+  --header-icon-tooltip-fg: #fff;
 }
 
 * {
@@ -20,6 +22,8 @@ body {
   font-size: 13px;
   background-color: var(--bg);
 }
+
+/* -- Header -- */
 
 header {
   display: flex;
@@ -43,6 +47,7 @@ header > div {
   display: grid;
   place-items: center;
   background-color: unset;
+  position: relative;
 }
 
 .header-left .header-button {
@@ -59,4 +64,23 @@ header > div {
   cursor: pointer;
   background-color: var(--header-icon-hover-color);
   border-radius: 3px;
+}
+
+.header-button::before,
+.header-button::after {
+  position: absolute;
+  top: 100%;
+  margin: 8px 0 0 0;
+}
+
+.header-button::before {
+  background-color: var(--header-icon-tooltip-bg);
+  color: var(--header-icon-tooltip-fg);
+  padding: 6px 8px;
+  white-space: nowrap;
+  border-radius: 5px;
+}
+
+.header-button:hover::before {
+  content: attr(data-tooltip);
 }
