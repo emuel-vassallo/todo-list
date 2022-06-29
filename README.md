@@ -1,6 +1,6 @@
-# Todo List
+# Todoist Clone
 
-A simple Todo List created as part of The Odin Project's [curriculum](https://www.theodinproject.com/).
+A simple [Todoist](https://todoist.com/) clone built with HTML, CSS, and JavaScript as part of The Odin Project's [curriculum](https://www.theodinproject.com/).
 
 ### [Live Demo](https://emuel-vassallo.github.io/todo-list/)
 
@@ -20,7 +20,3 @@ A simple Todo List created as part of The Odin Project's [curriculum](https://ww
 - CSS
 - JavaScript
 - Webpack
-
-## Credits and Inspiration
-
-- []() []()
