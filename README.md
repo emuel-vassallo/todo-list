@@ -1,6 +1,6 @@
-# TODO List
+# Todo List
 
-A simple TODO List created as part of The Odin Project's [curriculum](https://www.theodinproject.com/).
+A simple Todo List created as part of The Odin Project's [curriculum](https://www.theodinproject.com/).
 
 ### [Live Demo](https://emuel-vassallo.github.io/todo-list/)
 
