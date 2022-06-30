@@ -133,7 +133,6 @@ main {
   flex-direction: column;
   gap: 12px;
   user-select: none;
-  transform: translateX(0);
   color: var(--sidebar-fg);
   background-color: var(--sidebar-bg);
   left: 0;

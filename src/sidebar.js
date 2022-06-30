@@ -16,6 +16,12 @@ const removeSelectedClass = () => {
   for (const button of sidebarButtons) button.classList.remove('selected');
 };
 
+const getCapitalizedString = (str) =>
+  str.charAt(0).toUpperCase() + str.slice(1);
+
+const changeTabTitle = (tabName) =>
+  (document.title = `${getCapitalizedString(tabName)}: Todoist`);
+
 const addSelectedClassOnClick = () => {
   const sidebarButtons = getSidebarButtons();
   for (const button of sidebarButtons) {
@@ -26,4 +32,9 @@ const addSelectedClassOnClick = () => {
   }
 };
 
-export { toggleProjectsVisibility, addSelectedClassOnClick, getSidebarButtons };
+export {
+  toggleProjectsVisibility,
+  addSelectedClassOnClick,
+  getSidebarButtons,
+  changeTabTitle,
+};
