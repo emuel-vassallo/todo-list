@@ -5,7 +5,9 @@
   --bg: #fff;
   --header-icon-tooltip-bg: #444;
   --header-icon-tooltip-fg: #fff;
+  --sidebar-width: 339px;
   --sidebar-bg: #fafafa;
+  --sidebar-fg: #202020;
   --sidebar-button-hover-bg: #eeeeee;
   --sidebar-button-inbox-icon-color: #246fe0;
   --sidebar-button-today-icon-color: #058527;
@@ -56,8 +58,9 @@ header > div {
 }
 
 .header-button {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: unset;
   position: relative;
 }
@@ -102,6 +105,7 @@ header > div {
   text-align: center;
   font-size: 1rem;
   transition-delay: 0.1s;
+  z-index: 2;
 }
 
 .header-button:hover .tooltip,
@@ -109,7 +113,7 @@ header > div {
 .add-project-button:hover .tooltip {
   opacity: 1;
   visibility: visible;
-  transition-delay: 0.4s;
+  transition-delay: 0.35s;
 }
 
 /* -- Main -- */
@@ -123,12 +127,32 @@ main {
 
 .sidebar {
   display: flex;
+  position: fixed;
   flex-direction: column;
   gap: 12px;
+  user-select: none;
+  transform: translateX(0);
+  color: var(--sidebar-fg);
   background-color: var(--sidebar-bg);
-  width: 334px;
+  left: 0;
   height: 100%;
+  transform: translateX(-100%);
+  transition: 0.2s;
+  opacity: 0;
+  visibility: hidden;
   padding: 30px 5px 30px 35px;
+  z-index: 1;
+}
+
+.sidebar.is-visible {
+  width: var(--sidebar-width);
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.sidebar.is-visible + .editor {
+  transform: translateX(var(--sidebar-width));
 }
 
 .sidebar > ul {
@@ -169,7 +193,8 @@ main {
   fill: var(--sidebar-button-inbox-icon-color);
 }
 
-.sidebar-today-icon path {
+.sidebar-today-icon path,
+.sidebar-today-icon tspan {
   fill: var(--sidebar-button-today-icon-color);
 }
 
@@ -179,7 +204,7 @@ main {
 
 .sidebar-button .tooltip {
   position: relative;
-  left: 172px;
+  left: 50%;
 }
 
 /* Sidebar Projects Button */
@@ -230,7 +255,7 @@ main {
 
 .add-project-button .tooltip {
   position: absolute;
-  top: 156px;
+  top: 111px;
   margin: 0 0 7px 0;
 }
 
@@ -247,4 +272,6 @@ main {
 .editor {
   padding: 42px;
   background-color: var(--bg);
+  transform: translateX(0);
+  transition: transform 0.2s;
 }

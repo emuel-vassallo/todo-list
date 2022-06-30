@@ -1,3 +1,3 @@
-import loadHeader from './header.js';
+import toggleMenuVisibility from './header.js';
 
-loadHeader();
+toggleMenuVisibility();
