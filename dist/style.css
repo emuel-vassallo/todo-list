@@ -10,6 +10,8 @@
   --sidebar-button-inbox-icon-color: #246fe0;
   --sidebar-button-today-icon-color: #058527;
   --sidebar-button-upcoming-icon-color: #692fc2;
+  --sidebar-button-add-project-icon-color: #000;
+  --sidebar-button-project-arrow-color: #686868;
 }
 
 * {
@@ -81,6 +83,11 @@ header > div {
   height: 30px;
 }
 
+.add-project-button:active .sidebar-add-project-icon path {
+  stroke: var(--sidebar-button-add-project-icon-color);
+  stroke-width: 0.15;
+}
+
 /* Button Tooltip */
 
 .tooltip {
@@ -98,10 +105,11 @@ header > div {
 }
 
 .header-button:hover .tooltip,
-.sidebar-button:hover .tooltip {
+.sidebar-button:hover .tooltip,
+.add-project-button:hover .tooltip {
   opacity: 1;
   visibility: visible;
-  transition-delay: 0.3s;
+  transition-delay: 0.4s;
 }
 
 /* -- Main -- */
@@ -115,6 +123,8 @@ main {
 
 .sidebar {
   display: flex;
+  flex-direction: column;
+  gap: 12px;
   background-color: var(--sidebar-bg);
   width: 334px;
   height: 100%;
@@ -170,6 +180,66 @@ main {
 .sidebar-button .tooltip {
   position: relative;
   left: 172px;
+}
+
+/* Sidebar Projects Button */
+
+.sidebar-projects {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 12px 0 0;
+}
+
+.sidebar-projects-button {
+  display: flex;
+  height: 36px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 5px 0 5px 12px;
+  font-weight: bold;
+  background-color: unset;
+}
+
+.sidebar-projects-button:hover {
+  cursor: pointer;
+}
+
+/* Add Project Button */
+
+.add-project-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
+  width: 32px;
+  height: 32px;
+  background-color: unset;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: none;
+}
+
+.add-project-button:hover {
+  background-color: var(--sidebar-button-hover-bg);
+  cursor: pointer;
+}
+
+.add-project-button .tooltip {
+  position: absolute;
+  top: 156px;
+  margin: 0 0 7px 0;
+}
+
+.sidebar-projects-arrow-icon path {
+  fill: var(--sidebar-button-project-arrow-color);
+}
+
+.sidebar:hover .add-project-button {
+  opacity: 1;
 }
 
 /* -- Editor -- */
