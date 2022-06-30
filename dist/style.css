@@ -1,11 +1,12 @@
 :root {
   --accent-color: #db4c3f;
+  --header-height: 44px;
   --header-icon-color: #fff;
   --header-icon-hover-color: hsla(0, 0%, 100%, 0.2);
   --bg: #fff;
   --header-icon-tooltip-bg: #444;
   --header-icon-tooltip-fg: #fff;
-  --sidebar-width: 339px;
+  --sidebar-width: 239px;
   --sidebar-bg: #fafafa;
   --sidebar-fg: #202020;
   --sidebar-button-hover-bg: #eeeeee;
@@ -44,7 +45,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 44px;
+  height: var(--header-height);
   padding: 12px 40px;
   background-color: var(--accent-color);
 }
@@ -120,7 +121,8 @@ header > div {
 
 main {
   display: flex;
-  height: 100%;
+  height: calc(100vh - var(--header-height));
+  overflow: hidden;
 }
 
 /* -- Sidebar -- */
@@ -180,12 +182,16 @@ main {
   border-radius: 5px;
 }
 
+.sidebar-button > svg {
+  flex-shrink: 0;
+}
+
 .sidebar-button:hover {
   background-color: var(--sidebar-button-hover-bg);
   cursor: pointer;
 }
 
-.selected-sidebar-button {
+.sidebar-button.selected {
   background-color: var(--sidebar-button-hover-bg);
 }
 
@@ -204,7 +210,7 @@ main {
 
 .sidebar-button .tooltip {
   position: relative;
-  left: 50%;
+  left: 30%;
 }
 
 /* Sidebar Projects Button */
@@ -279,8 +285,17 @@ main {
 /* -- Editor -- */
 
 .editor {
-  padding: 42px;
+  padding: 36px 55px;
   background-color: var(--bg);
   transform: translateX(0);
   transition: transform var(--sidebar-toggle-transition-time);
+  width: calc(100vw - var(--sidebar-width));
+}
+
+.editor:not(.is-sidebar-visible) {
+  width: 100vw;
+}
+
+.tab-title {
+  text-transform: capitalize;
 }

@@ -71,7 +71,8 @@
         <ul>
           <li>
             <button
-              class="sidebar-button sidebar-button-inbox selected-sidebar-button"
+              class="sidebar-button sidebar-button-inbox selected"
+              data-tab-name="inbox"
             >
               <svg
                 width="24"
@@ -93,7 +94,10 @@
             </button>
           </li>
           <li>
-            <button class="sidebar-button sidebar-button-today">
+            <button
+              class="sidebar-button sidebar-button-today"
+              data-tab-name="today"
+            >
               <svg
                 width="24"
                 height="24"
@@ -124,7 +128,10 @@
             </button>
           </li>
           <li>
-            <button class="sidebar-button sidebar-button-upcoming">
+            <button
+              class="sidebar-button sidebar-button-upcoming"
+              data-tab-name="upcoming"
+            >
               <svg
                 width="24"
                 height="24"
@@ -173,8 +180,8 @@
           </button>
         </div>
       </div>
-      <div class="editor">
-        <h2>Inbox</h2>
+      <div class="editor is-sidebar-visible">
+        <h2 class="tab-title">Inbox</h2>
       </div>
     </main>
   </body>

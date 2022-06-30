@@ -9,4 +9,21 @@ const toggleProjectsVisibility = () => {
   });
 };
 
-export default toggleProjectsVisibility;
+const getSidebarButtons = () => document.querySelectorAll('.sidebar-button');
+
+const removeSelectedClass = () => {
+  const sidebarButtons = getSidebarButtons();
+  for (const button of sidebarButtons) button.classList.remove('selected');
+};
+
+const addSelectedClassOnClick = () => {
+  const sidebarButtons = getSidebarButtons();
+  for (const button of sidebarButtons) {
+    button.addEventListener('click', () => {
+      removeSelectedClass();
+      button.classList.add('selected');
+    });
+  }
+};
+
+export { toggleProjectsVisibility, addSelectedClassOnClick, getSidebarButtons };
