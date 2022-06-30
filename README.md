@@ -2,7 +2,7 @@
 
 A simple [Todoist](https://todoist.com/) clone built with HTML, CSS, and JavaScript as part of The Odin Project's [curriculum](https://www.theodinproject.com/).
 
-### [Live Demo](https://emuel-vassallo.github.io/todo-list/)
+### [Live Demo](https://emuel-vassallo.github.io/todoist-clone/)
 
 ## Showcase
 

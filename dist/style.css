@@ -1,10 +1,15 @@
 :root {
   --accent-color: #db4c3f;
   --header-icon-color: #fff;
-  --header-icon-hover-color: #e27065;
+  --header-icon-hover-color: hsla(0, 0%, 100%, 0.2);
   --bg: #fff;
   --header-icon-tooltip-bg: #444;
   --header-icon-tooltip-fg: #fff;
+  --sidebar-bg: #fafafa;
+  --sidebar-button-hover-bg: #eeeeee;
+  --sidebar-button-inbox-icon-color: #246fe0;
+  --sidebar-button-today-icon-color: #058527;
+  --sidebar-button-upcoming-icon-color: #692fc2;
 }
 
 * {
@@ -15,12 +20,17 @@
   outline: none;
 }
 
-body {
+html {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Apple Color Emoji, Helvetica, Arial, sans-serif, Segoe UI Emoji,
     Segoe UI Symbol;
   font-size: 13px;
-  background-color: var(--bg);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 /* -- Header -- */
@@ -30,13 +40,13 @@ header {
   align-items: center;
   justify-content: space-between;
   height: 44px;
-  padding: 12px 42px;
+  padding: 12px 40px;
   background-color: var(--accent-color);
 }
 
 header > div {
   display: flex;
-  gap: 8px;
+  gap: 4px;
 }
 
 .header-icon path {
@@ -66,21 +76,89 @@ header > div {
   border-radius: 3px;
 }
 
-.header-button::before,
-.header-button::after {
-  position: absolute;
-  top: 100%;
-  margin: 8px 0 0 0;
-}
+/* Header Buttons Tooltip */
 
 .header-button::before {
-  background-color: var(--header-icon-tooltip-bg);
+  position: absolute;
   color: var(--header-icon-tooltip-fg);
+  background-color: var(--header-icon-tooltip-bg);
   padding: 6px 8px;
   white-space: nowrap;
   border-radius: 5px;
+  text-align: center;
+  top: 128%;
 }
 
 .header-button:hover::before {
   content: attr(data-tooltip);
+}
+
+/* -- Main -- */
+
+main {
+  display: flex;
+  height: 100%;
+}
+
+/* -- Sidebar -- */
+
+.sidebar {
+  display: flex;
+  background-color: var(--sidebar-bg);
+  width: 334px;
+  height: 100%;
+  padding: 30px 5px 30px 35px;
+}
+
+.sidebar > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.sidebar > ul > li {
+  width: 100%;
+  list-style-type: none;
+}
+
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+  background-color: unset;
+  width: 100%;
+  height: 34px;
+  padding: 5px 0 5px 7px;
+  font-size: 1.124rem;
+  border-radius: 5px;
+}
+
+.sidebar-button:hover {
+  background-color: var(--sidebar-button-hover-bg);
+  cursor: pointer;
+}
+
+.selected-sidebar-button {
+  background-color: var(--sidebar-button-hover-bg);
+}
+
+.sidebar-inbox-icon path {
+  fill: var(--sidebar-button-inbox-icon-color);
+}
+
+.sidebar-today-icon path {
+  fill: var(--sidebar-button-today-icon-color);
+}
+
+.sidebar-upcoming-icon path {
+  fill: var(--sidebar-button-upcoming-icon-color);
+}
+
+/* -- Editor -- */
+
+.editor {
+  padding: 42px;
+  background-color: var(--bg);
 }
