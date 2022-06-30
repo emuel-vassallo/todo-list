@@ -76,21 +76,32 @@ header > div {
   border-radius: 3px;
 }
 
-/* Header Buttons Tooltip */
+.header-button .tooltip {
+  top: 128%;
+  height: 30px;
+}
 
-.header-button::before {
+/* Button Tooltip */
+
+.tooltip {
   position: absolute;
   color: var(--header-icon-tooltip-fg);
   background-color: var(--header-icon-tooltip-bg);
-  padding: 6px 8px;
+  padding: 8px;
+  opacity: 0;
+  pointer-events: none;
   white-space: nowrap;
   border-radius: 5px;
   text-align: center;
-  top: 128%;
+  font-size: 1rem;
+  transition-delay: 0.1s;
 }
 
-.header-button:hover::before {
-  content: attr(data-tooltip);
+.header-button:hover .tooltip,
+.sidebar-button:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.3s;
 }
 
 /* -- Main -- */
@@ -154,6 +165,11 @@ main {
 
 .sidebar-upcoming-icon path {
   fill: var(--sidebar-button-upcoming-icon-color);
+}
+
+.sidebar-button .tooltip {
+  position: relative;
+  left: 172px;
 }
 
 /* -- Editor -- */
