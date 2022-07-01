@@ -1,12 +1,18 @@
-import { getSidebarButtons, changeTabTitle } from './sidebar.js';
+import { Sidebar } from './sidebar.js';
 
 const Editor = (() => {
-  const getEditor = () => document.querySelector('.editor');
+  const editor = document.querySelector('.editor');
+  const sidebarButtons = document.querySelectorAll('.sidebar-button');
 
   const removeEditorContent = () => {
-    const editor = getEditor();
     while (editor.firstChild) editor.removeChild(editor.lastChild);
   };
+
+  const addSidebarVisibleClass = () =>
+    editor.classList.add('is-sidebar-visible');
+
+  const removeSidebarVisibleClass = () =>
+    editor.classList.remove('is-sidebar-visible');
 
   const getNewTabTitle = (tabTitleText) => {
     const tabTitle = document.createElement('h2');
@@ -16,34 +22,28 @@ const Editor = (() => {
   };
 
   const addTabTitle = (tabTitleText) => {
-    const editor = getEditor();
     const newTabTitle = getNewTabTitle(tabTitleText);
     editor.append(newTabTitle);
   };
 
   const loadInboxContent = () => {
-    const editor = getEditor();
     console.log('Inbox loaded');
   };
 
   const loadTodayContent = () => {
-    const editor = getEditor();
     console.log('Today loaded');
   };
 
   const loadUpcomingContent = () => {
-    const editor = getEditor();
     console.log('Upcoming loaded');
   };
 
   const addCurrentTabNameClass = (tabName) => {
-    const editor = getEditor();
     if (editor.classList.contains(`.${tabName}`)) return;
     editor.classList.add(tabName);
   };
 
   const removeTabNameClass = () => {
-    const editor = getEditor();
     const tabNames = ['inbox', 'today', 'upcoming'];
     for (const tabName of tabNames) editor.classList.remove(tabName);
   };
@@ -57,11 +57,10 @@ const Editor = (() => {
   };
 
   const changeEditorContent = () => {
-    const sidebarButtons = getSidebarButtons();
     for (const button of sidebarButtons) {
       button.addEventListener('click', () => {
         const tabName = button.dataset.tabName;
-        changeTabTitle(tabName);
+        Sidebar.changeTabTitle(tabName);
         removeEditorContent();
         removeTabNameClass();
         addCurrentTabNameClass(tabName);
@@ -70,7 +69,12 @@ const Editor = (() => {
       });
     }
   };
-  return { changeEditorContent };
+
+  return {
+    changeEditorContent,
+    addSidebarVisibleClass,
+    removeSidebarVisibleClass,
+  };
 })();
 
 export { Editor };

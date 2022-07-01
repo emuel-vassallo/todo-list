@@ -284,6 +284,8 @@ main {
 /* -- Editor -- */
 
 .editor {
+  display: flex;
+  flex-direction: column;
   padding: 36px 55px;
   background-color: var(--bg);
   transform: translateX(0);
@@ -297,4 +299,13 @@ main {
 
 .tab-title {
   text-transform: capitalize;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 0;
+    opacity: 0;
+    visibility:hidden;
+    transform: translateX(-100%);
+  }
 }
