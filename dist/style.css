@@ -77,12 +77,6 @@ header > div {
   height: 32px;
 }
 
-.header-button:hover {
-  cursor: pointer;
-  background-color: var(--header-icon-hover-color);
-  border-radius: 3px;
-}
-
 .header-button .tooltip {
   top: 128%;
   height: 30px;
@@ -199,11 +193,6 @@ main {
   flex-shrink: 0;
 }
 
-.sidebar-button:hover {
-  background-color: var(--sidebar-button-hover-bg);
-  cursor: pointer;
-}
-
 .sidebar-button.selected {
   background-color: var(--sidebar-button-hover-bg);
 }
@@ -248,10 +237,6 @@ main {
   background-color: unset;
 }
 
-.sidebar-projects-button:hover {
-  cursor: pointer;
-}
-
 /* Add Project Button */
 
 .add-project-button {
@@ -265,11 +250,6 @@ main {
   border-radius: 5px;
   opacity: 0;
   visibility: none;
-}
-
-.add-project-button:hover {
-  background-color: var(--sidebar-button-hover-bg);
-  cursor: pointer;
 }
 
 .add-project-button .tooltip {
@@ -291,10 +271,6 @@ main {
   fill: var(--sidebar-button-project-arrow-color);
 }
 
-.sidebar:hover .add-project-button {
-  opacity: 1;
-}
-
 /* -- Editor -- */
 
 .editor {
@@ -313,6 +289,34 @@ main {
 
 .tab-title {
   text-transform: capitalize;
+}
+
+/* Media Queries */
+
+@media (hover: hover) {
+  .header-button:hover {
+    cursor: pointer;
+    background-color: var(--header-icon-hover-color);
+    border-radius: 3px;
+  }
+
+  .sidebar-button:hover {
+    background-color: var(--sidebar-button-hover-bg);
+    cursor: pointer;
+  }
+
+  .sidebar-projects-button:hover {
+    cursor: pointer;
+  }
+
+  .add-project-button:hover {
+    background-color: var(--sidebar-button-hover-bg);
+    cursor: pointer;
+  }
+
+  .sidebar:hover .add-project-button {
+    opacity: 1;
+  }
 }
 
 @media screen and (max-width: 750px) {
