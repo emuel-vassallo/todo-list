@@ -50,19 +50,21 @@ const Sidebar = (() => {
   };
 
   const toggleSidebarVisibility = () => {
-    const menuButton = document.querySelector('.menu-button');
+    const menuToggleButtons = document.querySelectorAll('.menu-button');
     const menuButtonTooltip = document.querySelector('.menu-button > span');
-    menuButton.addEventListener('click', () => {
-      sidebar.classList.toggle('is-visible');
-      editor.classList.toggle('is-sidebar-visible');
-      if (sidebar.classList.contains('is-visible')) {
-        menuButtonTooltip.textContent = 'Close menu';
-        return;
-      }
-      menuButtonTooltip.textContent = 'Open menu';
-    });
+    for (const button of menuToggleButtons) {
+      button.addEventListener('click', () => {
+        sidebar.classList.toggle('is-visible');
+        editor.classList.toggle('is-sidebar-visible');
+        if (sidebar.classList.contains('is-visible')) {
+          menuButtonTooltip.textContent = 'Close menu';
+          return;
+        }
+        menuButtonTooltip.textContent = 'Open menu';
+      });
+    }
     window.addEventListener('resize', function () {
-      if (window.innerWidth < 760) {
+      if (window.innerWidth < 750) {
         removeVisibleClass();
         return;
       }
