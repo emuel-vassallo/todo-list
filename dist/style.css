@@ -82,6 +82,19 @@ header > div {
   height: 30px;
 }
 
+.add-project-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
+  width: 32px;
+  height: 32px;
+  background-color: unset;
+  border-radius: 5px;
+  opacity: 1;
+  visibility: visible;
+}
+
 .add-project-button:active .sidebar-add-project-icon path {
   stroke: var(--sidebar-button-add-project-icon-color);
   stroke-width: 0.15;
@@ -239,19 +252,6 @@ main {
 
 /* Add Project Button */
 
-.add-project-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1 0 auto;
-  width: 32px;
-  height: 32px;
-  background-color: unset;
-  border-radius: 5px;
-  opacity: 0;
-  visibility: none;
-}
-
 .add-project-button .tooltip {
   position: absolute;
   top: 111px;
@@ -307,6 +307,11 @@ main {
 
   .sidebar-projects-button:hover {
     cursor: pointer;
+  }
+
+  .add-project-button {
+    opacity: 0;
+    visibility: none;
   }
 
   .add-project-button:hover {
