@@ -341,7 +341,7 @@ main {
     transform: none;
   }
 
-  .sidebar-overlay {
+  .sidebar-overlay.is-visible {
     opacity: 1;
     display: block;
     visibility: visible;

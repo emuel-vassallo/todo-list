@@ -56,6 +56,9 @@ const Sidebar = (() => {
       button.addEventListener('click', () => {
         sidebar.classList.toggle('is-visible');
         editor.classList.toggle('is-sidebar-visible');
+        document
+          .querySelector('.sidebar-overlay')
+          .classList.toggle('is-visible');
         if (sidebar.classList.contains('is-visible')) {
           menuButtonTooltip.textContent = 'Close menu';
           return;
@@ -63,6 +66,7 @@ const Sidebar = (() => {
         menuButtonTooltip.textContent = 'Open menu';
       });
     }
+
     window.addEventListener('resize', function () {
       if (window.innerWidth < 750) {
         removeVisibleClass();
@@ -70,6 +74,10 @@ const Sidebar = (() => {
       }
       addVisibleClass();
     });
+
+    if (window.innerWidth > 750) {
+      addVisibleClass();
+    } else removeVisibleClass();
   };
 
   return {
