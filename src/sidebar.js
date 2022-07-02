@@ -82,6 +82,7 @@ const Sidebar = (() => {
       console.log('Hidden');
       return;
     }
+
     if (!isSidebarVisible && windowWidth > 750) {
       addVisibleClass();
       console.log('Visible');
@@ -89,11 +90,12 @@ const Sidebar = (() => {
     }
   });
 
+  toggleSidebarVisibility();
+  toggleProjectsVisibility();
+  addSelectedClassOnClick();
+
   return {
-    toggleProjectsVisibility,
-    addSelectedClassOnClick,
     changeTabTitle,
-    toggleSidebarVisibility,
   };
 })();
 

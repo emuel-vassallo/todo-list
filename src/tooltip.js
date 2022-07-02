@@ -61,8 +61,9 @@ const Tooltip = (() => {
   const changeMenuTooltipTextClose = () =>
     (menuButtonTooltip.textContent = 'Close menu');
 
+  hideTooltipOnClick();
+
   return {
-    hideTooltipOnClick,
     changeMenuTooltipTextOpen,
     changeMenuTooltipTextClose,
   };

@@ -70,8 +70,9 @@ const Editor = (() => {
     }
   };
 
+  changeEditorContent()
+
   return {
-    changeEditorContent,
     addSidebarVisibleClass,
     removeSidebarVisibleClass,
   };
