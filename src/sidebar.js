@@ -68,31 +68,39 @@ const Sidebar = (() => {
     }
   };
 
-  if (window.innerWidth > 750) addVisibleClass();
+  const getCurrentDay = () => new Date().getDate();
 
-  window.addEventListener('resize', () => {
-    const isSidebarVisible = sidebar.classList.contains('is-visible');
-    const isOverlayVisible = overlay.classList.contains('is-visible');
-    const windowWidth = window.innerWidth;
+  const getFormattedDay = () => ('0' + getCurrentDay()).slice(-2);
 
-    if (isSidebarVisible && isOverlayVisible && windowWidth <= 750) return;
+  const updateTodayIconDay = () =>
+    (document.querySelector('.sidebar-today-icon tspan').textContent =
+      getFormattedDay());
 
-    if (isSidebarVisible && windowWidth <= 750) {
-      removeVisibleClass();
-      console.log('Hidden');
-      return;
-    }
+  const controlSidebarVisibility = () => {
+    if (window.innerWidth > 750) addVisibleClass();
 
-    if (!isSidebarVisible && windowWidth > 750) {
-      addVisibleClass();
-      console.log('Visible');
-      return;
-    }
-  });
+    window.addEventListener('resize', () => {
+      const isSidebarVisible = sidebar.classList.contains('is-visible');
+      const isOverlayVisible = overlay.classList.contains('is-visible');
+      const windowWidth = window.innerWidth;
+
+      if (isOverlayVisible) return;
+      if (isSidebarVisible && windowWidth <= 750) {
+        removeVisibleClass();
+        return;
+      }
+      if (!isSidebarVisible && windowWidth > 750) {
+        addVisibleClass();
+        return;
+      }
+    });
+  };
 
   toggleSidebarVisibility();
   toggleProjectsVisibility();
   addSelectedClassOnClick();
+  updateTodayIconDay();
+  controlSidebarVisibility();
 
   return {
     changeTabTitle,
