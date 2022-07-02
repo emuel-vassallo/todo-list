@@ -1,7 +1,9 @@
 import { Editor } from './editor';
+import { Tooltip } from './tooltip.js';
 
 const Sidebar = (() => {
   const sidebar = document.querySelector('.sidebar');
+  const overlay = document.querySelector('.sidebar-overlay');
   const sidebarButtons = document.querySelectorAll('.sidebar-button');
   const editor = document.querySelector('.editor');
 
@@ -36,49 +38,56 @@ const Sidebar = (() => {
   };
 
   const addVisibleClass = () => {
-    const menuButtonTooltip = document.querySelector('.menu-button > span');
     sidebar.classList.add('is-visible');
     Editor.addSidebarVisibleClass();
-    menuButtonTooltip.textContent = 'Close menu';
+    Tooltip.changeMenuTooltipTextClose();
   };
 
   const removeVisibleClass = () => {
-    const menuButtonTooltip = document.querySelector('.menu-button > span');
     sidebar.classList.remove('is-visible');
     Editor.removeSidebarVisibleClass();
-    menuButtonTooltip.textContent = 'Open menu';
+    Tooltip.changeMenuTooltipTextOpen();
   };
+
+  const toggleOverlayVisibility = () =>
+    document.querySelector('.sidebar-overlay').classList.toggle('is-visible');
 
   const toggleSidebarVisibility = () => {
     const menuToggleButtons = document.querySelectorAll('.menu-button');
-    const menuButtonTooltip = document.querySelector('.menu-button > span');
     for (const button of menuToggleButtons) {
       button.addEventListener('click', () => {
         sidebar.classList.toggle('is-visible');
         editor.classList.toggle('is-sidebar-visible');
-        document
-          .querySelector('.sidebar-overlay')
-          .classList.toggle('is-visible');
+        toggleOverlayVisibility();
         if (sidebar.classList.contains('is-visible')) {
-          menuButtonTooltip.textContent = 'Close menu';
+          Tooltip.changeMenuTooltipTextClose();
           return;
         }
-        menuButtonTooltip.textContent = 'Open menu';
+        Tooltip.changeMenuTooltipTextOpen();
       });
     }
-
-    window.addEventListener('resize', function () {
-      if (window.innerWidth < 750) {
-        removeVisibleClass();
-        return;
-      }
-      addVisibleClass();
-    });
-
-    if (window.innerWidth > 750) {
-      addVisibleClass();
-    } else removeVisibleClass();
   };
+
+  if (window.innerWidth > 750) addVisibleClass();
+
+  window.addEventListener('resize', () => {
+    const isSidebarVisible = sidebar.classList.contains('is-visible');
+    const isOverlayVisible = overlay.classList.contains('is-visible');
+    const windowWidth = window.innerWidth;
+
+    if (isSidebarVisible && isOverlayVisible && windowWidth <= 750) return;
+
+    if (isSidebarVisible && windowWidth <= 750) {
+      removeVisibleClass();
+      console.log('Hidden');
+      return;
+    }
+    if (!isSidebarVisible && windowWidth > 750) {
+      addVisibleClass();
+      console.log('Visible');
+      return;
+    }
+  });
 
   return {
     toggleProjectsVisibility,
