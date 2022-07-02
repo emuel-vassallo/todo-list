@@ -2,7 +2,7 @@ import { Sidebar } from './sidebar.js';
 
 const Editor = (() => {
   const editor = document.querySelector('.editor');
-  const sidebarButtons = document.querySelectorAll('.sidebar-button');
+  const tabLinkButtons = document.querySelectorAll('.tab-link');
 
   const removeEditorContent = () => {
     while (editor.firstChild) editor.removeChild(editor.lastChild);
@@ -26,17 +26,11 @@ const Editor = (() => {
     editor.append(newTabTitle);
   };
 
-  const loadInboxContent = () => {
-    console.log('Inbox loaded');
-  };
+  const loadInboxContent = () => {};
 
-  const loadTodayContent = () => {
-    console.log('Today loaded');
-  };
+  const loadTodayContent = () => {};
 
-  const loadUpcomingContent = () => {
-    console.log('Upcoming loaded');
-  };
+  const loadUpcomingContent = () => {};
 
   const addCurrentTabNameClass = (tabName) => {
     if (editor.classList.contains(`.${tabName}`)) return;
@@ -56,13 +50,15 @@ const Editor = (() => {
     }[tabName]?.());
   };
 
-  const changeEditorContent = () => {
-    for (const button of sidebarButtons) {
+  const changeContentOnTabChange = () => {
+    for (const button of tabLinkButtons) {
       button.addEventListener('click', () => {
         const tabName = button.dataset.tabName;
         Sidebar.changeTabTitle(tabName);
         removeEditorContent();
         removeTabNameClass();
+        Sidebar.removeSelectedButtonClass();
+        Sidebar.addSelectedClassToButton(tabName);
         addCurrentTabNameClass(tabName);
         loadNewEditorContent(tabName);
         addTabTitle(tabName);
@@ -70,7 +66,7 @@ const Editor = (() => {
     }
   };
 
-  changeEditorContent()
+  changeContentOnTabChange();
 
   return {
     addSidebarVisibleClass,

@@ -18,7 +18,12 @@ const Sidebar = (() => {
     });
   };
 
-  const removeSelectedClass = () => {
+  const addSelectedClassToButton = (tabName) => {
+    for (const button of sidebarButtons)
+      if (button.dataset.tabName === tabName) button.classList.add('selected');
+  };
+
+  const removeSelectedButtonClass = () => {
     for (const button of sidebarButtons) button.classList.remove('selected');
   };
 
@@ -27,15 +32,6 @@ const Sidebar = (() => {
 
   const changeTabTitle = (tabName) =>
     (document.title = `${getCapitalizedString(tabName)}: Todoist`);
-
-  const addSelectedClassOnClick = () => {
-    for (const button of sidebarButtons) {
-      button.addEventListener('click', () => {
-        removeSelectedClass();
-        button.classList.add('selected');
-      });
-    }
-  };
 
   const addVisibleClass = () => {
     sidebar.classList.add('is-visible');
@@ -98,12 +94,13 @@ const Sidebar = (() => {
 
   toggleSidebarVisibility();
   toggleProjectsVisibility();
-  addSelectedClassOnClick();
   updateTodayIconDay();
   controlSidebarVisibility();
 
   return {
     changeTabTitle,
+    removeSelectedButtonClass,
+    addSelectedClassToButton,
   };
 })();
 

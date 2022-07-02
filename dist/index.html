@@ -1,189 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Today: Todoist</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="components/favicon.png" />
-    <link href="style.css" rel="stylesheet" />
-    <script src="main.js" defer></script>
-  </head>
 
-  <body>
-    <header>
-      <div class="header-left">
-        <button class="header-button menu-button">
-          <svg
-            class="header-icon menu-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M4.5 5h15a.5.5 0 1 1 0 1h-15a.5.5 0 0 1 0-1zm0 6h15a.5.5 0 1 1 0 1h-15a.5.5 0 1 1 0-1zm0 6h15a.5.5 0 1 1 0 1h-15a.5.5 0 1 1 0-1z"
-            ></path>
-          </svg>
-          <span class="tooltip"> Close menu </span>
-        </button>
-        <button class="header-button home-button" data-tab-name="today">
-          <svg
-            class="header-icon home-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill="currentColor"
-              d="M12.527 3.075c.35.104.64.263 1.27.876L19.1 9.123c.374.364.49.505.601.678.11.174.185.351.232.552.042.178.062.34.066.742L20 17.718c0 .446-.046.607-.134.77a.906.906 0 01-.378.378c-.163.088-.324.134-.77.134H14v-4.718c0-.446-.046-.607-.134-.77a.906.906 0 00-.378-.378c-.142-.077-.284-.122-.616-.132L12.718 13h-1.436c-.446 0-.607.046-.77.134a.906.906 0 00-.378.378c-.077.142-.122.284-.132.616l-.002.154V19H5.282c-.446 0-.607-.046-.77-.134a.906.906 0 01-.378-.378c-.088-.163-.134-.324-.134-.77v-6.462c0-.522.02-.703.067-.903.047-.2.121-.378.232-.552l.077-.113c.098-.134.233-.282.524-.565l5.304-5.172c.629-.613.92-.772 1.269-.876a1.82 1.82 0 011.054 0zm-.286.958a.825.825 0 00-.482 0c-.18.054-.326.139-.63.418l-.227.216L5.598 9.84c-.3.293-.385.39-.456.5a.76.76 0 00-.102.242c-.026.112-.037.224-.04.531l.002 6.807.005.073.074.006L8.999 18 9 14.268l.003-.17c.013-.448.083-.749.249-1.058a1.9 1.9 0 01.788-.788c.306-.164.6-.234 1.043-.249l.199-.003h1.45l.17.003c.448.013.749.083 1.058.249.337.18.608.45.788.788.164.306.234.6.249 1.043l.003.199L14.999 18l3.92-.002.073-.006.006-.073.002-.2v-6.615l-.005-.218a1.494 1.494 0 00-.035-.305.747.747 0 00-.102-.242l-.059-.084a3.571 3.571 0 00-.294-.315l-5.407-5.273c-.425-.414-.604-.545-.798-.615l-.06-.019z"
-            ></path>
-          </svg>
-          <span class="tooltip"> Go to home </span>
-        </button>
-      </div>
-      <div class="header-right">
-        <button class="header-button">
-          <svg
-            class="header-icon plus-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-          >
-            <g fill="none" fill-rule="evenodd" transform="translate(4 3)">
-              <mask id="jd4FBg" fill="#fff">
-                <path
-                  d="M9 8h7a.5.5 0 1 1 0 1H9v7a.5.5 0 1 1-1 0V9H1a.5.5 0 0 1 0-1h7V1a.5.5 0 0 1 1 0v7z"
-                ></path>
-              </mask>
-              <g mask="url(#jd4FBg)">
-                <path fill="currentColor" d="M-4-3h24v24H-4z"></path>
-              </g>
+<head>
+  <title>Today: Todoist</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="components/favicon.png" />
+  <link href="style.css" rel="stylesheet" />
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <div class="header-left">
+      <button class="header-button menu-button">
+        <svg class="header-icon menu-icon" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="currentColor" fill-rule="evenodd"
+            d="M4.5 5h15a.5.5 0 1 1 0 1h-15a.5.5 0 0 1 0-1zm0 6h15a.5.5 0 1 1 0 1h-15a.5.5 0 1 1 0-1zm0 6h15a.5.5 0 1 1 0 1h-15a.5.5 0 1 1 0-1z">
+          </path>
+        </svg>
+        <span class="tooltip"> Close menu </span>
+      </button>
+      <button class="header-button home-button tab-link" data-tab-name="today">
+        <svg class="header-icon home-icon" width="24" height="24" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill="currentColor"
+            d="M12.527 3.075c.35.104.64.263 1.27.876L19.1 9.123c.374.364.49.505.601.678.11.174.185.351.232.552.042.178.062.34.066.742L20 17.718c0 .446-.046.607-.134.77a.906.906 0 01-.378.378c-.163.088-.324.134-.77.134H14v-4.718c0-.446-.046-.607-.134-.77a.906.906 0 00-.378-.378c-.142-.077-.284-.122-.616-.132L12.718 13h-1.436c-.446 0-.607.046-.77.134a.906.906 0 00-.378.378c-.077.142-.122.284-.132.616l-.002.154V19H5.282c-.446 0-.607-.046-.77-.134a.906.906 0 01-.378-.378c-.088-.163-.134-.324-.134-.77v-6.462c0-.522.02-.703.067-.903.047-.2.121-.378.232-.552l.077-.113c.098-.134.233-.282.524-.565l5.304-5.172c.629-.613.92-.772 1.269-.876a1.82 1.82 0 011.054 0zm-.286.958a.825.825 0 00-.482 0c-.18.054-.326.139-.63.418l-.227.216L5.598 9.84c-.3.293-.385.39-.456.5a.76.76 0 00-.102.242c-.026.112-.037.224-.04.531l.002 6.807.005.073.074.006L8.999 18 9 14.268l.003-.17c.013-.448.083-.749.249-1.058a1.9 1.9 0 01.788-.788c.306-.164.6-.234 1.043-.249l.199-.003h1.45l.17.003c.448.013.749.083 1.058.249.337.18.608.45.788.788.164.306.234.6.249 1.043l.003.199L14.999 18l3.92-.002.073-.006.006-.073.002-.2v-6.615l-.005-.218a1.494 1.494 0 00-.035-.305.747.747 0 00-.102-.242l-.059-.084a3.571 3.571 0 00-.294-.315l-5.407-5.273c-.425-.414-.604-.545-.798-.615l-.06-.019z">
+          </path>
+        </svg>
+        <span class="tooltip"> Go to home </span>
+      </button>
+    </div>
+    <div class="header-right">
+      <button class="header-button">
+        <svg class="header-icon plus-icon" width="24" height="24" viewBox="0 0 24 24">
+          <g fill="none" fill-rule="evenodd" transform="translate(4 3)">
+            <mask id="jd4FBg" fill="#fff">
+              <path d="M9 8h7a.5.5 0 1 1 0 1H9v7a.5.5 0 1 1-1 0V9H1a.5.5 0 0 1 0-1h7V1a.5.5 0 0 1 1 0v7z"></path>
+            </mask>
+            <g mask="url(#jd4FBg)">
+              <path fill="currentColor" d="M-4-3h24v24H-4z"></path>
             </g>
+          </g>
+        </svg>
+        <span class="tooltip"> Add task </span>
+      </button>
+    </div>
+  </header>
+  <main>
+    <div class="sidebar-overlay menu-button"></div>
+    <div class="sidebar">
+      <ul>
+        <li>
+          <button class="sidebar-button sidebar-button-inbox tab-link" data-tab-name="inbox">
+            <svg width="24" height="24" viewBox="0 0 24 24" class="sidebar-inbox-icon">
+              <g fill="currentColor" fill-rule="nonzero">
+                <path d="M10 14.5a2 2 0 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z" opacity="0.1">
+                </path>
+                <path
+                  d="M8.062 4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z">
+                </path>
+              </g>
+            </svg><span>Inbox</span>
+            <span class="tooltip"> Go to Inbox </span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-button sidebar-button-today tab-link selected" data-tab-name="today">
+            <svg width="24" height="24" viewBox="0 0 24 24" class="sidebar-today-icon">
+              <g fill="currentColor" fill-rule="evenodd">
+                <path fill-rule="nonzero" d="M6 4.5h12A1.5 1.5 0 0 1 19.5 6v2.5h-15V6A1.5 1.5 0 0 1 6 4.5z"
+                  opacity=".1"></path>
+                <path fill-rule="nonzero"
+                  d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6zm1 3h10a.5.5 0 1 1 0 1H7a.5.5 0 0 1 0-1z">
+                </path>
+                <text
+                  font-family="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+                  font-size="9" transform="translate(4 2)" font-weight="500">
+                  <tspan x="8" y="15" text-anchor="middle">30</tspan>
+                </text>
+              </g>
+            </svg><span>Today</span>
+            <span class="tooltip"> Go to Today </span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-button sidebar-button-upcoming tab-link" data-tab-name="upcoming">
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+              class="sidebar-upcoming-icon">
+              <g fill="currentColor" fill-rule="nonzero">
+                <path d="M6 4.5h12A1.5 1.5 0 0119.5 6v2.5h-15V6A1.5 1.5 0 016 4.5z" opacity="0.1"></path>
+                <path
+                  d="M6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2zm0 1a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1H6zm10 12a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm8-4a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zM7 8h10a.5.5 0 110 1H7a.5.5 0 010-1z">
+                </path>
+              </g>
+            </svg><span>Upcoming</span>
+            <span class="tooltip"> Go to Upcoming </span>
+          </button>
+        </li>
+      </ul>
+      <div class="sidebar-projects">
+        <button class="sidebar-projects-button">
+          <svg class="sidebar-projects-arrow-icon" width="16" height="16" viewBox="0 0 16 16">
+            <path d="M14 5.758L13.156 5 7.992 9.506l-.55-.48.002.002-4.588-4.003L2 5.77 7.992 11 14 5.758"
+              fill="currentColor"></path>
           </svg>
-          <span class="tooltip"> Add task </span>
+          <span>Projects</span>
+        </button>
+        <button class="add-project-button">
+          <svg class="sidebar-add-project-icon" width="13" height="13">
+            <path d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z"
+              fill="currentColor" fill-rule="evenodd"></path>
+          </svg>
+          <span class="tooltip"> Add Project </span>
         </button>
       </div>
-    </header>
-    <main>
-      <div class="sidebar-overlay menu-button"></div>
-      <div class="sidebar">
-        <ul>
-          <li>
-            <button
-              class="sidebar-button sidebar-button-inbox selected"
-              data-tab-name="inbox"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                class="sidebar-inbox-icon"
-              >
-                <g fill="currentColor" fill-rule="nonzero">
-                  <path
-                    d="M10 14.5a2 2 0 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z"
-                    opacity="0.1"
-                  ></path>
-                  <path
-                    d="M8.062 4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z"
-                  ></path>
-                </g></svg
-              ><span>Inbox</span>
-              <span class="tooltip"> Go to Inbox </span>
-            </button>
-          </li>
-          <li>
-            <button
-              class="sidebar-button sidebar-button-today"
-              data-tab-name="today"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                class="sidebar-today-icon"
-              >
-                <g fill="currentColor" fill-rule="evenodd">
-                  <path
-                    fill-rule="nonzero"
-                    d="M6 4.5h12A1.5 1.5 0 0 1 19.5 6v2.5h-15V6A1.5 1.5 0 0 1 6 4.5z"
-                    opacity=".1"
-                  ></path>
-                  <path
-                    fill-rule="nonzero"
-                    d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6zm1 3h10a.5.5 0 1 1 0 1H7a.5.5 0 0 1 0-1z"
-                  ></path>
-                  <text
-                    font-family="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
-                    font-size="9"
-                    transform="translate(4 2)"
-                    font-weight="500"
-                  >
-                    <tspan x="8" y="15" text-anchor="middle">30</tspan>
-                  </text>
-                </g></svg
-              ><span>Today</span>
-              <span class="tooltip"> Go to Today </span>
-            </button>
-          </li>
-          <li>
-            <button
-              class="sidebar-button sidebar-button-upcoming"
-              data-tab-name="upcoming"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                class="sidebar-upcoming-icon"
-              >
-                <g fill="currentColor" fill-rule="nonzero">
-                  <path
-                    d="M6 4.5h12A1.5 1.5 0 0119.5 6v2.5h-15V6A1.5 1.5 0 016 4.5z"
-                    opacity="0.1"
-                  ></path>
-                  <path
-                    d="M6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2zm0 1a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1H6zm10 12a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm8-4a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zM7 8h10a.5.5 0 110 1H7a.5.5 0 010-1z"
-                  ></path>
-                </g></svg
-              ><span>Upcoming</span>
-              <span class="tooltip"> Go to Upcoming </span>
-            </button>
-          </li>
-        </ul>
-        <div class="sidebar-projects">
-          <button class="sidebar-projects-button">
-            <svg
-              class="sidebar-projects-arrow-icon"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M14 5.758L13.156 5 7.992 9.506l-.55-.48.002.002-4.588-4.003L2 5.77 7.992 11 14 5.758"
-                fill="currentColor"
-              ></path>
-            </svg>
-            <span>Projects</span>
-          </button>
-          <button class="add-project-button">
-            <svg class="sidebar-add-project-icon" width="13" height="13">
-              <path
-                d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z"
-                fill="currentColor"
-                fill-rule="evenodd"
-              ></path>
-            </svg>
-            <span class="tooltip"> Add Project </span>
-          </button>
-        </div>
-      </div>
-      <div class="editor is-sidebar-visible">
-        <h2 class="tab-title">Inbox</h2>
-      </div>
-    </main>
-  </body>
+    </div>
+    <div class="editor is-sidebar-visible">
+      <h2 class="tab-title">Today</h2>
+    </div>
+  </main>
+</body>
+
 </html>
