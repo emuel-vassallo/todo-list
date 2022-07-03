@@ -1,5 +1,6 @@
 :root {
   --accent-color: #db4c3f;
+  --gray-text: #727272;
   --header-height: 44px;
   --header-icon-color: #fff;
   --header-icon-hover-color: hsla(0, 0%, 100%, 0.2);
@@ -25,7 +26,7 @@
   --priority-1-icon-color: #d1453b;
   --priority-2-icon-color: #eb8909;
   --priority-3-icon-color: #246fe0;
-  --sidebar-width: 239px;
+  --sidebar-width: 305px;
   --sidebar-bg: #fafafa;
   --sidebar-fg: #202020;
   --sidebar-button-hover-bg: #eeeeee;
@@ -582,8 +583,22 @@ main {
   width: 100vw;
 }
 
+/* Tab Heading */
+
+.tab-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
 .tab-title {
   text-transform: capitalize;
+  font-size: 1.3rem;
+}
+
+.current-date-title {
+  font-size: 0.8rem;
+  color: var(--gray-text);
 }
 
 /* Media Queries */
