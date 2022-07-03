@@ -87,8 +87,10 @@ const NewTaskModal = (() => {
     focusTaskNameInput();
     disableSubmitButton();
     hidePriorityDropDown();
-    resetPrioritySelectorIcon();
-    resetPriorityOption();
+    newTaskModal.addEventListener('transitionend', () => {
+      resetPrioritySelectorIcon();
+      resetPriorityOption();
+    });
   };
 
   // Event Listeners
