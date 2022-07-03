@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 const NewTaskModal = (() => {
   const addTaskButton = document.querySelector('.add-task-button');
   const newTaskModal = document.querySelector('.add-task-modal');
@@ -52,9 +54,9 @@ const NewTaskModal = (() => {
     const selectorIconParent = prioritySelectorIcon.parentNode;
     selectorIconParent.replaceChild(newIcon, prioritySelectorIcon);
   };
-  const resetPrioritySelectorIcon = () => {
+  const resetPrioritySelectorIcon = () =>
     changePrioritySelectorIcon(defaultPrioritySelectorIcon);
-  };
+
   const resetPriorityOption = () => {
     const defaultPriorityOption = priorityDropdownOptions[3];
     removeActiveClass();
@@ -83,13 +85,14 @@ const NewTaskModal = (() => {
     });
   };
 
+  dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
+
   // Event Listeners
   addTaskButton.addEventListener('click', () => toggleModal());
 
   modalCancelButton.addEventListener('click', () => toggleModal());
 
   window.addEventListener('keydown', (e) => {
-    console.log(newTaskModal);
     if (e.key === 'Escape' && isModalVisible()) toggleModal();
   });
 
