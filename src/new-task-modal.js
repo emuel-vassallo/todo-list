@@ -8,6 +8,9 @@ const NewTaskModal = (() => {
   const modalCancelButton = document.querySelector('.cancel-button');
   const dueDatePicker = document.querySelector('.due-date-picker');
   const prioritySelector = document.querySelector('.priority-selector');
+  const defaultPrioritySelectorIcon = document.querySelector(
+    '.selected-priority > svg'
+  );
   const priorityDropdownMenu = document.querySelector(
     '.priority-dropdown-menu'
   );
@@ -49,6 +52,14 @@ const NewTaskModal = (() => {
     const selectorIconParent = prioritySelectorIcon.parentNode;
     selectorIconParent.replaceChild(newIcon, prioritySelectorIcon);
   };
+  const resetPrioritySelectorIcon = () => {
+    changePrioritySelectorIcon(defaultPrioritySelectorIcon);
+  };
+  const resetPriorityOption = () => {
+    const defaultPriorityOption = priorityDropdownOptions[3];
+    removeActiveClass();
+    defaultPriorityOption.classList.add('active-priority');
+  };
   const changeActivePriorityOnClick = () => {
     for (const button of priorityDropdownOptions) {
       button.addEventListener('click', () => {
@@ -76,6 +87,8 @@ const NewTaskModal = (() => {
     focusTaskNameInput();
     disableSubmitButton();
     hidePriorityDropDown();
+    resetPrioritySelectorIcon();
+    resetPriorityOption();
   };
 
   // Event Listeners
