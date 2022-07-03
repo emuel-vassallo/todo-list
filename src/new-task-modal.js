@@ -60,17 +60,6 @@ const NewTaskModal = (() => {
     removeActiveClass();
     defaultPriorityOption.classList.add('active-priority');
   };
-  const changeActivePriorityOnClick = () => {
-    for (const button of priorityDropdownOptions) {
-      button.addEventListener('click', () => {
-        removeActiveClass();
-        button.classList.add('active-priority');
-        const buttonIcon = button.firstElementChild.cloneNode(true);
-        changePrioritySelectorIcon(buttonIcon);
-        togglePriorityDropdown();
-      });
-    }
-  };
 
   // Due Date
   const changeDefaultDueDate = () => (dueDatePicker.valueAsDate = new Date());
@@ -88,6 +77,7 @@ const NewTaskModal = (() => {
     disableSubmitButton();
     hidePriorityDropDown();
     newTaskModal.addEventListener('transitionend', () => {
+      if (isModalVisible()) return;
       resetPrioritySelectorIcon();
       resetPriorityOption();
     });
@@ -99,6 +89,7 @@ const NewTaskModal = (() => {
   modalCancelButton.addEventListener('click', () => toggleModal());
 
   window.addEventListener('keydown', (e) => {
+    console.log(newTaskModal);
     if (e.key === 'Escape' && isModalVisible()) toggleModal();
   });
 
@@ -123,7 +114,15 @@ const NewTaskModal = (() => {
     disableSubmitButton();
   });
 
-  changeActivePriorityOnClick();
+  for (const button of priorityDropdownOptions) {
+    button.addEventListener('click', () => {
+      removeActiveClass();
+      button.classList.add('active-priority');
+      const buttonIcon = button.firstElementChild.cloneNode(true);
+      changePrioritySelectorIcon(buttonIcon);
+      togglePriorityDropdown();
+    });
+  }
 })();
 
 export { NewTaskModal };
