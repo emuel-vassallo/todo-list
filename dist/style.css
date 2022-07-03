@@ -21,6 +21,10 @@
   --form-add-task-hover-bg: #b03d32;
   --form-add-task-disabled-bg: #f1b7b2;
   --form-add-task-disabled-fg: #fff;
+  --dropdown-item-hover-bg: #f3f3f3;
+  --priority-1-icon-color: #d1453b;
+  --priority-2-icon-color: #eb8909;
+  --priority-3-icon-color: #246fe0;
   --sidebar-width: 239px;
   --sidebar-bg: #fafafa;
   --sidebar-fg: #202020;
@@ -130,16 +134,23 @@ header > div {
   background-color: var(--add-task-modal-bg);
   box-shadow: 0 2px 50px rgba(0, 0, 0, 0.3);
   transition: all 0.15s ease-in-out;
+  z-index: 3;
 }
 
 .add-task-modal.visible {
   opacity: 1;
   transform: scale(1);
-  z-index: 3;
+}
+
+.add-task-modal-overlay {
+  visibility: hidden;
+  width: 0;
+  height: 0;
 }
 
 .add-task-modal-overlay.visible {
   position: absolute;
+  visibility: visible;
   width: 100vw;
   height: 100vh;
   z-index: 2;
@@ -171,8 +182,7 @@ header > div {
 }
 
 .form-inputs > input::placeholder,
-.form-inputs > input::-webkit-input-placeholder,
-.form-inputs > input:-ms-input-placeholder {
+.form-inputs > input::-webkit-input-placeholder {
   color: var(--form-input-placeholder-fg);
 }
 
@@ -219,6 +229,21 @@ header > div {
   cursor: pointer;
 }
 
+/* Project, Priority Selector Overlay */
+
+.add-task-modal-overlay {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.add-task-modal-overlay.visible {
+  position: absolute;
+  visibility: visible;
+  width: 100vw;
+  height: 100vh;
+}
+
 /* Project Selector */
 
 .project-selector {
@@ -228,6 +253,10 @@ header > div {
 .project-selector .tooltip {
   bottom: 18%;
   left: 24%;
+}
+
+.add-task-modal-overlay.visible {
+  z-index: 2;
 }
 
 /* Priority Selector */
@@ -240,13 +269,76 @@ header > div {
   height: 24px;
 }
 
-.priority-selector:hover {
+.priority-selector.selected {
   background-color: var(--form-extra-fields-button-hover-bg);
 }
 
+.priority-selector:hover {
+  background-color: var(--form-extra-fields-button-hover-bg);
+  cursor: pointer;
+}
+
 .priority-selector .tooltip {
-  bottom: 18%;
-  left: 73%;
+  top: 64%;
+  right: -86px;
+}
+
+/* Priority Dropdown Menu */
+
+.select-clicked {
+  border: 2px solid blue;
+}
+
+.priority-dropdown-menu {
+  list-style: none;
+  width: 275px;
+  position: fixed;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #dfdfdf;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  font-size: 0.81rem;
+  font-family: inherit;
+  left: 70%;
+  top: 61%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 2;
+}
+
+.priority-dropdown-menu.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.priority-dropdown-menu > li {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  padding: 4px 10px;
+  list-style-type: none;
+  user-select: none;
+}
+
+.priority-dropdown-menu > li:hover {
+  background-color: var(--dropdown-item-hover-bg);
+  cursor: pointer;
+}
+
+svg[data-priority='1'] path {
+  fill: var(--priority-1-icon-color);
+}
+
+svg[data-priority='2'] path {
+  fill: var(--priority-2-icon-color);
+}
+
+svg[data-priority='3'] path {
+  fill: var(--priority-3-icon-color);
+}
+
+.active-priority {
+  background-color: var(--dropdown-item-hover-bg);
 }
 
 /* Cancel and Add Task Buttons */
@@ -487,7 +579,7 @@ main {
   padding: 36px 55px;
   background-color: var(--bg);
   transform: translateX(0);
-  transition: transform var(--sidebar-toggle-transition-time);
+  transition: transform 0.3s;
   width: calc(100vw - var(--sidebar-width));
 }
 
