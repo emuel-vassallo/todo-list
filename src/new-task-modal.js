@@ -13,34 +13,30 @@ const NewTaskModal = (() => {
   );
 
   const toggleNewTaskModal = () => newTaskModal.classList.toggle('visible');
-
   const toggleOverlay = () => newTaskModalOverlay.classList.toggle('visible');
-
   const clearModal = () => addTaskForm.reset();
-
   const changeDefaultDueDate = () => (dueDatePicker.valueAsDate = new Date());
-
   const enableSubmitButton = () => (submitButton.disabled = false);
-
   const disableSubmitButton = () => (submitButton.disabled = true);
-
   const focusTaskNameInput = () => taskNameInput.focus();
-
   const toggleModal = () => {
     toggleNewTaskModal();
     toggleOverlay();
     clearModal();
     changeDefaultDueDate();
     focusTaskNameInput();
+    disableSubmitButton();
   };
 
   addTaskButton.addEventListener('click', () => toggleModal());
-
   modalCancelButton.addEventListener('click', () => toggleModal());
-
   newTaskModalOverlay.addEventListener('click', (e) => {
     const clickedElementParent = e.target.offsetParent;
-    if (!clickedElementParent || clickedElementParent === newTaskModal) return;
+    const isModalClicked =
+      !clickedElementParent ||
+      clickedElementParent === newTaskModal ||
+      clickedElementParent === newTaskModalOverlay;
+    if (isModalClicked) return;
     toggleModal();
   });
 
