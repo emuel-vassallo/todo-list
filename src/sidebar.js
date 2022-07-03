@@ -81,14 +81,8 @@ const Sidebar = (() => {
       const windowWidth = window.innerWidth;
 
       if (isOverlayVisible) return;
-      if (isSidebarVisible && windowWidth <= 750) {
-        removeVisibleClass();
-        return;
-      }
-      if (!isSidebarVisible && windowWidth > 750) {
-        addVisibleClass();
-        return;
-      }
+      if (isSidebarVisible && windowWidth <= 750) removeVisibleClass();
+      else if (!isSidebarVisible && windowWidth > 750) addVisibleClass();
     });
   };
 

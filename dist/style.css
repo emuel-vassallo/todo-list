@@ -6,6 +6,21 @@
   --bg: #fff;
   --header-icon-tooltip-bg: #444;
   --header-icon-tooltip-fg: #fff;
+  --add-task-modal-bg: #fff;
+  --form-input-fg: #000;
+  --form-input-placeholder-fg: #444;
+  --form-extra-fields-button-fg: #555;
+  --form-extra-fields-button-bg: #fff;
+  --form-extra-fields-button-hover-bg: #eee;
+  --form-cancel-bg: #f5f5f5;
+  --form-cancel-hover-bg: #e5e5e5;
+  --form-cancel-fg: #444;
+  --form-cancel-hover-fg: #222;
+  --form-add-task-bg: #db4c3f;
+  --form-add-task-fg: #fff;
+  --form-add-task-hover-bg: #b03d32;
+  --form-add-task-disabled-bg: #f1b7b2;
+  --form-add-task-disabled-fg: #fff;
   --sidebar-width: 239px;
   --sidebar-bg: #fafafa;
   --sidebar-fg: #202020;
@@ -24,13 +39,12 @@
   box-sizing: border-box;
   border: 0;
   outline: none;
-}
-
-body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Apple Color Emoji, Helvetica, Arial, sans-serif, Segoe UI Emoji,
     Segoe UI Symbol;
-  font-size: 13px;
+}
+
+body {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -97,6 +111,191 @@ header > div {
   stroke-width: 0.15;
 }
 
+/* Add Task Modal */
+
+.add-task-modal {
+  position: absolute;
+  top: 14vh;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transform: scale(0.5);
+  width: 550px;
+  height: 187px;
+  font-weight: 400;
+  border-radius: 10px;
+  padding: 16px;
+  background-color: var(--add-task-modal-bg);
+  box-shadow: 0 2px 50px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
+  z-index: 3;
+}
+
+.add-task-modal.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.add-task-modal-overlay.visible {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+}
+
+.add-task-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.add-task-form button:hover {
+  cursor: pointer;
+}
+
+/* Inputs */
+
+.form-inputs {
+  display: flex;
+  flex-direction: column;
+  font-family: inherit;
+  gap: 12px;
+}
+
+.form-inputs > input {
+  word-break: break-word;
+  overflow: hidden;
+}
+
+.form-inputs > input::placeholder {
+  color: var(--form-input-placeholder-fg);
+}
+
+.form-inputs > input[name='task_name'] {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.form-inputs > input[name='description'] {
+  font-size: 13px;
+}
+
+/* Due Date, Project & Priority Selectors */
+
+.extra-fields {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.extra-fields > div:first-child {
+  display: flex;
+  gap: 8px;
+}
+
+/* Due Date & Project Selector */
+
+.due-date-picker,
+.project-selector {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  color: var(--form-extra-fields-button-fg);
+  background-color: var(--form-extra-fields-button-bg);
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 5px;
+}
+
+.due-date-picker:hover,
+.project-selector:hover {
+  background-color: var(--form-extra-fields-button-hover-bg);
+  cursor: pointer;
+}
+
+/* Project Selector */
+
+.project-selector {
+  gap: 4px;
+}
+
+.project-selector .tooltip {
+  bottom: 18%;
+  left: 24%;
+}
+
+/* Priority Selector */
+
+.priority-selector {
+  background-color: unset;
+  color: var(--form-extra-fields-button-fg);
+  border-radius: 5px;
+  width: 24px;
+  height: 24px;
+}
+
+.priority-selector:hover {
+  background-color: var(--form-extra-fields-button-hover-bg);
+}
+
+.priority-selector .tooltip {
+  bottom: 18%;
+  left: 73%;
+}
+
+/* Cancel and Add Task Buttons */
+
+.cancel-submit-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 11px;
+}
+
+.cancel-submit-container > button {
+  height: 33px;
+  font-weight: 600;
+  padding: 0 12px;
+  border-radius: 5px;
+  transition: all 0.1s ease-in-out;
+}
+
+.cancel-submit-container > button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.cancel-button {
+  background-color: var(--form-cancel-bg);
+  color: var(--form-cancel-fg);
+}
+
+.cancel-button:hover {
+  background-color: var(--form-cancel-hover-bg);
+  color: var(--form-cancel-hover-fg);
+}
+
+.add-task-submit-button {
+  background-color: var(--form-add-task-bg);
+  color: var(--form-add-task-fg);
+}
+
+.add-task-submit-button:hover {
+  background-color: var(--form-add-task-hover-bg);
+}
+
+.add-task-submit-button:disabled {
+  background-color: var(--form-add-task-disabled-bg);
+  color: var(--form-add-task-disabled-fg);
+}
+
+.add-task-submit-button:disabled:hover {
+  cursor: not-allowed;
+}
+
 /* Button Tooltip */
 
 .tooltip {
@@ -120,6 +319,13 @@ header > div {
   opacity: 1;
   visibility: visible;
   transition-delay: 0.35s;
+}
+
+.tooltip-text-highlight {
+  background-color: #777;
+  padding: 1px 5px;
+  border-radius: 2px;
+  margin: 0 3px;
 }
 
 /* -- Main -- */
