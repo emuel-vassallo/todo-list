@@ -19,6 +19,7 @@ const NewTaskModal = (() => {
   const enableSubmitButton = () => (submitButton.disabled = false);
   const disableSubmitButton = () => (submitButton.disabled = true);
   const focusTaskNameInput = () => taskNameInput.focus();
+  const isModalVisible = () => newTaskModal.classList.contains('visible');
   const toggleModal = () => {
     toggleNewTaskModal();
     toggleOverlay();
@@ -30,6 +31,9 @@ const NewTaskModal = (() => {
 
   addTaskButton.addEventListener('click', () => toggleModal());
   modalCancelButton.addEventListener('click', () => toggleModal());
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isModalVisible()) toggleModal();
+  });
   newTaskModalOverlay.addEventListener('click', (e) => {
     const clickedElementParent = e.target.offsetParent;
     const isModalClicked =
