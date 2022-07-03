@@ -7,9 +7,12 @@ const NewTaskModal = (() => {
   );
   const modalCancelButton = document.querySelector('.cancel-button');
   const dueDatePicker = document.querySelector('.due-date-picker');
-  const priorityButton = document.querySelector('.priority-selector');
+  const prioritySelector = document.querySelector('.priority-selector');
   const priorityDropdownMenu = document.querySelector(
     '.priority-dropdown-menu'
+  );
+  const priorityDropdownOptions = document.querySelectorAll(
+    '.priority-dropdown-menu > li'
   );
   const submitButton = document.querySelector('.add-task-submit-button');
   const newTaskModalOverlay = document.querySelector(
@@ -29,12 +32,35 @@ const NewTaskModal = (() => {
   // Priority
   const togglePriorityDropdown = () => {
     priorityDropdownMenu.classList.toggle('visible');
-    priorityButton.classList.toggle('selected');
+    prioritySelector.classList.toggle('selected');
   };
   const hidePriorityDropDown = () => {
     priorityDropdownMenu.classList.remove('visible');
-    priorityButton.classList.remove('selected');
+    prioritySelector.classList.remove('selected');
   };
+  const removeActiveClass = () => {
+    for (const button of priorityDropdownOptions)
+      button.classList.remove('active-priority');
+  };
+  const changePrioritySelectorIcon = (newIcon) => {
+    const prioritySelectorIcon = document.querySelector(
+      '.selected-priority > svg'
+    );
+    const selectorIconParent = prioritySelectorIcon.parentNode;
+    selectorIconParent.replaceChild(newIcon, prioritySelectorIcon);
+  };
+  const changeActivePriorityOnClick = () => {
+    for (const button of priorityDropdownOptions) {
+      button.addEventListener('click', () => {
+        removeActiveClass();
+        button.classList.add('active-priority');
+        const buttonIcon = button.firstElementChild.cloneNode(true);
+        changePrioritySelectorIcon(buttonIcon);
+        togglePriorityDropdown();
+      });
+    }
+  };
+
   // Due Date
   const changeDefaultDueDate = () => (dueDatePicker.valueAsDate = new Date());
 
@@ -61,14 +87,15 @@ const NewTaskModal = (() => {
     if (e.key === 'Escape' && isModalVisible()) toggleModal();
   });
 
-  priorityButton.addEventListener('click', () => togglePriorityDropdown());
+  prioritySelector.addEventListener('click', () => togglePriorityDropdown());
 
   newTaskModalOverlay.addEventListener('click', (e) => {
     const clickedElementParent = e.target.offsetParent;
     const isModalClicked =
       !clickedElementParent ||
       clickedElementParent === newTaskModal ||
-      clickedElementParent === newTaskModalOverlay;
+      clickedElementParent === newTaskModalOverlay ||
+      clickedElementParent === priorityDropdownMenu;
     if (isModalClicked) return;
     toggleModal();
   });
@@ -80,6 +107,8 @@ const NewTaskModal = (() => {
     }
     disableSubmitButton();
   });
+
+  changeActivePriorityOnClick();
 })();
 
 export { NewTaskModal };

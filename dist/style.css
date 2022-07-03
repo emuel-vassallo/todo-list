@@ -280,7 +280,7 @@ header > div {
 
 .priority-selector .tooltip {
   top: 64%;
-  right: -86px;
+  right: -21px;
 }
 
 /* Priority Dropdown Menu */
@@ -415,13 +415,6 @@ svg[data-priority='3'] path {
   transition-delay: 0.35s;
 }
 
-.tooltip-text-highlight {
-  background-color: #777;
-  padding: 1px 5px;
-  border-radius: 2px;
-  margin: 0 3px;
-}
-
 /* -- Main -- */
 
 main {
@@ -515,6 +508,7 @@ main {
 .sidebar-today-icon path,
 .sidebar-today-icon tspan {
   fill: var(--sidebar-button-today-icon-color);
+  font-family: system-ui;
 }
 
 .sidebar-upcoming-icon path {
