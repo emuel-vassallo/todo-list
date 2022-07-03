@@ -3,7 +3,7 @@ const NewTaskModal = (() => {
   const newTaskModal = document.querySelector('.add-task-modal');
   const addTaskForm = document.querySelector('.add-task-form');
   const taskNameInput = document.querySelector(
-    '.form-inputs > input:first-child'
+    ".form-inputs > input[name='task_name']"
   );
   const modalCancelButton = document.querySelector('.cancel-button');
   const dueDatePicker = document.querySelector('.due-date-picker');
