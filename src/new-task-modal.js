@@ -126,6 +126,8 @@ const NewTaskModal = (() => {
       togglePriorityDropdown();
     });
   }
+
+  return { toggleModal };
 })();
 
 export { NewTaskModal };

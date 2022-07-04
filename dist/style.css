@@ -575,12 +575,10 @@ main {
   transform: translateX(0);
   transition: transform var(--sidebar-toggle-transition-time);
   width: calc(100vw - var(--sidebar-width));
-  visibility: visible;
 }
 
 .editor:not(.is-sidebar-visible) {
   width: 100vw;
-  visibility: hidden;
 }
 
 /* Tab Heading */

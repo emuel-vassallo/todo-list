@@ -1,4 +1,5 @@
 import { Sidebar } from './sidebar.js';
+import { NewTaskModal } from './new-task-modal.js';
 import { format } from 'date-fns';
 
 const Editor = (() => {
@@ -114,6 +115,11 @@ const Editor = (() => {
     );
   };
 
+  const toggleModalOnButtonClick = () => {
+    const addTaskButton = document.querySelector('.editor-add-task-button');
+    addTaskButton.addEventListener('click', () => NewTaskModal.toggleModal());
+  };
+
   // Tabs
 
   const addEditorCurrentTabNameClass = (tabName) => {
@@ -148,6 +154,8 @@ const Editor = (() => {
         addTabTitle(tabName);
         loadNewEditorContent(tabName);
         addNewAddTaskButton();
+        changeAddTaskButtonPlusIcon();
+        toggleModalOnButtonClick();
       });
     }
   };
@@ -156,6 +164,7 @@ const Editor = (() => {
   updateCurrentDateTitle();
   addNewAddTaskButton();
   changeAddTaskButtonPlusIcon();
+  toggleModalOnButtonClick();
 
   return {
     addSidebarVisibleClass,
