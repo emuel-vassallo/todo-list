@@ -452,7 +452,6 @@ main {
   height: 100%;
   transform: translateX(-100%);
   transition: var(--sidebar-toggle-transition-time);
-  opacity: 0;
   visibility: hidden;
   padding: 30px 5px 30px 35px;
   z-index: 1;
@@ -460,7 +459,6 @@ main {
 
 .sidebar.is-visible {
   width: var(--sidebar-width);
-  opacity: 1;
   visibility: visible;
   transform: translateX(0);
 }
@@ -575,12 +573,14 @@ main {
   padding: 36px 55px;
   background-color: var(--bg);
   transform: translateX(0);
-  transition: transform 0.3s;
+  transition: transform var(--sidebar-toggle-transition-time);
   width: calc(100vw - var(--sidebar-width));
+  visibility: visible;
 }
 
 .editor:not(.is-sidebar-visible) {
   width: 100vw;
+  visibility: hidden;
 }
 
 /* Tab Heading */
@@ -589,6 +589,7 @@ main {
   display: flex;
   align-items: center;
   gap: 7px;
+  margin: 0 0 8px 0;
 }
 
 .tab-title {
@@ -599,6 +600,36 @@ main {
 .current-date-title {
   font-size: 0.8rem;
   color: var(--gray-text);
+  white-space: nowrap;
+}
+
+/* Add Task Button */
+
+.editor-add-task-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: unset;
+  height: 33px;
+  gap: 8px;
+}
+
+.editor-add-task-button:hover {
+  cursor: pointer;
+}
+
+.editor-add-task-text {
+  color: var(--gray-text);
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.editor-add-task-plus-icon {
+  color: var(--accent-color);
+}
+
+.editor-add-task-button:hover .editor-add-task-text {
+  color: var(--accent-color);
 }
 
 /* Media Queries */

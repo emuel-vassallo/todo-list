@@ -80,7 +80,43 @@ const Editor = (() => {
 
   const loadUpcomingContent = () => {};
 
-  const addCurrentTabNameClass = (tabName) => {
+  // Add task Button
+
+  const addNewAddTaskButton = () => {
+    const addTaskButton = document.createElement('button');
+    const plusIcon = document.createElement('span');
+    const addTaskText = document.createElement('p');
+
+    addTaskButton.classList.add('editor-add-task-button');
+    plusIcon.classList.add(
+      'editor-add-task-plus-icon',
+      'material-symbols-rounded'
+    );
+    addTaskText.classList.add('editor-add-task-text');
+
+    plusIcon.textContent = 'add';
+    addTaskText.textContent = 'Add task';
+
+    addTaskButton.append(plusIcon, addTaskText);
+    editor.append(addTaskButton);
+  };
+
+  const changeAddTaskButtonPlusIcon = () => {
+    const addTaskButton = document.querySelector('.editor-add-task-button');
+    const plusIcon = document.querySelector('.editor-add-task-plus-icon');
+    addTaskButton.addEventListener(
+      'mouseover',
+      () => (plusIcon.textContent = 'add_circle')
+    );
+    addTaskButton.addEventListener(
+      'mouseout',
+      () => (plusIcon.textContent = 'add')
+    );
+  };
+
+  // Tabs
+
+  const addEditorCurrentTabNameClass = (tabName) => {
     if (editor.classList.contains(`.${tabName}`)) return;
     editor.classList.add(tabName);
   };
@@ -107,17 +143,19 @@ const Editor = (() => {
         removeTabNameClass();
         Sidebar.removeSelectedButtonClass();
         Sidebar.addSelectedClassToButton(tabName);
-        addCurrentTabNameClass(tabName);
+        addEditorCurrentTabNameClass(tabName);
         addEmptyTabHeading();
         addTabTitle(tabName);
-        if (tabName === 'home') addCurrentDateTitle();
         loadNewEditorContent(tabName);
+        addNewAddTaskButton();
       });
     }
   };
 
   changeContentOnTabChange();
   updateCurrentDateTitle();
+  addNewAddTaskButton();
+  changeAddTaskButtonPlusIcon();
 
   return {
     addSidebarVisibleClass,
