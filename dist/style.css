@@ -191,8 +191,13 @@ header > div {
   font-weight: 400;
   border-radius: 10px;
   background-color: var(--modal-bg);
-  transition: opacity 0.15s ease-in-out;
+  opacity: 0;
   z-index: 3;
+}
+
+.add-project-modal.visible {
+  opacity: 1;
+  transition: all 0.2s;
 }
 
 .add-project-modal-header {
@@ -246,10 +251,14 @@ header > div {
   border-bottom-right-radius: 10px;
 }
 
+.add-project-modal .cancel-submit-container button {
+  border-radius: 3px;
+}
+
 .add-project-modal .cancel-button {
   border: 1px solid var(--add-project-modal-gray);
   color: #222;
-  transition: all 0.3s ease;
+  transition: border 0.3s ease;
 }
 
 .add-project-modal .cancel-button:hover {
@@ -454,7 +463,7 @@ svg[data-priority='3'] path {
   transition: transform 0.1s ease-in-out;
 }
 
-.cancel-submit-container > button:active:not(:disabled) {
+.add-task-form .cancel-submit-container > button:active:not(:disabled) {
   transform: scale(0.96);
 }
 
@@ -474,8 +483,7 @@ svg[data-priority='3'] path {
   color: var(--form-add-task-fg);
 }
 
-.add-task-submit-button:hover,
-.add-project-submit-button:hover {
+.add-task-submit-button:hover {
   background-color: var(--form-add-task-hover-bg);
 }
 
