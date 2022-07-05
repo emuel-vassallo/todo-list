@@ -16,7 +16,6 @@ const NewProjectModal = (() => {
   const toggleModalOverlay = () =>
     newProjectModalOverlay.classList.toggle('visible');
   const resetInput = () => {
-    console.log('Reset');
     projectNameInput.value = '';
   };
 

@@ -42,7 +42,6 @@ const Tooltip = (() => {
           tooltip.classList.containes('visible')
         ) {
           tooltip.classList.remove('visible');
-          console.log('hide!');
           return;
         }
         tooltip.classList.add('visible');

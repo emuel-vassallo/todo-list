@@ -13,9 +13,9 @@
   --form-extra-fields-button-fg: #555;
   --form-extra-fields-button-bg: #fff;
   --form-extra-fields-button-hover-bg: #eee;
-  --form-cancel-bg: #f5f5f5;
+  --form-cancel-bg: #f3f3f3;
   --form-cancel-hover-bg: #e5e5e5;
-  --form-cancel-fg: #444;
+  --form-cancel-fg: #202020;
   --form-cancel-hover-fg: #222;
   --form-add-task-bg: #db4c3f;
   --form-add-task-fg: #fff;
@@ -257,12 +257,13 @@ header > div {
 
 .add-project-modal .cancel-button {
   border: 1px solid var(--add-project-modal-gray);
+  text-shadow: 0 1px 0 #fff;
   color: #222;
   transition: border 0.3s ease;
 }
 
 .add-project-modal .cancel-button:hover {
-  border: 1px solid var(--gray-text);
+  border: 1px solid #aaa;
   background-color: var(--form-cancel-bg);
 }
 
@@ -290,7 +291,7 @@ header > div {
 }
 
 #projects-list > li::marker {
-  content: "1";
+  content: '1';
   font-size: 1rem;
   color: #808080;
 }
@@ -308,8 +309,13 @@ header > div {
   cursor: pointer;
 }
 
+.project-icon {
+  color: rgb(128, 128, 128);
+  width: 24px;
+  height: 24px;
+}
+
 .project-name {
-  font-size: 0.9rem;
   width: 100%;
 }
 
@@ -504,6 +510,7 @@ svg[data-priority='3'] path {
   padding: 0 12px;
   border-radius: 5px;
   transition: transform 0.1s ease-in-out;
+  text-align: center;
 }
 
 .add-task-form .cancel-submit-container > button:active:not(:disabled) {
@@ -689,6 +696,7 @@ main {
   width: 100%;
   padding: 5px 0 5px 12px;
   font-family: inherit;
+  font-size: 0.85em;
   font-weight: bold;
   background-color: unset;
 }

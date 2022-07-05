@@ -4,8 +4,6 @@ import { format } from 'date-fns';
 
 const Editor = (() => {
   const editor = document.querySelector('.editor');
-  const tabLinkButtons = document.querySelectorAll('.tab-link');
-
   const removeEditorContent = () => {
     while (editor.firstChild) editor.removeChild(editor.lastChild);
   };
@@ -140,22 +138,27 @@ const Editor = (() => {
     }[tabName]?.());
   };
 
+  const changeContent = (tabName) => {
+    Sidebar.changeTabTitle(tabName);
+    removeEditorContent();
+    removeTabNameClass();
+    Sidebar.removeSelectedButtonClass();
+    Sidebar.addSelectedClassToButton(tabName);
+    addEditorCurrentTabNameClass(tabName);
+    addEmptyTabHeading();
+    addTabTitle(tabName);
+    loadNewEditorContent(tabName);
+    addNewAddTaskButton();
+    changeAddTaskButtonPlusIcon();
+    toggleModalOnButtonClick();
+  };
+
   const changeContentOnTabChange = () => {
+    const tabLinkButtons = document.querySelectorAll('.tab-link');
     for (const button of tabLinkButtons) {
       button.addEventListener('click', () => {
         const tabName = button.dataset.tabName;
-        Sidebar.changeTabTitle(tabName);
-        removeEditorContent();
-        removeTabNameClass();
-        Sidebar.removeSelectedButtonClass();
-        Sidebar.addSelectedClassToButton(tabName);
-        addEditorCurrentTabNameClass(tabName);
-        addEmptyTabHeading();
-        addTabTitle(tabName);
-        loadNewEditorContent(tabName);
-        addNewAddTaskButton();
-        changeAddTaskButtonPlusIcon();
-        toggleModalOnButtonClick();
+        changeContent(tabName);
       });
     }
   };
@@ -170,6 +173,7 @@ const Editor = (() => {
     addSidebarVisibleClass,
     removeSidebarVisibleClass,
     updateCurrentDateTitle,
+    changeContent,
   };
 })();
 
