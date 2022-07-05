@@ -7,7 +7,9 @@ const NewTaskModal = (() => {
   const taskNameInput = document.querySelector(
     ".form-inputs > input[name='task_name']"
   );
-  const modalCancelButton = document.querySelector('.add-task-modal .cancel-button');
+  const modalCancelButton = document.querySelector(
+    '.add-task-modal .cancel-button'
+  );
   const dueDatePicker = document.querySelector('.due-date-picker');
   const prioritySelector = document.querySelector('.priority-selector');
   const defaultPrioritySelectorIcon = document.querySelector(
@@ -111,6 +113,14 @@ const NewTaskModal = (() => {
 
   taskNameInput.addEventListener('input', () => {
     if (taskNameInput.value) {
+      enableSubmitButton();
+      return;
+    }
+    disableSubmitButton();
+  });
+
+  dueDatePicker.addEventListener('input', () => {
+    if (dueDatePicker.value) {
       enableSubmitButton();
       return;
     }
