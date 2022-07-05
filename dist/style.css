@@ -7,7 +7,7 @@
   --bg: #fff;
   --header-icon-tooltip-bg: #444;
   --header-icon-tooltip-fg: #fff;
-  --add-task-modal-bg: #fff;
+  --modal-bg: #fff;
   --form-input-fg: #000;
   --form-input-placeholder-fg: #444;
   --form-extra-fields-button-fg: #555;
@@ -26,6 +26,8 @@
   --priority-1-icon-color: #d1453b;
   --priority-2-icon-color: #eb8909;
   --priority-3-icon-color: #246fe0;
+  --add-project-modal-gray: #ddd;
+  --add-project-modal-header-bg: #fafafa;
   --sidebar-width: 305px;
   --sidebar-bg: #fafafa;
   --sidebar-fg: #202020;
@@ -133,8 +135,8 @@ header > div {
   font-weight: 400;
   border-radius: 10px;
   padding: 16px;
-  background-color: var(--add-task-modal-bg);
-  box-shadow: 0 2px 50px rgba(0, 0, 0, 0.3);
+  background-color: var(--modal-bg);
+  box-shadow: 0 2px 50px rgba(0, 0, 0, 0.2);
   transition: all 0.15s ease-in-out;
   z-index: 3;
 }
@@ -166,6 +168,96 @@ header > div {
 }
 
 .add-task-form button:hover {
+  cursor: pointer;
+}
+
+/* Add Project Modal */
+
+.add-project-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.add-project-modal {
+  position: fixed;
+  top: 14vh;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  user-select: none;
+  width: 400px;
+  height: 187px;
+  font-weight: 400;
+  border-radius: 10px;
+  background-color: var(--modal-bg);
+  transition: opacity 0.15s ease-in-out;
+  z-index: 3;
+}
+
+.add-project-modal-header {
+  display: flex;
+  width: 100%;
+  background-color: var(--add-project-modal-header-bg);
+  border-bottom: 1px solid var(--add-project-modal-gray);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 24px;
+}
+
+.add-project-modal-main {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px;
+}
+
+.add-project-modal-main > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.add-project-modal-main label {
+  font-weight: bold;
+  font-size: 0.93rem;
+}
+
+.add-project-modal-main input {
+  padding: 5px;
+  border: 1px solid var(--add-project-modal-gray);
+  border-radius: 5px;
+  width: 100%;
+  height: 28px;
+  font-size: 0.9rem;
+}
+
+.add-project-modal-main input:focus {
+  border: 1px solid #000;
+}
+
+.add-project-modal .cancel-submit-container {
+  padding: 12px;
+  background-color: var(--add-project-modal-header-bg);
+  border-top: 1px solid var(--add-project-modal-gray);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.add-project-modal .cancel-button {
+  border: 1px solid var(--add-project-modal-gray);
+  color: #222;
+  transition: all 0.3s ease;
+}
+
+.add-project-modal .cancel-button:hover {
+  border: 1px solid var(--gray-text);
+  background-color: var(--form-cancel-bg);
+}
+
+.add-project-modal button:hover {
   cursor: pointer;
 }
 
@@ -233,13 +325,15 @@ header > div {
 
 /* Project, Priority Selector Overlay */
 
-.add-task-modal-overlay {
+.add-task-modal-overlay,
+.add-project-modal-overlay {
   visibility: hidden;
   width: 0;
   height: 0;
 }
 
-.add-task-modal-overlay.visible {
+.add-task-modal-overlay.visible,
+.add-project-modal-overlay.visible {
   position: absolute;
   visibility: visible;
   width: 100vw;
@@ -374,21 +468,25 @@ svg[data-priority='3'] path {
   color: var(--form-cancel-hover-fg);
 }
 
-.add-task-submit-button {
+.add-task-submit-button,
+.add-project-submit-button {
   background-color: var(--form-add-task-bg);
   color: var(--form-add-task-fg);
 }
 
-.add-task-submit-button:hover {
+.add-task-submit-button:hover,
+.add-project-submit-button:hover {
   background-color: var(--form-add-task-hover-bg);
 }
 
-.add-task-submit-button:disabled {
+.add-task-submit-button:disabled,
+.add-project-submit-button:disabled {
   background-color: var(--form-add-task-disabled-bg);
   color: var(--form-add-task-disabled-fg);
 }
 
-.add-task-submit-button:disabled:hover {
+.add-task-submit-button:disabled:hover,
+.add-project-submit-button:disabled:hover {
   cursor: not-allowed;
 }
 

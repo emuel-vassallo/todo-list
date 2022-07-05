@@ -226,6 +226,30 @@
         </form>
       </div>
     </div>
+    <div class="add-project-modal-overlay visible">
+      <div class="add-project-modal">
+        <div class="add-project-modal-header">
+          <h4>Add project</h4>
+        </div>
+        <div class="add-project-modal-main">
+          <div>
+            <label for="project_name">Name</label>
+            <input
+              type="text"
+              id="project_name"
+              name="project_name"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+        <div class="cancel-submit-container">
+          <button class="cancel-button" type="button">Cancel</button>
+          <button class="add-project-submit-button" type="button" disabled>
+           Add
+          </button>
+        </div>
+      </div>
+    </div>
     <main>
       <div class="sidebar-overlay menu-button"></div>
       <div class="sidebar">
