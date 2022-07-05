@@ -87,6 +87,14 @@ const NewTaskModal = (() => {
     });
   };
 
+  const enableOrDisableSubmit = () => {
+    if (dueDatePicker.value && taskNameInput.value) {
+      enableSubmitButton();
+      return;
+    }
+    disableSubmitButton();
+  };
+
   dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
 
   // Event Listeners
@@ -111,21 +119,8 @@ const NewTaskModal = (() => {
     toggleModal();
   });
 
-  taskNameInput.addEventListener('input', () => {
-    if (taskNameInput.value) {
-      enableSubmitButton();
-      return;
-    }
-    disableSubmitButton();
-  });
-
-  dueDatePicker.addEventListener('input', () => {
-    if (dueDatePicker.value) {
-      enableSubmitButton();
-      return;
-    }
-    disableSubmitButton();
-  });
+  taskNameInput.addEventListener('input', () => enableOrDisableSubmit());
+  dueDatePicker.addEventListener('input', () => enableOrDisableSubmit());
 
   for (const button of priorityDropdownOptions) {
     button.addEventListener('click', () => {
