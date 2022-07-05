@@ -15,7 +15,10 @@ const NewProjectModal = (() => {
     newProjectModal.classList.toggle('visible');
   const toggleModalOverlay = () =>
     newProjectModalOverlay.classList.toggle('visible');
-  const clearModal = () => (projectNameInput.textContent = '');
+  const resetInput = () => {
+    console.log('Reset');
+    projectNameInput.value = '';
+  };
 
   // Submit Button
   const enableSubmitButton = () => (submitButton.disabled = false);
@@ -24,7 +27,7 @@ const NewProjectModal = (() => {
   const toggleModal = () => {
     toggleNewProjectModal();
     toggleModalOverlay();
-    clearModal();
+    resetInput();
     disableSubmitButton();
   };
 

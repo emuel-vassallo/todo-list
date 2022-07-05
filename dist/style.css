@@ -270,6 +270,49 @@ header > div {
   cursor: pointer;
 }
 
+/* Projects List */
+
+.projects-list-container {
+  display: flex;
+  width: 100%;
+}
+
+#projects-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#projects-list > li {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+#projects-list > li::marker {
+  content: "1";
+  font-size: 1rem;
+  color: #808080;
+}
+
+.project-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 34px;
+  padding: 5px 7px;
+  text-align: left;
+}
+
+.project-button:hover {
+  cursor: pointer;
+}
+
+.project-name {
+  font-size: 0.9rem;
+  width: 100%;
+}
+
 /* Inputs */
 
 .form-inputs {
