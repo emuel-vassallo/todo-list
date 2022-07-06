@@ -20,6 +20,7 @@ const NewProjectModal = (() => {
   const toggleModalOverlay = () =>
     newProjectModalOverlay.classList.toggle('visible');
   const resetForm = () => newProjectForm.reset();
+  const focusInput = () => projectNameInput.focus();
 
   // Submit Button
   const enableSubmitButton = () => (submitButton.disabled = false);
@@ -30,6 +31,7 @@ const NewProjectModal = (() => {
     toggleNewProjectModal();
     resetForm();
     disableSubmitButton();
+    focusInput();
   };
 
   const addProjectOnSubmit = () => {
@@ -39,6 +41,8 @@ const NewProjectModal = (() => {
     Project.addProjectNameToList(newProjectName);
     toggleModal();
   };
+
+  // Event Listeners
 
   addProjectButton.addEventListener('mouseup', () => toggleModal());
   modalCancelButton.addEventListener('click', () => toggleModal());
