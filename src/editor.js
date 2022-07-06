@@ -68,17 +68,6 @@ const Editor = (() => {
     tabHeading.append(newCurrentDateTitle);
   };
 
-  // Loading Content
-
-  const loadInboxContent = () => {};
-
-  const loadTodayContent = () => {
-    addCurrentDateTitle();
-    updateCurrentDateTitle();
-  };
-
-  const loadUpcomingContent = () => {};
-
   // Add task Button
 
   const addNewAddTaskButton = () => {
@@ -130,14 +119,6 @@ const Editor = (() => {
     for (const tabName of tabNames) editor.classList.remove(tabName);
   };
 
-  const loadNewEditorContent = (tabName) => {
-    ({
-      inbox: loadInboxContent,
-      today: loadTodayContent,
-      upcoming: loadUpcomingContent,
-    }[tabName]?.());
-  };
-
   const changeContent = (tabName) => {
     Sidebar.changeTabTitle(tabName);
     removeEditorContent();
@@ -147,7 +128,10 @@ const Editor = (() => {
     addEditorCurrentTabNameClass(tabName);
     addEmptyTabHeading();
     addTabTitle(tabName);
-    loadNewEditorContent(tabName);
+    if (tabName === 'Today') {
+      addCurrentDateTitle();
+      updateCurrentDateTitle();
+    }
     addNewAddTaskButton();
     changeAddTaskButtonPlusIcon();
     toggleModalOnButtonClick();

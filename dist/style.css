@@ -745,6 +745,7 @@ main {
   align-items: center;
   gap: 7px;
   margin: 0 0 8px 0;
+  height: 36px;
 }
 
 .tab-title {
