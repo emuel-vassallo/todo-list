@@ -5,6 +5,7 @@ const Sidebar = (() => {
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.querySelector('.sidebar-overlay');
   const editor = document.querySelector('.editor');
+  const projectsList = document.querySelector('.projects-list-container');
 
   const toggleProjectsVisibility = () => {
     const sidebarProjectsButton = document.querySelector(
@@ -14,6 +15,7 @@ const Sidebar = (() => {
 
     sidebarProjectsButton.addEventListener('click', () => {
       arrow.classList.toggle('expanded');
+      projectsList.classList.toggle('expanded');
     });
   };
 
