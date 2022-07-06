@@ -51,7 +51,10 @@ const NewProjectModal = (() => {
   });
 
   submitButton.addEventListener('click', () => addProjectOnSubmit());
-  newProjectForm.addEventListener('submit', () => addProjectOnSubmit());
+  newProjectForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    addProjectOnSubmit();
+  });
 })();
 
 export { NewProjectModal };
