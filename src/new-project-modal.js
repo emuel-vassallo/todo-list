@@ -52,7 +52,7 @@ const NewProjectModal = (() => {
 
   submitButton.addEventListener('click', () => addProjectOnSubmit());
   newProjectForm.addEventListener('submit', (e) => {
-    e.preventDefault()
+    e.preventDefault();
     addProjectOnSubmit();
   });
 })();
