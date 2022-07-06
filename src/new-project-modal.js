@@ -4,6 +4,7 @@ import { Project } from './project.js';
 const NewProjectModal = (() => {
   const addProjectButton = document.querySelector('.add-project-button');
   const newProjectModal = document.querySelector('.add-project-modal');
+  const newProjectForm = document.querySelector('#add-project-form');
   const projectNameInput = document.querySelector('#project_name');
   const modalCancelButton = document.querySelector(
     '.add-project-modal .cancel-button'
@@ -18,24 +19,28 @@ const NewProjectModal = (() => {
     newProjectModal.classList.toggle('visible');
   const toggleModalOverlay = () =>
     newProjectModalOverlay.classList.toggle('visible');
-  const resetInput = () => {
-    projectNameInput.value = '';
-  };
+  const resetForm = () => newProjectForm.reset();
 
   // Submit Button
   const enableSubmitButton = () => (submitButton.disabled = false);
   const disableSubmitButton = () => (submitButton.disabled = true);
 
   const toggleModal = () => {
-    toggleNewProjectModal();
     toggleModalOverlay();
-    resetInput();
+    toggleNewProjectModal();
+    resetForm();
     disableSubmitButton();
   };
 
-  const getProjectNameInput = () => projectNameInput.value;
+  const addProjectOnSubmit = () => {
+    const newProjectName = projectNameInput.value;
+    if (!newProjectName) return;
+    ProjectButton.addProjectButton(newProjectName);
+    Project.addProjectNameToList(newProjectName);
+    toggleModal();
+  };
 
-  addProjectButton.addEventListener('click', () => toggleModal());
+  addProjectButton.addEventListener('mouseup', () => toggleModal());
   modalCancelButton.addEventListener('click', () => toggleModal());
   projectNameInput.addEventListener('input', () => {
     if (projectNameInput.value) {
@@ -45,21 +50,8 @@ const NewProjectModal = (() => {
     disableSubmitButton();
   });
 
-  submitButton.addEventListener('click', () => {
-    const newProjectName = getProjectNameInput();
-    ProjectButton.addProjectButton(newProjectName);
-    Project.addProjectNameToList(newProjectName);
-    toggleModal();
-  });
-
-  document.addEventListener('keyup', (e) => {
-    if (e.code !== 'Enter' || !newProjectModal.classList.contains('visible'))
-      return;
-    const newProjectName = getProjectNameInput();
-    ProjectButton.addProjectButton(newProjectName);
-    Project.addProjectNameToList(newProjectName);
-    toggleModal();
-  });
+  submitButton.addEventListener('click', () => addProjectOnSubmit());
+  newProjectForm.addEventListener('submit', () => addProjectOnSubmit());
 })();
 
 export { NewProjectModal };

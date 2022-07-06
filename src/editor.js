@@ -131,7 +131,6 @@ const Editor = (() => {
       updateCurrentDateTitle();
     }
     addNewAddTaskButton();
-    changeAddTaskButtonPlusIcon();
     toggleModalOnButtonClick();
   };
 
