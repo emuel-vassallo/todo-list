@@ -72,35 +72,43 @@ const Editor = (() => {
 
   const addNewAddTaskButton = () => {
     const addTaskButton = document.createElement('button');
-    const plusIcon = document.createElement('span');
+    const plusIconSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
+    const plusIconPath = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'path'
+    );
     const addTaskText = document.createElement('p');
 
-    addTaskButton.classList.add('editor-add-task-button');
-    plusIcon.classList.add(
-      'editor-add-task-plus-icon',
-      'material-symbols-rounded'
+    plusIconPath.setAttribute(
+      'd',
+      'M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z'
     );
+    plusIconPath.setAttribute('fill', 'currentColor');
+    plusIconPath.setAttribute('fill-rule', 'evenodd');
+
+    addTaskButton.classList.add('editor-add-task-button');
+    plusIconSvg.classList.add('editor-add-task-plus-icon');
     addTaskText.classList.add('editor-add-task-text');
 
-    plusIcon.textContent = 'add';
     addTaskText.textContent = 'Add task';
 
-    addTaskButton.append(plusIcon, addTaskText);
+    plusIconSvg.appendChild(plusIconPath);
+    addTaskButton.append(plusIconSvg, addTaskText);
     editor.append(addTaskButton);
   };
 
-  const changeAddTaskButtonPlusIcon = () => {
-    const addTaskButton = document.querySelector('.editor-add-task-button');
-    const plusIcon = document.querySelector('.editor-add-task-plus-icon');
-    addTaskButton.addEventListener(
-      'mouseover',
-      () => (plusIcon.textContent = 'add_circle')
-    );
-    addTaskButton.addEventListener(
-      'mouseout',
-      () => (plusIcon.textContent = 'add')
-    );
-  };
+  <span class='icon_add' aria-hidden='true'>
+    <svg width='13' height='13'>
+      <path
+        d='M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z'
+        fill='currentColor'
+        fill-rule='evenodd'
+      ></path>
+    </svg>
+  </span>;
 
   const toggleModalOnButtonClick = () => {
     const addTaskButton = document.querySelector('.editor-add-task-button');
@@ -150,7 +158,6 @@ const Editor = (() => {
   changeContentOnTabChange();
   updateCurrentDateTitle();
   addNewAddTaskButton();
-  changeAddTaskButtonPlusIcon();
   toggleModalOnButtonClick();
 
   return {

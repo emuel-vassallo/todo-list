@@ -780,7 +780,27 @@ main {
 }
 
 .editor-add-task-plus-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--accent-color);
+  background-color: unset;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+}
+
+.editor-add-task-plus-icon > path {
+  transform: translate(2px, 2px);
+}
+
+.editor-add-task-button:hover .editor-add-task-plus-icon {
+  color: #fff;
+  background-color: var(--accent-color);
+}
+
+.editor-add-task-button:hover .editor-add-task-plus-icon > path {
+  transform: scale(0.85) translate(3.4px, 3.4px);
 }
 
 .editor-add-task-button:hover .editor-add-task-text {
