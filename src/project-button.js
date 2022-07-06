@@ -1,4 +1,5 @@
 import { Editor } from './editor.js';
+import { Project } from './project.js';
 
 const ProjectButton = (() => {
   const getProjectIcon = () => {
@@ -57,6 +58,14 @@ const ProjectButton = (() => {
     addProjectButtonToSidebarList(newButton);
     addButtonEventListener(newButton);
   };
+
+  const addExistingProjectButtons = () => {
+    const projectsList = Project.getProjectsList();
+    for (const projectName in projectsList)
+      addProjectButton(projectsList[projectName]);
+  };
+
+  addExistingProjectButtons();
 
   return { addProjectButton };
 })();
