@@ -1,6 +1,6 @@
 import { Editor } from './editor.js';
 
-const Project = (() => {
+const ProjectButton = (() => {
   const getProjectIcon = () => {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.classList.add('project-icon');
@@ -39,32 +39,26 @@ const Project = (() => {
   };
 
   const addButtonEventListener = (projectButton) => {
-    console.log(projectButton);
     const tabName = projectButton.dataset.tabName;
-    console.log(tabName);
     projectButton.addEventListener('click', () =>
       Editor.changeContent(tabName)
     );
   };
 
-  const addProjectButtonToSidebar = (projectButton) => {
+  const addProjectButtonToSidebarList = (projectButton) => {
     const projectsList = document.querySelector('#projects-list');
     const listItem = getProjectButtonListItem(projectButton);
     projectsList.appendChild(listItem);
   };
 
-  const buttonNames = ['Work', 'School', 'Reading'];
-
-  const addProjectButtonsToSidebar = (projectNamesList) => {
-    for (const buttonName of projectNamesList) {
-      const icon = getProjectIcon();
-      const newButton = getNewProjectButton(icon, buttonName);
-      addProjectButtonToSidebar(newButton);
-      addButtonEventListener(newButton);
-    }
+  const addProjectButton = (projectName) => {
+    const icon = getProjectIcon();
+    const newButton = getNewProjectButton(icon, projectName);
+    addProjectButtonToSidebarList(newButton);
+    addButtonEventListener(newButton);
   };
 
-  addProjectButtonsToSidebar(buttonNames);
+  return { addProjectButton };
 })();
 
-export { Project };
+export { ProjectButton };

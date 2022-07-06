@@ -1,3 +1,5 @@
+import { ProjectButton } from './project-button.js';
+
 const NewProjectModal = (() => {
   const addProjectButton = document.querySelector('.add-project-button');
   const newProjectModal = document.querySelector('.add-project-modal');
@@ -30,6 +32,8 @@ const NewProjectModal = (() => {
     disableSubmitButton();
   };
 
+  const getProjectNameInput = () => projectNameInput.value;
+
   addProjectButton.addEventListener('click', () => toggleModal());
   modalCancelButton.addEventListener('click', () => toggleModal());
   projectNameInput.addEventListener('input', () => {
@@ -38,6 +42,19 @@ const NewProjectModal = (() => {
       return;
     }
     disableSubmitButton();
+  });
+
+  submitButton.addEventListener('click', () => {
+    const newProjectName = getProjectNameInput();
+    ProjectButton.addProjectButton(newProjectName);
+    toggleModal();
+  });
+
+  document.addEventListener('keyup', (e) => {
+    if (e.code !== 'Enter') return;
+    const newProjectName = getProjectNameInput();
+    ProjectButton.addProjectButton(newProjectName);
+    toggleModal();
   });
 })();
 
