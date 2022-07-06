@@ -24,9 +24,7 @@ const ProjectButton = (() => {
     );
     newProjectNameSpan.classList.add('project-name');
 
-    const projectNameLowerCase = projectName.toLowerCase();
-
-    newProjectButton.dataset.tabName = projectNameLowerCase;
+    newProjectButton.dataset.tabName = projectName;
     newProjectNameSpan.textContent = projectName;
 
     newProjectButton.append(projectIcon, newProjectNameSpan);

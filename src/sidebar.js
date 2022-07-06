@@ -27,11 +27,8 @@ const Sidebar = (() => {
     for (const button of sidebarButtons) button.classList.remove('selected');
   };
 
-  const getCapitalizedString = (str) =>
-    str.charAt(0).toUpperCase() + str.slice(1);
-
   const changeTabTitle = (tabName) =>
-    (document.title = `${getCapitalizedString(tabName)}: Todoist`);
+    (document.title = `${tabName}: Todoist`);
 
   const addVisibleClass = () => {
     sidebar.classList.add('is-visible');

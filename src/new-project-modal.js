@@ -53,6 +53,7 @@ const NewProjectModal = (() => {
   });
 
   document.addEventListener('keyup', (e) => {
+    // BUG: Modal toggles even if not visible when pressing enter
     if (e.code !== 'Enter') return;
     const newProjectName = getProjectNameInput();
     ProjectButton.addProjectButton(newProjectName);

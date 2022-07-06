@@ -14,7 +14,7 @@ const Editor = (() => {
   const removeSidebarVisibleClass = () =>
     editor.classList.remove('is-sidebar-visible');
 
-  //Tab Heading
+  // Tab Heading
 
   const getNewTabHeadingDiv = () => {
     const tabHeading = document.createElement('div');
@@ -27,7 +27,7 @@ const Editor = (() => {
     editor.append(tabHeadingDiv);
   };
 
-  //Tab Title
+  // Tab Title
 
   const getNewTabTitle = (tabTitleText) => {
     const tabTitle = document.createElement('h2');
