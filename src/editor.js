@@ -107,11 +107,6 @@ const Editor = (() => {
 
   // Tabs
 
-  const addEditorCurrentTabNameClass = (tabName) => {
-    if (editor.classList.contains(`.${tabName}`)) return;
-    editor.classList.add(tabName);
-  };
-
   const removeTabNameClass = () => {
     const tabNames = ['inbox', 'today', 'upcoming'];
     for (const tabName of tabNames) editor.classList.remove(tabName);
@@ -123,7 +118,6 @@ const Editor = (() => {
     removeTabNameClass();
     Sidebar.removeSelectedButtonClass();
     Sidebar.addSelectedClassToButton(buttonClicked);
-    addEditorCurrentTabNameClass(tabName);
     addEmptyTabHeading();
     addTabTitle(tabName);
     if (tabName === 'Today') {
