@@ -4,7 +4,6 @@ import { Tooltip } from './tooltip.js';
 const Sidebar = (() => {
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.querySelector('.sidebar-overlay');
-  const sidebarButtons = document.querySelectorAll('.sidebar-button');
   const editor = document.querySelector('.editor');
 
   const toggleProjectsVisibility = () => {
@@ -18,17 +17,17 @@ const Sidebar = (() => {
     });
   };
 
-  const addSelectedClassToButton = (tabName) => {
-    for (const button of sidebarButtons)
-      if (button.dataset.tabName === tabName) button.classList.add('selected');
-  };
+  const addSelectedClassToButton = (button) => button.classList.add('selected');
 
   const removeSelectedButtonClass = () => {
-    for (const button of sidebarButtons) button.classList.remove('selected');
+    const sidebarButtons = document.querySelectorAll('.sidebar-button');
+    for (const button of sidebarButtons) {
+      if (button.classList.contains('selected'))
+        button.classList.remove('selected');
+    }
   };
 
-  const changeTabTitle = (tabName) =>
-    (document.title = `${tabName}: Todoist`);
+  const changeTabTitle = (tabName) => (document.title = `${tabName}: Todoist`);
 
   const addVisibleClass = () => {
     sidebar.classList.add('is-visible');
@@ -90,9 +89,8 @@ const Sidebar = (() => {
 
   return {
     changeTabTitle,
-    removeSelectedButtonClass,
     addSelectedClassToButton,
+    removeSelectedButtonClass,
   };
 })();
-
 export { Sidebar };

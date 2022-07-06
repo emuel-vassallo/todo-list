@@ -117,12 +117,12 @@ const Editor = (() => {
     for (const tabName of tabNames) editor.classList.remove(tabName);
   };
 
-  const changeContent = (tabName) => {
+  const changeContent = (buttonClicked, tabName) => {
     Sidebar.changeTabTitle(tabName);
     removeEditorContent();
     removeTabNameClass();
     Sidebar.removeSelectedButtonClass();
-    Sidebar.addSelectedClassToButton(tabName);
+    Sidebar.addSelectedClassToButton(buttonClicked);
     addEditorCurrentTabNameClass(tabName);
     addEmptyTabHeading();
     addTabTitle(tabName);
@@ -135,11 +135,11 @@ const Editor = (() => {
   };
 
   const changeContentOnTabChange = () => {
-    const tabLinkButtons = document.querySelectorAll('.tab-link');
-    for (const button of tabLinkButtons) {
+    const sidebarButtons = document.querySelectorAll('.sidebar-button');
+    for (const button of sidebarButtons) {
       button.addEventListener('click', () => {
         const tabName = button.dataset.tabName;
-        changeContent(tabName);
+        changeContent(button, tabName);
       });
     }
   };

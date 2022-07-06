@@ -39,9 +39,9 @@ const ProjectButton = (() => {
 
   const addButtonEventListener = (projectButton) => {
     const tabName = projectButton.dataset.tabName;
-    projectButton.addEventListener('click', () =>
-      Editor.changeContent(tabName)
-    );
+    projectButton.addEventListener('click', (e) => {
+      Editor.changeContent(e.target, tabName);
+    });
   };
 
   const addProjectButtonToSidebarList = (projectButton) => {
