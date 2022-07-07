@@ -82,13 +82,21 @@ const ProjectButton = (() => {
     return listItem;
   };
 
+  const updateProjectButtonIds = () => {
+    const projectButtons = document.querySelectorAll('.project-button');
+    for (let i = 0; i < projectButtons.length; i++)
+      projectButtons[i].dataset.projectId = i;
+  };
+
   const addButtonEventListener = (projectButton) => {
     const tabName = projectButton.dataset.tabName;
     const deleteButton = projectButton.childNodes[2];
     deleteButton.addEventListener('click', () => {
       projectButton.remove();
-      // const projectButtonId = projectButton.dataset.projectId;
-      // ProjectLogic.deleteProjectFromList(projectButtonId);
+      const projectButtonId = projectButton.dataset.projectId;
+      ProjectLogic.removeProjectFromList(projectButtonId);
+      ProjectLogic.updateProjectIds();
+      updateProjectButtonIds();
     });
     projectButton.addEventListener('click', (e) => {
       if (e.target !== projectButton) return;
