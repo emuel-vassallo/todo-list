@@ -18,11 +18,13 @@ const Editor = (() => {
   const getEmptyStateContent = (tabName) => {
     const emptyStateContainer = document.createElement('div');
     const emptyStateImage = document.createElement('img');
+    const emptyStateTextContainer = document.createElement('div');
     const emptyStateHeading = document.createElement('h4');
     const emptyStateBody = document.createElement('p');
 
     emptyStateContainer.classList.add('empty-state-container');
     emptyStateImage.classList.add('empty-state-image');
+    emptyStateTextContainer.classList.add('empty-state-text')
     emptyStateHeading.classList.add('empty-state-heading');
     emptyStateBody.classList.add('empty-state-body');
 
@@ -51,10 +53,10 @@ const Editor = (() => {
     emptyStateHeading.textContent = headingText;
     emptyStateBody.textContent = bodyText;
 
+    emptyStateTextContainer.append(emptyStateHeading, emptyStateBody)
     emptyStateContainer.append(
       emptyStateImage,
-      emptyStateHeading,
-      emptyStateBody
+      emptyStateTextContainer
     );
     return emptyStateContainer;
   };
