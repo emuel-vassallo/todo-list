@@ -447,7 +447,12 @@ header > div {
 
 .project-selector {
   gap: 4px;
-  max-width: 70px;
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10ch;
+  appearance: none;
 }
 
 .add-task-modal-overlay.visible {
