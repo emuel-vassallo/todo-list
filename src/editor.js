@@ -14,6 +14,56 @@ const Editor = (() => {
   const removeSidebarVisibleClass = () =>
     editor.classList.remove('is-sidebar-visible');
 
+  // Empty State
+  const getEmptyStateContent = (tabName) => {
+    const emptyStateContainer = document.createElement('div');
+    const emptyStateImage = document.createElement('img');
+    const emptyStateHeading = document.createElement('h4');
+    const emptyStateBody = document.createElement('p');
+
+    emptyStateContainer.classList.add('empty-state-container');
+    emptyStateImage.classList.add('empty-state-image');
+    emptyStateHeading.classList.add('empty-state-heading');
+    emptyStateBody.classList.add('empty-state-body');
+
+    const projectEmptyStateImage = 'components/project-empty-state.png';
+    emptyStateImage.src =
+      {
+        Inbox: 'components/inbox-empty-state.png',
+        Today: 'components/today-empty-state.png',
+        Upcoming: 'components/upcoming-empty-state.png',
+      }[tabName] || projectEmptyStateImage;
+
+    const projectHeadingText = 'What will you accomplish?';
+    const headingText =
+      {
+        Inbox: 'All clear',
+        Today: "You're all done for the week! #TodoistZero",
+        Upcoming: 'Get a clear view of upcoming tasks',
+      }[tabName] || projectHeadingText;
+
+    const bodyText = {
+      Inbox: "Looks like everything's organized in the right place.",
+      Today: 'Enjoy the rest of your day.',
+      Upcoming: 'All upcoming tasks will show up here.',
+    }[tabName];
+
+    emptyStateHeading.textContent = headingText;
+    emptyStateBody.textContent = bodyText;
+
+    emptyStateContainer.append(
+      emptyStateImage,
+      emptyStateHeading,
+      emptyStateBody
+    );
+    return emptyStateContainer;
+  };
+
+  const loadEmptyStateContent = (tabName) => {
+    const emptyStateContent = getEmptyStateContent(tabName);
+    editor.append(emptyStateContent);
+  };
+
   // Tab Heading
 
   const getNewTabHeadingDiv = () => {
@@ -126,6 +176,7 @@ const Editor = (() => {
     }
     addNewAddTaskButton();
     toggleModalOnButtonClick();
+    loadEmptyStateContent(tabName);
   };
 
   const changeContentOnTabChange = () => {
@@ -142,6 +193,7 @@ const Editor = (() => {
   updateCurrentDateTitle();
   addNewAddTaskButton();
   toggleModalOnButtonClick();
+  loadEmptyStateContent('Today');
 
   return {
     addSidebarVisibleClass,

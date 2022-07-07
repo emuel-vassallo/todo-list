@@ -854,6 +854,30 @@ main {
   color: var(--accent-color);
 }
 
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  justify-content: space-between;
+  width: 360px;
+  min-height: 270px;
+  margin: 42px 0 0 0;
+}
+
+.empty-state-image {
+  max-width: 220px;
+}
+
+.empty-state-heading {
+  font-weight: 500;
+}
+
+.empty-state-body {
+  font-size: 0.81rem;
+  color: var(--gray-text);
+}
+
 /* Media Queries */
 
 @media (hover: hover) {

@@ -2,38 +2,38 @@ import { format } from 'date-fns';
 
 const NewTaskModal = (() => {
   const addTaskButton = document.querySelector('.add-task-button');
-  
+
   const newTaskModal = document.querySelector('.add-task-modal');
   const newTaskModalOverlay = document.querySelector(
     '.add-task-modal-overlay '
   );
-  
+
   const addTaskForm = document.querySelector('.add-task-form');
   const taskNameInput = document.querySelector(
     ".form-inputs > input[name='task_name']"
   );
-  
+
   const dueDatePicker = document.querySelector('.due-date-picker');
-  
+
   const projectSelector = document.querySelector('.project-selector');
-  
+
   const prioritySelector = document.querySelector('.priority-selector');
   const defaultPrioritySelectorIcon = document.querySelector(
     '.selected-priority > svg'
   );
-  
+
   const priorityDropdownMenu = document.querySelector(
     '.priority-dropdown-menu'
   );
   const priorityDropdownOptions = document.querySelectorAll(
     '.priority-dropdown-menu > li'
   );
-  
+
   const modalCancelButton = document.querySelector(
     '.add-task-modal .cancel-button'
   );
   const submitButton = document.querySelector('.add-task-submit-button');
-  
+
   // Modal
   const toggleNewTaskModal = () => newTaskModal.classList.toggle('visible');
   const toggleModalOverlay = () =>
@@ -44,11 +44,11 @@ const NewTaskModal = (() => {
   // Task Name
   const focusTaskNameInput = () => taskNameInput.focus();
 
-  // Project 
+  // Project
   const toggleProjectsDropdown = () => {
     priorityDropdownMenu.classList.toggle('visible');
     prioritySelector.classList.toggle('selected');
-  }
+  };
 
   // Priority
   const togglePriorityDropdown = () => {
@@ -94,13 +94,8 @@ const NewTaskModal = (() => {
     focusTaskNameInput();
     disableSubmitButton();
     hidePriorityDropDown();
-    newTaskModal.addEventListener('transitionend', () => {
-      if (isModalVisible()) return;
-      resetPrioritySelectorIcon();
-      resetPriorityOption();
-    });
   };
-
+  
   const enableOrDisableSubmit = () => {
     if (dueDatePicker.value && taskNameInput.value) {
       enableSubmitButton();
@@ -110,6 +105,12 @@ const NewTaskModal = (() => {
   };
 
   dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
+
+  newTaskModal.addEventListener('transitionend', () => {
+    if (isModalVisible()) return;
+    resetPrioritySelectorIcon();
+    resetPriorityOption();
+  });
 
   // Event Listeners
   addTaskButton.addEventListener('click', () => toggleModal());
