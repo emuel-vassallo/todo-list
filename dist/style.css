@@ -328,7 +328,6 @@ header > div {
   cursor: pointer;
 }
 
-
 .project-icon {
   color: rgb(128, 128, 128);
   width: 24px;
@@ -337,6 +336,7 @@ header > div {
 
 .project-name {
   width: 100%;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 23ch;
@@ -350,7 +350,7 @@ header > div {
   visibility: hidden;
 }
 
-.project-button:hover .delete-project-icon{
+.project-button:hover .delete-project-icon {
   visibility: visible;
   opacity: 1;
 }
@@ -358,7 +358,6 @@ header > div {
 .delete-project-icon:hover {
   transition: color 0.2s ease-in-out;
   color: #202020;
-
 }
 
 .delete-project-icon:active {
