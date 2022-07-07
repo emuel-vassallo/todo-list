@@ -1,15 +1,10 @@
-const Project = (() => {
+const ProjectLogic = (() => {
   const createEmptyProjectsList = () => {
     if (localStorage.getItem('projects')) return;
     localStorage.setItem('projects', JSON.stringify({}));
   };
 
   const getProjectsList = () => JSON.parse(localStorage.getItem('projects'));
-
-  const isProjectNameUsed = (newProjectName) => {
-    const projectsList = getProjectsList();
-    return Object.values(projectsList).includes(newProjectName);
-  };
 
   const addProjectNameToList = (newProjectName) => {
     const projectsList = getProjectsList();
@@ -18,9 +13,18 @@ const Project = (() => {
     localStorage.setItem('projects', JSON.stringify(projectsList));
   };
 
+  // const deleteProjectFromList = (projectButtonId) => {
+  //   const projectsList = getProjectsList();
+  //   delete projectsList[projectButtonId];
+  //   console.log( projectsList );
+  //   localStorage.setItem('projects', JSON.stringify(projectsList));
+  //   const newProjectsList = getProjectsList();
+  //   console.log( newProjectsList );
+  // };
+
   createEmptyProjectsList();
 
   return { getProjectsList, addProjectNameToList };
 })();
 
-export { Project };
+export { ProjectLogic };

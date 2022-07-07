@@ -1,5 +1,5 @@
 import { Editor } from './editor.js';
-import { Project } from './project.js';
+import { ProjectLogic } from './project-logic.js';
 
 const ProjectButton = (() => {
   const getProjectIcon = () => {
@@ -84,7 +84,14 @@ const ProjectButton = (() => {
 
   const addButtonEventListener = (projectButton) => {
     const tabName = projectButton.dataset.tabName;
+    const deleteButton = projectButton.childNodes[2];
+    deleteButton.addEventListener('click', () => {
+      projectButton.remove();
+      // const projectButtonId = projectButton.dataset.projectId;
+      // ProjectLogic.deleteProjectFromList(projectButtonId);
+    });
     projectButton.addEventListener('click', (e) => {
+      if (e.target !== projectButton) return;
       Editor.changeContent(e.target, tabName);
     });
   };
@@ -95,15 +102,25 @@ const ProjectButton = (() => {
     projectsList.appendChild(listItem);
   };
 
+  const getTotalProjectButtonsAmount = () =>
+    document.querySelectorAll('.project-button').length;
+
+  const addProjectButtonId = (projectButton) => {
+    const projectButtonsAmount = getTotalProjectButtonsAmount();
+    const projectId = projectButtonsAmount - 1;
+    projectButton.dataset.projectId = projectId;
+  };
+
   const addProjectButton = (projectName) => {
     const icon = getProjectIcon();
     const newButton = getNewProjectButton(icon, projectName);
     addProjectButtonToSidebarList(newButton);
     addButtonEventListener(newButton);
+    addProjectButtonId(newButton);
   };
 
   const addExistingProjectButtons = () => {
-    const projectsList = Project.getProjectsList();
+    const projectsList = ProjectLogic.getProjectsList();
     for (const projectName in projectsList)
       addProjectButton(projectsList[projectName]);
   };

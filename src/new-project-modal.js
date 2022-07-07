@@ -1,5 +1,5 @@
 import { ProjectButton } from './project-button.js';
-import { Project } from './project.js';
+import { ProjectLogic } from './project-logic.js';
 
 const NewProjectModal = (() => {
   const addProjectButton = document.querySelector('.add-project-button');
@@ -38,7 +38,7 @@ const NewProjectModal = (() => {
     const newProjectName = projectNameInput.value;
     if (!newProjectName) return;
     ProjectButton.addProjectButton(newProjectName);
-    Project.addProjectNameToList(newProjectName);
+    ProjectLogic.addProjectNameToList(newProjectName);
     toggleModal();
   };
 
