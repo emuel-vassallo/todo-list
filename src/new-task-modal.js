@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { ProjectLogic } from './project-logic.js';
 
 const NewTaskModal = (() => {
   const addTaskButton = document.querySelector('.add-task-button');
@@ -45,9 +46,53 @@ const NewTaskModal = (() => {
   const focusTaskNameInput = () => taskNameInput.focus();
 
   // Project
-  const toggleProjectsDropdown = () => {
-    priorityDropdownMenu.classList.toggle('visible');
-    prioritySelector.classList.toggle('selected');
+  const getProjectOptionElement = (projectName, id) => {
+    const option = document.createElement('option');
+    option.value = projectName;
+    option.text = projectName;
+    option.dataset.id = id;
+    option.classList.add('project-selection-option');
+    return option;
+  };
+
+  const loadProjectSelectorOptions = () => {
+    const projectList = ProjectLogic.getProjectsList();
+    const projectListLength = Object.keys(projectList).length;
+
+    for (let i = 0; i < projectListLength; i++) {
+      const projectName = projectList[i];
+      const projectId = i;
+      const projectOptionElement = getProjectOptionElement(
+        projectName,
+        projectId
+      );
+      projectSelector.appendChild(projectOptionElement);
+    }
+  };
+
+  const addProjectSelectorOption = (projectName) => {
+    const projectList = ProjectLogic.getProjectsList();
+    const projectId = Object.keys(projectList).length;
+    const projectOptionElement = getProjectOptionElement(
+      projectName,
+      projectId
+    );
+    projectSelector.appendChild(projectOptionElement);
+  };
+
+  const removeProjectSelectorOption = (projectIdToRemove) =>
+    document
+      .querySelector(
+        `.project-selection-option[data-id="${projectIdToRemove}"]`
+      )
+      .remove();
+
+  const updateProjectSelectorIds = () => {
+    const projectSelectorOptions = document.querySelectorAll(
+      '.project-selection-option'
+    );
+    for (let i = 0; i < projectSelectorOptions.length; i++)
+      projectSelectorOptions[i].dataset.id = i;
   };
 
   // Priority
@@ -95,7 +140,7 @@ const NewTaskModal = (() => {
     disableSubmitButton();
     hidePriorityDropDown();
   };
-  
+
   const enableOrDisableSubmit = () => {
     if (dueDatePicker.value && taskNameInput.value) {
       enableSubmitButton();
@@ -147,7 +192,14 @@ const NewTaskModal = (() => {
     });
   }
 
-  return { toggleModal };
+  loadProjectSelectorOptions();
+
+  return {
+    toggleModal,
+    addProjectSelectorOption,
+    removeProjectSelectorOption,
+    updateProjectSelectorIds,
+  };
 })();
 
 export { NewTaskModal };

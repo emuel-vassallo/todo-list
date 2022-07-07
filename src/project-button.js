@@ -1,5 +1,6 @@
 import { Editor } from './editor.js';
 import { ProjectLogic } from './project-logic.js';
+import { NewTaskModal } from './new-task-modal.js';
 
 const ProjectButton = (() => {
   const getProjectIcon = () => {
@@ -98,8 +99,10 @@ const ProjectButton = (() => {
       removeProjectButtonListItem(projectButton);
       const projectButtonId = projectButton.dataset.projectId;
       ProjectLogic.removeProjectFromList(projectButtonId);
-      ProjectLogic.updateProjectIds();
+      NewTaskModal.removeProjectSelectorOption(projectButtonId);
       updateProjectButtonIds();
+      ProjectLogic.updateProjectIds();
+      NewTaskModal.updateProjectSelectorIds();
     });
     projectButton.addEventListener('click', (e) => {
       if (e.target !== projectButton) return;

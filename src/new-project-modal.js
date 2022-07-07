@@ -1,5 +1,6 @@
 import { ProjectButton } from './project-button.js';
 import { ProjectLogic } from './project-logic.js';
+import { NewTaskModal } from './new-task-modal.js';
 
 const NewProjectModal = (() => {
   const addProjectButton = document.querySelector('.add-project-button');
@@ -40,6 +41,7 @@ const NewProjectModal = (() => {
     ProjectButton.addProjectButton(newProjectName);
     ProjectLogic.addProjectNameToList(newProjectName);
     toggleModal();
+    NewTaskModal.addProjectSelectorOption(newProjectName);
   };
 
   // Event Listeners
