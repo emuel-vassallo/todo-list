@@ -88,11 +88,14 @@ const ProjectButton = (() => {
       projectButtons[i].dataset.projectId = i;
   };
 
+  const removeProjectButtonListItem = (projectButton) =>
+    projectButton.parentNode.remove();
+
   const addButtonEventListener = (projectButton) => {
     const tabName = projectButton.dataset.tabName;
     const deleteButton = projectButton.childNodes[2];
     deleteButton.addEventListener('click', () => {
-      projectButton.remove();
+      removeProjectButtonListItem(projectButton);
       const projectButtonId = projectButton.dataset.projectId;
       ProjectLogic.removeProjectFromList(projectButtonId);
       ProjectLogic.updateProjectIds();
