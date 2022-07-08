@@ -24,3 +24,4 @@ A simple [Todoist](https://todoist.com/) clone built with HTML, CSS, and JavaScr
 ## Credits
 
 - [Google Symbols](https://fonts.google.com/icons?icon.query=plus&icon.style=Rounded)
+- [Todoist Clone](https://todoist-clone.com/) for design ideas

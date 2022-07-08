@@ -776,7 +776,7 @@ main {
   padding: 36px 55px;
   background-color: var(--bg);
   transform: translateX(0);
-  transition: transform var(--sidebar-toggle-transition-time);
+  transition: all var(--sidebar-toggle-transition-time);
   width: calc(100vw - var(--sidebar-width));
   overflow-y: scroll;
 }

@@ -95,18 +95,23 @@ const ProjectButton = (() => {
   const addButtonEventListener = (projectButton) => {
     const tabName = projectButton.dataset.tabName;
     const deleteButton = projectButton.childNodes[2];
-    deleteButton.addEventListener('click', () => {
-      removeProjectButtonListItem(projectButton);
-      const projectButtonId = projectButton.dataset.projectId;
-      ProjectLogic.removeProjectFromList(projectButtonId);
-      NewTaskModal.removeProjectSelectorOption(projectButtonId);
-      updateProjectButtonIds();
-      ProjectLogic.updateProjectIds();
-      NewTaskModal.updateProjectSelectorIds();
-    });
+
     projectButton.addEventListener('click', (e) => {
       if (e.target !== projectButton) return;
       Editor.changeContent(e.target, tabName);
+    });
+
+    deleteButton.addEventListener('click', () => {
+      removeProjectButtonListItem(projectButton);
+
+      const projectButtonId = projectButton.dataset.projectId;
+
+      NewTaskModal.updateProjectSelectorIds();
+      updateProjectButtonIds();
+      ProjectLogic.updateProjectIds();
+      
+      ProjectLogic.removeProjectFromList(projectButtonId);
+      NewTaskModal.removeProjectSelectorOption(projectButtonId);
     });
   };
 

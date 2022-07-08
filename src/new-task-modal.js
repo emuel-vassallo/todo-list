@@ -80,12 +80,13 @@ const NewTaskModal = (() => {
     projectSelector.appendChild(projectOptionElement);
   };
 
-  const removeProjectSelectorOption = (projectIdToRemove) =>
-    document
-      .querySelector(
-        `.project-selection-option[data-id="${projectIdToRemove}"]`
-      )
-      .remove();
+  const removeProjectSelectorOption = (projectSelectorId) => {
+    const projectSelectorOption = document.querySelector(
+      `.project-selection-option[data-id="${projectSelectorId}"]`
+    );
+    if (!document.body.contains(projectSelectorOption)) return;
+    projectSelectorOption.remove();
+  };
 
   const updateProjectSelectorIds = () => {
     const projectSelectorOptions = document.querySelectorAll(

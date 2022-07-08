@@ -24,7 +24,7 @@ const Editor = (() => {
 
     emptyStateContainer.classList.add('empty-state-container');
     emptyStateImage.classList.add('empty-state-image');
-    emptyStateTextContainer.classList.add('empty-state-text')
+    emptyStateTextContainer.classList.add('empty-state-text');
     emptyStateHeading.classList.add('empty-state-heading');
     emptyStateBody.classList.add('empty-state-body');
 
@@ -53,11 +53,8 @@ const Editor = (() => {
     emptyStateHeading.textContent = headingText;
     emptyStateBody.textContent = bodyText;
 
-    emptyStateTextContainer.append(emptyStateHeading, emptyStateBody)
-    emptyStateContainer.append(
-      emptyStateImage,
-      emptyStateTextContainer
-    );
+    emptyStateTextContainer.append(emptyStateHeading, emptyStateBody);
+    emptyStateContainer.append(emptyStateImage, emptyStateTextContainer);
     return emptyStateContainer;
   };
 
