@@ -1,6 +1,7 @@
 import { Editor } from './editor.js';
-import { ProjectLogic } from './project-logic.js';
 import { NewTaskModal } from './new-task-modal.js';
+import { ProjectLogic } from './project-logic.js';
+import { Sidebar } from './sidebar.js';
 
 const ProjectButton = (() => {
   const getProjectIcon = () => {
@@ -109,9 +110,11 @@ const ProjectButton = (() => {
       NewTaskModal.updateProjectSelectorIds();
       updateProjectButtonIds();
       ProjectLogic.updateProjectIds();
-      
+
       ProjectLogic.removeProjectFromList(projectButtonId);
       NewTaskModal.removeProjectSelectorOption(projectButtonId);
+
+      Sidebar.selectDefaultTab();
     });
   };
 

@@ -1,5 +1,6 @@
-import { format } from 'date-fns';
 import { ProjectLogic } from './project-logic.js';
+import { Sidebar } from './sidebar.js';
+import { format } from 'date-fns';
 
 const NewTaskModal = (() => {
   const addTaskButton = document.querySelector('.add-task-button');
@@ -96,6 +97,20 @@ const NewTaskModal = (() => {
       projectSelectorOptions[i].dataset.id = i;
   };
 
+  const changeSelectedProjectOption = () => {
+    const selectedSidebarButton = Sidebar.getSelectedButton();
+    const selectedProjectId = selectedSidebarButton.dataset.projectId;
+    const projectSelectorOptions = document.querySelectorAll(
+      '.project-selection-option'
+    );
+    const defaultSelectedOption = document.querySelector(
+      ".project-selector option[value='inbox']"
+    );
+    const projectOptionToSelect =
+      projectSelectorOptions[selectedProjectId] || defaultSelectedOption;
+    projectOptionToSelect.selected = 'selected';
+  };
+
   // Priority
   const togglePriorityDropdown = () => {
     priorityDropdownMenu.classList.toggle('visible');
@@ -140,6 +155,7 @@ const NewTaskModal = (() => {
     focusTaskNameInput();
     disableSubmitButton();
     hidePriorityDropDown();
+    changeSelectedProjectOption();
   };
 
   const enableOrDisableSubmit = () => {
@@ -159,6 +175,7 @@ const NewTaskModal = (() => {
   });
 
   // Event Listeners
+
   addTaskButton.addEventListener('click', () => toggleModal());
 
   modalCancelButton.addEventListener('click', () => toggleModal());

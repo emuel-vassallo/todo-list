@@ -1,5 +1,5 @@
-import { Sidebar } from './sidebar.js';
 import { NewTaskModal } from './new-task-modal.js';
+import { Sidebar } from './sidebar.js';
 import { format } from 'date-fns';
 
 const Editor = (() => {
@@ -161,12 +161,12 @@ const Editor = (() => {
     for (const tabName of tabNames) editor.classList.remove(tabName);
   };
 
-  const changeContent = (buttonClicked, tabName) => {
+  const changeContent = (sidebarButton, tabName) => {
     Sidebar.changeTabTitle(tabName);
     removeEditorContent();
     removeTabNameClass();
     Sidebar.removeSelectedButtonClass();
-    Sidebar.addSelectedClassToButton(buttonClicked);
+    Sidebar.addSelectedClassToButton(sidebarButton);
     addEmptyTabHeading();
     addTabTitle(tabName);
     if (tabName === 'Today') {

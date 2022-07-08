@@ -84,6 +84,15 @@ const Sidebar = (() => {
     });
   };
 
+  const getSelectedButton = () =>
+    document.querySelector('.sidebar-button.selected');
+
+  const selectDefaultTab = () => {
+    const inboxButton = document.querySelector('.sidebar-button-inbox');
+    const defaultButtonTabName = inboxButton.dataset.tabName;
+    Editor.changeContent(inboxButton, defaultButtonTabName);
+  };
+
   toggleSidebarVisibility();
   toggleProjectsVisibility();
   updateTodayIconDay();
@@ -93,6 +102,8 @@ const Sidebar = (() => {
     changeTabTitle,
     addSelectedClassToButton,
     removeSelectedButtonClass,
+    getSelectedButton,
+    selectDefaultTab,
   };
 })();
 export { Sidebar };
