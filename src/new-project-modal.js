@@ -40,8 +40,8 @@ const NewProjectModal = (() => {
     if (!newProjectName) return;
     ProjectButton.addProjectButton(newProjectName);
     ProjectLogic.addProjectNameToList(newProjectName);
-    toggleModal();
     NewTaskModal.addProjectSelectorOption(newProjectName);
+    toggleModal();
   };
 
   // Event Listeners
