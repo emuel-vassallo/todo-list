@@ -4,6 +4,8 @@ import { format } from 'date-fns';
 
 const Editor = (() => {
   const editor = document.querySelector('.editor');
+  const todaySidebarButton = document.querySelector('.sidebar-button-today');
+
   const removeEditorContent = () => {
     while (editor.firstChild) editor.removeChild(editor.lastChild);
   };
@@ -188,11 +190,19 @@ const Editor = (() => {
     }
   };
 
+  const changeContentOnHomeClick = (sidebarButton) => {
+    const homeButton = document.querySelector('.home-button');
+    homeButton.addEventListener('click', () =>
+      changeContent(sidebarButton, sidebarButton.dataset.tabName)
+    );
+  };
+
   changeContentOnTabChange();
   updateCurrentDateTitle();
   addNewAddTaskButton();
   toggleModalOnButtonClick();
   loadEmptyStateContent('Today');
+  changeContentOnHomeClick(todaySidebarButton);
 
   return {
     addSidebarVisibleClass,
