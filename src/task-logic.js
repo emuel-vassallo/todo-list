@@ -1,3 +1,0 @@
-const TaskLogic = (() => {})();
-
-export { TaskLogic };

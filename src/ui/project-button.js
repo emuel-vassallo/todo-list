@@ -1,7 +1,7 @@
 import { Editor } from './editor.js';
-import { NewTaskModal } from './new-task-modal.js';
-import { ProjectLogic } from './project-logic.js';
 import { Sidebar } from './sidebar.js';
+import { Storage } from '../storage.js';
+import { TaskModal } from './task-modal.js';
 
 const ProjectButton = (() => {
   const getProjectIcon = () => {
@@ -107,12 +107,12 @@ const ProjectButton = (() => {
 
       const projectButtonId = projectButton.dataset.projectId;
 
-      NewTaskModal.updateProjectSelectorIds();
+      TaskModal.updateProjectSelectorIds();
       updateProjectButtonIds();
-      ProjectLogic.updateProjectIds();
+      Storage.updateProjectIds();
 
-      ProjectLogic.removeProjectFromList(projectButtonId);
-      NewTaskModal.removeProjectSelectorOption(projectButtonId);
+      Storage.removeProject(projectButtonId);
+      TaskModal.removeProjectSelectorOption(projectButtonId);
 
       Sidebar.selectDefaultTab();
     });
@@ -143,7 +143,7 @@ const ProjectButton = (() => {
   };
 
   const addExistingProjectButtons = () => {
-    const projectsList = ProjectLogic.getProjectsList();
+    const projectsList = Storage.getProjects();
     for (const projectName in projectsList)
       addProjectButton(projectsList[projectName]);
   };

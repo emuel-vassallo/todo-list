@@ -1,5 +1,5 @@
-import { NewTaskModal } from './new-task-modal.js';
 import { Sidebar } from './sidebar.js';
+import { TaskModal } from './task-modal.js';
 import { format } from 'date-fns';
 
 const Editor = (() => {
@@ -30,12 +30,12 @@ const Editor = (() => {
     emptyStateHeading.classList.add('empty-state-heading');
     emptyStateBody.classList.add('empty-state-body');
 
-    const projectEmptyStateImage = 'components/project-empty-state.png';
+    const projectEmptyStateImage = 'components/images/project-empty-state.png';
     emptyStateImage.src =
       {
-        Inbox: 'components/inbox-empty-state.png',
-        Today: 'components/today-empty-state.png',
-        Upcoming: 'components/upcoming-empty-state.png',
+        Inbox: 'components/images/inbox-empty-state.png',
+        Today: 'components/images/today-empty-state.png',
+        Upcoming: 'components/images/upcoming-empty-state.png',
       }[tabName] || projectEmptyStateImage;
 
     const projectHeadingText = 'What will you accomplish?';
@@ -153,7 +153,7 @@ const Editor = (() => {
 
   const toggleModalOnButtonClick = () => {
     const addTaskButton = document.querySelector('.editor-add-task-button');
-    addTaskButton.addEventListener('click', () => NewTaskModal.toggleModal());
+    addTaskButton.addEventListener('click', () => TaskModal.toggleModal());
   };
 
   // Tabs

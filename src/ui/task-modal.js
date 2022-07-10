@@ -1,8 +1,8 @@
-import { ProjectLogic } from './project-logic.js';
 import { Sidebar } from './sidebar.js';
+import { Storage } from '../storage.js';
 import { format } from 'date-fns';
 
-const NewTaskModal = (() => {
+const TaskModal = (() => {
   const addTaskButton = document.querySelector('.add-task-button');
 
   const newTaskModal = document.querySelector('.add-task-modal');
@@ -57,7 +57,7 @@ const NewTaskModal = (() => {
   };
 
   const loadProjectSelectorOptions = () => {
-    const projectList = ProjectLogic.getProjectsList();
+    const projectList = Storage.getProjects();
     const projectListLength = Object.keys(projectList).length;
 
     for (let i = 0; i < projectListLength; i++) {
@@ -72,7 +72,7 @@ const NewTaskModal = (() => {
   };
 
   const addProjectSelectorOption = (projectName) => {
-    const projectList = ProjectLogic.getProjectsList();
+    const projectList = Storage.getProjects();
     const projectId = Object.keys(projectList).length;
     const projectOptionElement = getProjectOptionElement(
       projectName,
@@ -220,4 +220,4 @@ const NewTaskModal = (() => {
   };
 })();
 
-export { NewTaskModal };
+export { TaskModal };
