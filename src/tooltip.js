@@ -33,7 +33,7 @@ const Tooltip = (() => {
       const parentButton = tooltipsAndParents[i].parentButton;
       parentButton.addEventListener('mousedown', () => {
         tooltip.classList.remove('visible');
-        if (!tooltip.classList.contains('clicked'))
+        tooltip.classList.contains('clicked') &&
           tooltip.classList.add('clicked');
       });
       parentButton.addEventListener('mouseover', () => {
@@ -47,7 +47,7 @@ const Tooltip = (() => {
         tooltip.classList.add('visible');
       });
       parentButton.addEventListener('mouseout', () => {
-        if (tooltip.classList.contains('clicked'))
+        tooltip.classList.contains('clicked') &&
           tooltip.classList.remove('clicked');
         tooltip.classList.remove('visible');
       });

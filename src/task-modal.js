@@ -1,5 +1,5 @@
 import { Sidebar } from './sidebar.js';
-import { Storage } from '../storage.js';
+import { Storage } from './storage.js';
 import { format } from 'date-fns';
 
 const TaskModal = (() => {
@@ -85,8 +85,8 @@ const TaskModal = (() => {
     const projectSelectorOption = document.querySelector(
       `.project-selection-option[data-id="${projectSelectorId}"]`
     );
-    if (!document.body.contains(projectSelectorOption)) return;
-    projectSelectorOption.remove();
+    document.body.contains(projectSelectorOption) &&
+      projectSelectorOption.remove();
   };
 
   const updateProjectSelectorIds = () => {
@@ -181,7 +181,7 @@ const TaskModal = (() => {
   modalCancelButton.addEventListener('click', () => toggleModal());
 
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isModalVisible()) toggleModal();
+    e.key === 'Escape' && isModalVisible() && toggleModal();
   });
 
   prioritySelector.addEventListener('click', () => togglePriorityDropdown());
@@ -193,8 +193,7 @@ const TaskModal = (() => {
       clickedElementParent === newTaskModal ||
       clickedElementParent === newTaskModalOverlay ||
       clickedElementParent === priorityDropdownMenu;
-    if (isModalClicked) return;
-    toggleModal();
+    !isModalClicked && toggleModal();
   });
 
   taskNameInput.addEventListener('input', () => enableOrDisableSubmit());

@@ -1,6 +1,6 @@
 import { Editor } from './editor.js';
 import { Sidebar } from './sidebar.js';
-import { Storage } from '../storage.js';
+import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
 
 const ProjectButton = (() => {
@@ -75,6 +75,7 @@ const ProjectButton = (() => {
     newProjectNameSpan.textContent = projectName;
 
     newProjectButton.append(projectIcon, newProjectNameSpan, deleteButton);
+
     return newProjectButton;
   };
 
@@ -90,38 +91,36 @@ const ProjectButton = (() => {
       projectButtons[i].dataset.projectId = i;
   };
 
-  const removeProjectButtonListItem = (projectButton) =>
+  const removeProjectButton = (projectButton) =>
     projectButton.parentNode.remove();
 
   const addButtonEventListener = (projectButton) => {
     const tabName = projectButton.dataset.tabName;
     const deleteButton = projectButton.childNodes[2];
 
-    projectButton.addEventListener('click', (e) => {
-      if (e.target !== projectButton) return;
-      Editor.changeContent(e.target, tabName);
-    });
+    projectButton.addEventListener(
+      'click',
+      (e) =>
+        e.target === projectButton && Editor.changeContent(e.target, tabName)
+    );
 
     deleteButton.addEventListener('click', () => {
-      removeProjectButtonListItem(projectButton);
-
+      removeProjectButton(projectButton);
       const projectButtonId = projectButton.dataset.projectId;
 
       TaskModal.updateProjectSelectorIds();
       updateProjectButtonIds();
-      Storage.updateProjectIds();
-
       Storage.removeProject(projectButtonId);
+      Storage.updateProjectIds();
       TaskModal.removeProjectSelectorOption(projectButtonId);
-
       Sidebar.selectDefaultTab();
     });
   };
 
   const addProjectButtonToSidebarList = (projectButton) => {
-    const projectsList = document.querySelector('#projects-list');
+    const projects = document.querySelector('#projects-list');
     const listItem = getProjectButtonListItem(projectButton);
-    projectsList.appendChild(listItem);
+    projects.appendChild(listItem);
   };
 
   const getTotalProjectButtonsAmount = () =>
@@ -143,9 +142,12 @@ const ProjectButton = (() => {
   };
 
   const addExistingProjectButtons = () => {
-    const projectsList = Storage.getProjects();
-    for (const projectName in projectsList)
-      addProjectButton(projectsList[projectName]);
+    const projects = Storage.getProjects();
+    for (let i = 0; i < projects.length; i++) {
+      const project = projects[i];
+      const projectName = project.name;
+      addProjectButton(projectName);
+    }
   };
 
   addExistingProjectButtons();

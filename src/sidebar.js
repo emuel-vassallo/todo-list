@@ -24,7 +24,7 @@ const Sidebar = (() => {
   const removeSelectedButtonClass = () => {
     const sidebarButtons = document.querySelectorAll('.sidebar-button');
     for (const button of sidebarButtons) {
-      if (button.classList.contains('selected'))
+      button.classList.contains('selected') &&
         button.classList.remove('selected');
     }
   };
@@ -71,7 +71,7 @@ const Sidebar = (() => {
       getFormattedDay());
 
   const controlSidebarVisibility = () => {
-    if (window.innerWidth > 750) addVisibleClass();
+    window.innerWidth > 750 && addVisibleClass();
 
     window.addEventListener('resize', () => {
       const isSidebarVisible = sidebar.classList.contains('is-visible');

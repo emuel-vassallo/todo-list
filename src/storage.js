@@ -1,43 +1,53 @@
 const Storage = (() => {
-  const createEmptyProjectsList = () => {
+  const createEmptyProjectList = () => {
     if (localStorage.getItem('projects')) return;
-    localStorage.setItem('projects', JSON.stringify({}));
+    localStorage.setItem('projects', JSON.stringify([]));
   };
 
-  const getProjects = () => JSON.parse(localStorage.getItem('projects'));
+  const getProjects = () => {
+    if (localStorage.getItem('projects') === null) return [];
+    return JSON.parse(localStorage.getItem('projects'));
+  };
 
-  const addProject = (newProjectName) => {
-    const projectsList = getProjects();
-    const projectId = Object.keys(projectsList).length;
-    projectsList[projectId] = newProjectName;
-    localStorage.setItem('projects', JSON.stringify(projectsList));
+  const getNewProjectId = () => Object.keys(getProjects()).length;
+
+  const updateProjectList = (newProjectList) =>
+    localStorage.setItem('projects', JSON.stringify(newProjectList));
+
+  const addProject = (newProject) => {
+    let projects = getProjects();
+    // console.log(projects);
+    const parsedNewProject = JSON.parse(JSON.stringify(newProject));
+    projects = [...projects, parsedNewProject];
+    // console.log({ newProject, projects });
+    updateProjectList(projects);
+  };
+
+  const removeProject = (id) => {
+    let projectList = getProjects();
+    projectList.splice(id, 1);
+    updateProjectList(projectList);
   };
 
   const updateProjectIds = () => {
-    const oldProjectsList = getProjects();
-    const oldProjectsListArray = Object.values(oldProjectsList);
-    const projectsListLength = Object.keys(oldProjectsListArray).length;
-    const newProjectsList = {};
+    const projects = getProjects();
 
-    for (let i = 0; i < projectsListLength; i++)
-      newProjectsList[i] = oldProjectsListArray[i];
+    for (let i = 0; i < projects.length; i++) {
+      const project = projects[i];
+      project.id = i;
+    }
 
-    localStorage.setItem('projects', JSON.stringify(newProjectsList));
+    updateProjectList(projects);
   };
 
-  const removeProject = (projectButtonId) => {
-    const projectsList = getProjects();
-    delete projectsList[projectButtonId];
-    localStorage.setItem('projects', JSON.stringify(projectsList));
-  };
-
-  createEmptyProjectsList();
+  createEmptyProjectList();
 
   return {
-    getProjects,
     addProject,
-    updateProjectIds,
+    getNewProjectId,
+    getProjects,
     removeProject,
+    updateProjectIds,
   };
 })();
 

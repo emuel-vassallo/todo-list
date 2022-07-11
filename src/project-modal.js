@@ -1,6 +1,12 @@
 import { ProjectButton } from './project-button.js';
-import { Storage } from '../storage.js';
+import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
+
+function Project(id, name, tasks) {
+  this.id = id;
+  this.name = name;
+  this.tasks = tasks;
+}
 
 const NewProjectModal = (() => {
   const addProjectButton = document.querySelector('.add-project-button');
@@ -36,18 +42,24 @@ const NewProjectModal = (() => {
   };
 
   const addProjectOnSubmit = () => {
-    const newProjectName = projectNameInput.value;
-    if (!newProjectName) return;
-    ProjectButton.addProjectButton(newProjectName);
-    Storage.addProject(newProjectName);
-    TaskModal.addProjectSelectorOption(newProjectName);
+    const projectName = projectNameInput.value;
+
+    const projectId = Storage.getNewProjectId();
+    const tasks = [];
+    const project = new Project(projectId, projectName, tasks);
+
+    Storage.addProject(project);
+    ProjectButton.addProjectButton(projectName);
+    TaskModal.addProjectSelectorOption(projectName);
+
     toggleModal();
   };
 
   // Event Listeners
-
   addProjectButton.addEventListener('mouseup', () => toggleModal());
+
   modalCancelButton.addEventListener('click', () => toggleModal());
+
   projectNameInput.addEventListener('input', () => {
     if (projectNameInput.value) {
       enableSubmitButton();
@@ -57,10 +69,11 @@ const NewProjectModal = (() => {
   });
 
   submitButton.addEventListener('click', () => addProjectOnSubmit());
+
   newProjectForm.addEventListener('submit', (e) => {
     e.preventDefault();
     addProjectOnSubmit();
   });
-})();
+})(Project);
 
 export { NewProjectModal };

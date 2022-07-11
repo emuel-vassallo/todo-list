@@ -1,7 +1,7 @@
-import './ui/sidebar.js';
-import './ui/editor.js';
-import './ui/tooltip.js';
-import './ui/task-modal.js';
-import './ui/project-modal.js';
-import './ui/project-button';
+import './sidebar.js';
+import './editor.js';
+import './tooltip.js';
+import './task-modal.js';
+import './project-modal.js';
+import './project-button';
 import './storage.js';
