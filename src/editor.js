@@ -172,8 +172,10 @@ const Editor = (() => {
     // Tab heading
     addEmptyTabHeading();
     addTabTitle(tabName);
-    // BUG: Executes in projects named "Today".
-    tabName === 'Today' && (addCurrentDateTitle(), updateCurrentDateTitle());
+    const isButtonForProject = sidebarButton.dataset.projectId;
+    tabName === 'Today' &&
+      !isButtonForProject &&
+      (addCurrentDateTitle(), updateCurrentDateTitle());
 
     // Add task
     addNewAddTaskButton();

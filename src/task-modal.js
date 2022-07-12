@@ -59,13 +59,10 @@ const TaskModal = (() => {
   const loadProjectSelectorOptions = () => {
     const projectList = Storage.getProjects();
 
-    for (let i = 0; i < projectList.length; i++) {
-      const project = projectList[i];
-      const projectName = project.name;
-      const projectId = i;
+    for (const project of projectList) {
       const projectOptionElement = getProjectOptionElement(
-        projectName,
-        projectId
+        project.name,
+        project.id
       );
       projectSelector.appendChild(projectOptionElement);
     }
