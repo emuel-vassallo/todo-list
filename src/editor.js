@@ -66,7 +66,6 @@ const Editor = (() => {
   };
 
   // Tab Heading
-
   const getNewTabHeadingDiv = () => {
     const tabHeading = document.createElement('div');
     tabHeading.classList.add('tab-heading');
@@ -79,7 +78,6 @@ const Editor = (() => {
   };
 
   // Tab Title
-
   const getNewTabTitle = (tabTitleText) => {
     const tabTitle = document.createElement('h2');
     tabTitle.innerText = tabTitleText;
@@ -120,7 +118,6 @@ const Editor = (() => {
   };
 
   // Add task Button
-
   const addNewAddTaskButton = () => {
     const addTaskButton = document.createElement('button');
     const plusIconSvg = document.createElementNS(
@@ -151,13 +148,12 @@ const Editor = (() => {
     editor.append(addTaskButton);
   };
 
-  const toggleModalOnButtonClick = () => {
+  const addNewTaskButtonEventListener = () => {
     const addTaskButton = document.querySelector('.editor-add-task-button');
     addTaskButton.addEventListener('click', () => TaskModal.toggleModal());
   };
 
   // Tabs
-
   const removeTabNameClass = () => {
     const tabNames = ['inbox', 'today', 'upcoming'];
     for (const tabName of tabNames) editor.classList.remove(tabName);
@@ -166,27 +162,32 @@ const Editor = (() => {
   const changeContent = (sidebarButton, tabName) => {
     Sidebar.changeTabTitle(tabName);
     removeEditorContent();
+
+    // Selected class
     removeTabNameClass();
     Sidebar.removeSelectedButtonClass();
     Sidebar.addSelectedClassToButton(sidebarButton);
+
+    // Tab heading
     addEmptyTabHeading();
     addTabTitle(tabName);
-    if (tabName === 'Today') {
-      addCurrentDateTitle();
-      updateCurrentDateTitle();
-    }
+    tabName === 'Today' && (addCurrentDateTitle(), updateCurrentDateTitle());
+
+    // Add task
     addNewAddTaskButton();
-    toggleModalOnButtonClick();
+    addNewTaskButtonEventListener();
+
+    // BUG: Project names like inbox, today, and upcoming get the same content.
+    // TODO: Only load if project doesn't have todos.
     loadEmptyStateContent(tabName);
   };
 
   const changeContentOnTabChange = () => {
     const sidebarButtons = document.querySelectorAll('.sidebar-button');
     for (const button of sidebarButtons) {
-      button.addEventListener('click', () => {
-        const tabName = button.dataset.tabName;
-        changeContent(button, tabName);
-      });
+      button.addEventListener('click', () =>
+        changeContent(button, button.dataset.tabName)
+      );
     }
   };
 
@@ -200,7 +201,7 @@ const Editor = (() => {
   changeContentOnTabChange();
   updateCurrentDateTitle();
   addNewAddTaskButton();
-  toggleModalOnButtonClick();
+  addNewTaskButtonEventListener();
   loadEmptyStateContent('Today');
   changeContentOnHomeClick(todaySidebarButton);
 

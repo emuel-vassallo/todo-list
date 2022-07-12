@@ -1,12 +1,7 @@
+import { Project } from './project.js';
 import { ProjectButton } from './project-button.js';
 import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
-
-function Project(id, name, tasks) {
-  this.id = id;
-  this.name = name;
-  this.tasks = tasks;
-}
 
 const NewProjectModal = (() => {
   const addProjectButton = document.querySelector('.add-project-button');

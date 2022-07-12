@@ -294,7 +294,7 @@ header > div {
 .projects-list-container.expanded {
   visibility: visible;
   height: 100%;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
 #projects-list {

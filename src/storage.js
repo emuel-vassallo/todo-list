@@ -1,5 +1,9 @@
+import { Project } from './project.js';
+
 const Storage = (() => {
-  const createEmptyProjectList = () => {
+  const createEmptyProjectLists = () => {
+    if (localStorage.getItem('defaultProjects')) return;
+    localStorage.setItem('defaultProjects', JSON.stringify([]));
     if (localStorage.getItem('projects')) return;
     localStorage.setItem('projects', JSON.stringify([]));
   };
@@ -9,17 +13,39 @@ const Storage = (() => {
     return JSON.parse(localStorage.getItem('projects'));
   };
 
+  const getDefaultProjects = () =>
+    JSON.parse(localStorage.getItem('defaultProjects'));
+
   const getNewProjectId = () => Object.keys(getProjects()).length;
 
   const updateProjectList = (newProjectList) =>
     localStorage.setItem('projects', JSON.stringify(newProjectList));
 
+  const updateDefaultProjectList = (newProjectList) =>
+    localStorage.setItem('defaultProjects', JSON.stringify(newProjectList));
+
+  const addEmptyDefaultProjectsLists = () => {
+    let defaultProjects = getDefaultProjects();
+    if (defaultProjects.length > 0) return;
+
+    const tabNames = ['Inbox', 'Today', 'Upcoming'];
+
+    for (let i = 0; i < tabNames.length; i++) {
+      const projectId = i;
+      const projectName = tabNames[i];
+      const tasks = [];
+      const project = new Project(projectId, projectName, tasks);
+
+      defaultProjects = [...defaultProjects, project];
+    }
+
+    updateDefaultProjectList(defaultProjects);
+  };
+
   const addProject = (newProject) => {
     let projects = getProjects();
-    // console.log(projects);
     const parsedNewProject = JSON.parse(JSON.stringify(newProject));
     projects = [...projects, parsedNewProject];
-    // console.log({ newProject, projects });
     updateProjectList(projects);
   };
 
@@ -40,12 +66,14 @@ const Storage = (() => {
     updateProjectList(projects);
   };
 
-  createEmptyProjectList();
+  createEmptyProjectLists();
+  addEmptyDefaultProjectsLists();
 
   return {
     addProject,
     getNewProjectId,
     getProjects,
+    getDefaultProjects,
     removeProject,
     updateProjectIds,
   };
