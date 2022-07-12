@@ -11,9 +11,7 @@ const TaskModal = (() => {
   );
 
   const addTaskForm = document.querySelector('.add-task-form');
-  const taskNameInput = document.querySelector(
-    ".form-inputs > input[name='task_name']"
-  );
+  const taskNameInput = document.getElementById('task-name-input');
 
   const dueDatePicker = document.querySelector('.due-date-picker');
 
@@ -42,9 +40,6 @@ const TaskModal = (() => {
     newTaskModalOverlay.classList.toggle('visible');
   const clearModal = () => addTaskForm.reset();
   const isModalVisible = () => newTaskModal.classList.contains('visible');
-
-  // Task Name
-  const focusTaskNameInput = () => taskNameInput.focus();
 
   // Project
   const getProjectOptionElement = (projectName, id) => {
@@ -153,7 +148,6 @@ const TaskModal = (() => {
     toggleModalOverlay();
     clearModal();
     changeDefaultDueDate();
-    focusTaskNameInput();
     disableSubmitButton();
     hidePriorityDropDown();
     changeSelectedProjectOption();
@@ -174,6 +168,8 @@ const TaskModal = (() => {
     resetPrioritySelectorIcon();
     resetPriorityOption();
   });
+
+  newTaskModal.addEventListener('transitionstart', () => taskNameInput.focus());
 
   // Event Listeners
   addTaskButton.addEventListener('click', () => toggleModal());
