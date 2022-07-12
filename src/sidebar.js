@@ -106,4 +106,5 @@ const Sidebar = (() => {
     selectDefaultTab,
   };
 })();
+
 export { Sidebar };

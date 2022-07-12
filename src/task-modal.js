@@ -58,10 +58,10 @@ const TaskModal = (() => {
 
   const loadProjectSelectorOptions = () => {
     const projectList = Storage.getProjects();
-    const projectListLength = Object.keys(projectList).length;
 
-    for (let i = 0; i < projectListLength; i++) {
-      const projectName = projectList[i];
+    for (let i = 0; i < projectList.length; i++) {
+      const project = projectList[i];
+      const projectName = project.name;
       const projectId = i;
       const projectOptionElement = getProjectOptionElement(
         projectName,
@@ -116,14 +116,17 @@ const TaskModal = (() => {
     priorityDropdownMenu.classList.toggle('visible');
     prioritySelector.classList.toggle('selected');
   };
+
   const hidePriorityDropDown = () => {
     priorityDropdownMenu.classList.remove('visible');
     prioritySelector.classList.remove('selected');
   };
+
   const removeActiveClass = () => {
     for (const button of priorityDropdownOptions)
       button.classList.remove('active-priority');
   };
+
   const changePrioritySelectorIcon = (newIcon) => {
     const prioritySelectorIcon = document.querySelector(
       '.selected-priority > svg'
@@ -131,6 +134,7 @@ const TaskModal = (() => {
     const selectorIconParent = prioritySelectorIcon.parentNode;
     selectorIconParent.replaceChild(newIcon, prioritySelectorIcon);
   };
+
   const resetPrioritySelectorIcon = () =>
     changePrioritySelectorIcon(defaultPrioritySelectorIcon);
 
@@ -158,7 +162,7 @@ const TaskModal = (() => {
     changeSelectedProjectOption();
   };
 
-  const enableOrDisableSubmit = () => {
+  const toggleSubmitButtonState = () => {
     if (dueDatePicker.value && taskNameInput.value) {
       enableSubmitButton();
       return;
@@ -175,7 +179,6 @@ const TaskModal = (() => {
   });
 
   // Event Listeners
-
   addTaskButton.addEventListener('click', () => toggleModal());
 
   modalCancelButton.addEventListener('click', () => toggleModal());
@@ -196,8 +199,8 @@ const TaskModal = (() => {
     !isModalClicked && toggleModal();
   });
 
-  taskNameInput.addEventListener('input', () => enableOrDisableSubmit());
-  dueDatePicker.addEventListener('input', () => enableOrDisableSubmit());
+  taskNameInput.addEventListener('input', () => toggleSubmitButtonState());
+  dueDatePicker.addEventListener('input', () => toggleSubmitButtonState());
 
   for (const button of priorityDropdownOptions) {
     button.addEventListener('click', () => {

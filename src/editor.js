@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 
 const Editor = (() => {
   const editor = document.querySelector('.editor');
+  const homeButton = document.querySelector('.home-button');
   const todaySidebarButton = document.querySelector('.sidebar-button-today');
 
   const removeEditorContent = () => {
@@ -171,6 +172,7 @@ const Editor = (() => {
     // Tab heading
     addEmptyTabHeading();
     addTabTitle(tabName);
+    // BUG: Executes in projects named "Today".
     tabName === 'Today' && (addCurrentDateTitle(), updateCurrentDateTitle());
 
     // Add task
@@ -191,19 +193,15 @@ const Editor = (() => {
     }
   };
 
-  const changeContentOnHomeClick = (sidebarButton) => {
-    const homeButton = document.querySelector('.home-button');
-    homeButton.addEventListener('click', () =>
-      changeContent(sidebarButton, sidebarButton.dataset.tabName)
-    );
-  };
+  const loadTodayContent = () =>
+    changeContent(todaySidebarButton, todaySidebarButton.dataset.tabName);
+
+  homeButton.addEventListener('click', () => loadTodayContent());
 
   changeContentOnTabChange();
   updateCurrentDateTitle();
   addNewAddTaskButton();
   addNewTaskButtonEventListener();
-  loadEmptyStateContent('Today');
-  changeContentOnHomeClick(todaySidebarButton);
 
   return {
     addSidebarVisibleClass,
