@@ -888,6 +888,7 @@ main {
 .empty-state-body {
   font-size: 0.81rem;
   color: var(--gray-text);
+  text-align: center;
 }
 
 /* Media Queries */

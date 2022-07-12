@@ -46,13 +46,15 @@ const Editor = (() => {
       Inbox: 'All clear',
       Today: "You're all done for the week! #TodoistZero",
       Upcoming: 'Get a clear view of upcoming tasks',
-      Project: 'What will you accomplish?',
+      Project: 'Keep your tasks organized in projects',
     }[tabName];
 
     const bodyText = {
       Inbox: "Looks like everything's organized in the right place.",
       Today: 'Enjoy the rest of your day.',
       Upcoming: 'All upcoming tasks will show up here.',
+      Project:
+        'Group your tasks by goal or area of your life. Drag and drop to rearrange tasks or create sub-tasks.',
     }[tabName];
 
     emptyStateHeading.textContent = headingText;
