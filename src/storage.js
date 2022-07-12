@@ -18,8 +18,10 @@ const Storage = (() => {
 
   const getNewProjectId = () => Object.keys(getProjects()).length;
 
-  const getNewTaskId = (projectId) => {
-    const projects = getProjects();
+  const getNewTaskId = (projectId, isProjectDefault) => {
+    let projects;
+    if (isProjectDefault) projects = getDefaultProjects();
+    else projects = getProjects();
     const project = projects[projectId];
     const projectTasks = project.tasks;
     return projectTasks.length;

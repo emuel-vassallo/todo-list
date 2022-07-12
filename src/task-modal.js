@@ -211,8 +211,16 @@ const TaskModal = (() => {
 
   submitButton.addEventListener('click', () => {
     const selectedProjectButton = Sidebar.getSelectedButton();
-    const taskProjectId = selectedProjectButton.dataset.projectId;
-    const taskId = Storage.getNewTaskId(taskProjectId);
+
+    const isProjectDefault =
+      selectedProjectButton.dataset.defaultProjectId !== undefined;
+
+    let taskProjectId;
+    if (isProjectDefault)
+      taskProjectId = selectedProjectButton.dataset.defaultProjectId;
+    else taskProjectId = selectedProjectButton.dataset.projectId;
+
+    const taskId = Storage.getNewTaskId(taskProjectId, isProjectDefault);
     const taskName = taskNameInput.value;
     const taskDescription = taskDescriptionInput.value;
     const taskDueDate = dueDatePicker.value;
@@ -224,8 +232,10 @@ const TaskModal = (() => {
       taskDescription,
       taskDueDate,
       taskProjectId,
-      taskPriority
+      taskPriority,
+      isProjectDefault
     );
+
     console.log(task);
   });
 
