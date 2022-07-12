@@ -4,6 +4,8 @@ import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
 
 const ProjectButton = (() => {
+  const todaySidebarButton = document.querySelector('.sidebar-button-today');
+
   const getProjectIcon = () => {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -151,6 +153,7 @@ const ProjectButton = (() => {
   };
 
   addExistingProjectButtons();
+  Editor.changeContent(todaySidebarButton, todaySidebarButton.dataset.tabName);
 
   return { addProjectButton };
 })();

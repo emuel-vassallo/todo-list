@@ -790,19 +790,20 @@ main {
 .tab-heading {
   display: flex;
   align-items: center;
-  gap: 7px;
-  margin: 0 0 12px 0;
-  min-height: 36px;
+  justify-content: flex-start;
+  gap: 6px;
+  margin: 0 0 20px 0;
+  height: 36px;
 }
 
 .tab-title {
-  font-size: 1.3rem;
+  font-size: 1.32rem;
   max-width: 100%;
   overflow-wrap: break-word;
 }
 
 .current-date-title {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--gray-text);
   white-space: nowrap;
 }
