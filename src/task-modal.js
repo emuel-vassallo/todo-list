@@ -1,5 +1,6 @@
 import { Sidebar } from './sidebar.js';
 import { Storage } from './storage.js';
+import { Task } from './task.js';
 import { format } from 'date-fns';
 
 const TaskModal = (() => {
@@ -12,13 +13,16 @@ const TaskModal = (() => {
 
   const addTaskForm = document.querySelector('.add-task-form');
   const taskNameInput = document.getElementById('task-name-input');
+  const taskDescriptionInput = document.getElementById(
+    'task-description-input'
+  );
 
   const dueDatePicker = document.querySelector('.due-date-picker');
 
   const projectSelector = document.querySelector('.project-selector');
 
   const prioritySelector = document.querySelector('.priority-selector');
-  const defaultPrioritySelectorIcon = document.querySelector(
+  const prioritySelectorIcon = document.querySelector(
     '.selected-priority > svg'
   );
 
@@ -128,7 +132,7 @@ const TaskModal = (() => {
   };
 
   const resetPrioritySelectorIcon = () =>
-    changePrioritySelectorIcon(defaultPrioritySelectorIcon);
+    changePrioritySelectorIcon(prioritySelectorIcon);
 
   const resetPriorityOption = () => {
     const defaultPriorityOption = priorityDropdownOptions[3];
@@ -205,6 +209,26 @@ const TaskModal = (() => {
     });
   }
 
+  submitButton.addEventListener('click', () => {
+    const selectedProjectButton = Sidebar.getSelectedButton();
+    const taskProjectId = selectedProjectButton.dataset.projectId;
+    const taskId = Storage.getNewTaskId(taskProjectId);
+    const taskName = taskNameInput.value;
+    const taskDescription = taskDescriptionInput.value;
+    const taskDueDate = dueDatePicker.value;
+    const taskPriority = prioritySelectorIcon.dataset.priority;
+
+    const task = new Task(
+      taskId,
+      taskName,
+      taskDescription,
+      taskDueDate,
+      taskProjectId,
+      taskPriority
+    );
+    console.log(task);
+  });
+
   loadProjectSelectorOptions();
 
   return {
@@ -213,6 +237,6 @@ const TaskModal = (() => {
     removeProjectSelectorOption,
     updateProjectSelectorIds,
   };
-})();
+})(Task);
 
 export { TaskModal };

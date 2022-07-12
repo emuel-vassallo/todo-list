@@ -18,6 +18,13 @@ const Storage = (() => {
 
   const getNewProjectId = () => Object.keys(getProjects()).length;
 
+  const getNewTaskId = (projectId) => {
+    const projects = getProjects();
+    const project = projects[projectId];
+    const projectTasks = project.tasks;
+    return projectTasks.length;
+  };
+
   const updateProjectList = (newProjectList) =>
     localStorage.setItem('projects', JSON.stringify(newProjectList));
 
@@ -72,6 +79,7 @@ const Storage = (() => {
   return {
     addProject,
     getNewProjectId,
+    getNewTaskId,
     getProjects,
     getDefaultProjects,
     removeProject,
