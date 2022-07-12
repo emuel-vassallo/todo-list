@@ -18,7 +18,11 @@ const Editor = (() => {
     editor.classList.remove('is-sidebar-visible');
 
   // Empty State
-  const getEmptyStateContent = (tabName) => {
+  const getEmptyStateContent = (sidebarButton) => {
+    let tabName;
+    if (sidebarButton.dataset.projectId) tabName = 'Project';
+    else tabName = sidebarButton.dataset.tabName;
+
     const emptyStateContainer = document.createElement('div');
     const emptyStateImage = document.createElement('img');
     const emptyStateTextContainer = document.createElement('div');
@@ -31,21 +35,19 @@ const Editor = (() => {
     emptyStateHeading.classList.add('empty-state-heading');
     emptyStateBody.classList.add('empty-state-body');
 
-    const projectEmptyStateImage = 'components/images/project-empty-state.png';
-    emptyStateImage.src =
-      {
-        Inbox: 'components/images/inbox-empty-state.png',
-        Today: 'components/images/today-empty-state.png',
-        Upcoming: 'components/images/upcoming-empty-state.png',
-      }[tabName] || projectEmptyStateImage;
+    emptyStateImage.src = {
+      Inbox: 'components/images/inbox-empty-state.png',
+      Today: 'components/images/today-empty-state.png',
+      Upcoming: 'components/images/upcoming-empty-state.png',
+      Project: 'components/images/project-empty-state.png',
+    }[tabName];
 
-    const projectHeadingText = 'What will you accomplish?';
-    const headingText =
-      {
-        Inbox: 'All clear',
-        Today: "You're all done for the week! #TodoistZero",
-        Upcoming: 'Get a clear view of upcoming tasks',
-      }[tabName] || projectHeadingText;
+    const headingText = {
+      Inbox: 'All clear',
+      Today: "You're all done for the week! #TodoistZero",
+      Upcoming: 'Get a clear view of upcoming tasks',
+      Project: 'What will you accomplish?',
+    }[tabName];
 
     const bodyText = {
       Inbox: "Looks like everything's organized in the right place.",
@@ -61,8 +63,8 @@ const Editor = (() => {
     return emptyStateContainer;
   };
 
-  const loadEmptyStateContent = (tabName) => {
-    const emptyStateContent = getEmptyStateContent(tabName);
+  const loadEmptyStateContent = (sidebarButton) => {
+    const emptyStateContent = getEmptyStateContent(sidebarButton);
     editor.append(emptyStateContent);
   };
 
@@ -181,9 +183,8 @@ const Editor = (() => {
     addNewAddTaskButton();
     addNewTaskButtonEventListener();
 
-    // BUG: Project names like inbox, today, and upcoming get the same content.
     // TODO: Only load if project doesn't have todos.
-    loadEmptyStateContent(tabName);
+    loadEmptyStateContent(sidebarButton);
   };
 
   const changeContentOnTabChange = () => {
