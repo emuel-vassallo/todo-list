@@ -587,11 +587,8 @@ svg[data-priority='3'] path {
 .add-project-submit-button:disabled {
   background-color: var(--form-add-task-disabled-bg);
   color: var(--form-add-task-disabled-fg);
-}
-
-.add-task-submit-button:disabled:hover,
-.add-project-submit-button:disabled:hover {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
+  pointer-events: all !important;
 }
 
 /* Button Tooltip */
