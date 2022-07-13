@@ -85,6 +85,11 @@ const TaskModal = (() => {
       projectSelectorOption.remove();
   };
 
+  const removeAllProjectSelectorOptions = () => {
+    const projectsAmount = Storage.getProjects().length;
+    for (let i = 0; i < projectsAmount; i++) removeProjectSelectorOption(i);
+  };
+
   const updateProjectSelectorIds = () => {
     const projectSelectorOptions = document.querySelectorAll(
       '.project-selection-option'
@@ -168,13 +173,13 @@ const TaskModal = (() => {
   };
 
   const getTaskModalData = () => {
-    let taskProjectId =
+    let projectId =
       projectSelector.options[projectSelector.selectedIndex].dataset.id;
 
-    const isProjectInbox = taskProjectId === undefined;
-    if (isProjectInbox) taskProjectId = 0;
+    const isProjectInbox = projectId === undefined;
+    if (isProjectInbox) projectId = 0;
 
-    const taskId = Storage.getNewTaskId(taskProjectId);
+    const taskId = Storage.getNewTaskId(projectId, isProjectInbox);
     const taskName = taskNameInput.value.trim();
     const taskDescription = taskDescriptionInput.value.trim();
     const taskDueDate = dueDatePicker.value;
@@ -185,7 +190,7 @@ const TaskModal = (() => {
       taskName,
       taskDescription,
       taskDueDate,
-      taskProjectId,
+      projectId,
       taskPriority,
       isProjectInbox
     );
@@ -251,12 +256,13 @@ const TaskModal = (() => {
   // });
 
   dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
-  loadProjectSelectorOptions();
 
   return {
-    toggleModal,
     addProjectSelectorOption,
+    loadProjectSelectorOptions,
+    removeAllProjectSelectorOptions,
     removeProjectSelectorOption,
+    toggleModal,
     updateProjectSelectorIds,
   };
 })(Task);

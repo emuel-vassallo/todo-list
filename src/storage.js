@@ -22,6 +22,7 @@ const Storage = (() => {
     let projects;
     if (isProjectInbox) projects = getDefaultProjects();
     else projects = getProjects();
+    console.log({ projects, projectId });
     const project = projects[projectId];
     const projectTasks = project.tasks;
     return projectTasks.length;
@@ -66,12 +67,7 @@ const Storage = (() => {
 
   const updateProjectIds = () => {
     const projects = getProjects();
-
-    for (let i = 0; i < projects.length; i++) {
-      const project = projects[i];
-      project.id = i;
-    }
-
+    for (let i = 0; i < projects.length; i++) projects[i].id = i;
     updateProjectList(projects);
   };
 

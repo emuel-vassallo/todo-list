@@ -107,15 +107,19 @@ const ProjectButton = (() => {
     );
 
     deleteButton.addEventListener('click', () => {
-      removeProjectButton(projectButton);
-      const projectButtonId = projectButton.dataset.projectId;
-
-      TaskModal.updateProjectSelectorIds();
-      updateProjectButtonIds();
-      Storage.removeProject(projectButtonId);
-      Storage.updateProjectIds();
-      TaskModal.removeProjectSelectorOption(projectButtonId);
       Sidebar.selectDefaultTab();
+      
+      const projectButtonId = projectButton.dataset.projectId;
+      console.log(projectButtonId)
+      
+      removeProjectButton(projectButton);
+      Storage.removeProject(projectButtonId);
+      TaskModal.removeProjectSelectorOption(projectButtonId);
+      
+      updateProjectButtonIds();
+      Storage.updateProjectIds();
+      
+      TaskModal.updateProjectSelectorIds();
     });
   };
 
@@ -138,9 +142,9 @@ const ProjectButton = (() => {
     const icon = getProjectIcon();
     const newButton = getNewProjectButton(icon, projectName);
     addProjectButtonToSidebarList(newButton);
-    addButtonEventListener(newButton);
     addProjectButtonId(newButton);
     Editor.changeContent(newButton, projectName);
+    addButtonEventListener(newButton);
   };
 
   const addExistingProjectButtons = () => {
