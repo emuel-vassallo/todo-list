@@ -176,7 +176,7 @@ const Editor = (() => {
     // Tab heading
     addEmptyTabHeading();
     addTabTitle(tabName);
-    const isDefaultProjectButton = sidebarButton.dataset.defaultProjectId;
+    const isDefaultProjectButton = sidebarButton.projectId === undefined;
     if (tabName === 'Today' && isDefaultProjectButton) {
       addCurrentDateTitle();
       updateCurrentDateTitle();
