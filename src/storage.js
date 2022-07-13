@@ -75,6 +75,21 @@ const Storage = (() => {
     updateProjectList(projects);
   };
 
+  const addTaskToProject = (task) => {
+    const isProjectInbox = task.isProjectInbox;
+    let projectList;
+    if (isProjectInbox) projectList = getDefaultProjects();
+    else projectList = getProjects();
+
+    const taskProject = projectList[task.projectId];
+    taskProject.tasks = [...taskProject.tasks, task];
+    if (isProjectInbox) {
+      updateDefaultProjectList(projectList);
+      return;
+    }
+    updateProjectList(projectList);
+  };
+
   createEmptyProjectLists();
   addEmptyDefaultProjectsLists();
 
@@ -86,6 +101,7 @@ const Storage = (() => {
     getDefaultProjects,
     removeProject,
     updateProjectIds,
+    addTaskToProject,
   };
 })();
 

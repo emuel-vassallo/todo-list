@@ -13,7 +13,7 @@ function Task(
   this.dueDate = dueDate;
   this.projectId = projectId;
   this.priority = priority;
-  this.isProjectDefault = isProjectInbox;
+  this.isProjectInbox = isProjectInbox;
 }
 
 export { Task };

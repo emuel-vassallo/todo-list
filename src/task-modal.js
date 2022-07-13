@@ -169,8 +169,8 @@ const TaskModal = (() => {
     let taskProjectId =
       projectSelector.options[projectSelector.selectedIndex].dataset.id;
 
-    const isInboxSelected = taskProjectId === undefined;
-    if (isInboxSelected) taskProjectId = 0;
+    const isProjectInbox = taskProjectId === undefined;
+    if (isProjectInbox) taskProjectId = 0;
 
     const taskId = Storage.getNewTaskId(taskProjectId);
     const taskName = taskNameInput.value;
@@ -185,10 +185,8 @@ const TaskModal = (() => {
       taskDueDate,
       taskProjectId,
       taskPriority,
-      isInboxSelected
+      isProjectInbox
     );
-
-    console.log(task);
 
     return task;
   };
@@ -237,17 +235,18 @@ const TaskModal = (() => {
   }
 
   submitButton.addEventListener('click', () => {
-    getTaskModalData();
+    const task = getTaskModalData();
+    Storage.addTaskToProject(task);
     toggleModal();
   });
 
-  newTaskModal.addEventListener('submit', (e) => {
-    // TODO: Make pressing enter to submit work.
-    e.preventDefault();
-    if (submitButton.disabled) return;
-    getTaskModalData();
-    toggleModal();
-  });
+  // newTaskModal.addEventListener('submit', (e) => {
+  //   // TODO: Make pressing enter to submit work.
+  //   e.preventDefault();
+  //   if (submitButton.disabled) return;
+  //   const task = getTaskModalData();
+  //   toggleModal();
+  // });
 
   dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
   loadProjectSelectorOptions();
