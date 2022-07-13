@@ -176,10 +176,11 @@ const Editor = (() => {
     // Tab heading
     addEmptyTabHeading();
     addTabTitle(tabName);
-    const isButtonForProject = sidebarButton.dataset.projectId;
-    tabName === 'Today' &&
-      !isButtonForProject &&
-      (addCurrentDateTitle(), updateCurrentDateTitle());
+    const isDefaultProjectButton = sidebarButton.dataset.defaultProjectId;
+    if (tabName === 'Today' && isDefaultProjectButton) {
+      addCurrentDateTitle();
+      updateCurrentDateTitle();
+    }
 
     // Add task
     addNewAddTaskButton();

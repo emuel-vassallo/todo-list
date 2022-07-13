@@ -11,7 +11,7 @@ const TaskModal = (() => {
     '.add-task-modal-overlay '
   );
 
-  const addTaskForm = document.querySelector('.add-task-form');
+  const addTaskForm = document.querySelector('#add-task-form');
   const taskNameInput = document.getElementById('task-name-input');
   const taskDescriptionInput = document.getElementById(
     'task-description-input'
@@ -165,15 +165,42 @@ const TaskModal = (() => {
     disableSubmitButton();
   };
 
-  dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
+  const getTaskModalData = () => {
+    let taskProjectId =
+      projectSelector.options[projectSelector.selectedIndex].dataset.id;
+
+    const isInboxSelected = taskProjectId === undefined;
+    if (isInboxSelected) taskProjectId = 0;
+
+    const taskId = Storage.getNewTaskId(taskProjectId);
+    const taskName = taskNameInput.value;
+    const taskDescription = taskDescriptionInput.value;
+    const taskDueDate = dueDatePicker.value;
+    const taskPriority = prioritySelectorIcon.dataset.priority;
+
+    const task = new Task(
+      taskId,
+      taskName,
+      taskDescription,
+      taskDueDate,
+      taskProjectId,
+      taskPriority,
+      isInboxSelected
+    );
+
+    console.log(task);
+
+    return task;
+  };
 
   newTaskModal.addEventListener('transitionend', () => {
-    if (isModalVisible()) return;
+    if (isModalVisible()) {
+      taskNameInput.focus();
+      return;
+    }
     resetPrioritySelectorIcon();
     resetPriorityOption();
   });
-
-  newTaskModal.addEventListener('transitionstart', () => taskNameInput.focus());
 
   // Event Listeners
   addTaskButton.addEventListener('click', () => toggleModal());
@@ -210,35 +237,19 @@ const TaskModal = (() => {
   }
 
   submitButton.addEventListener('click', () => {
-    const selectedProjectButton = Sidebar.getSelectedButton();
-
-    const isProjectDefault =
-      selectedProjectButton.dataset.defaultProjectId !== undefined;
-
-    let taskProjectId;
-    if (isProjectDefault)
-      taskProjectId = selectedProjectButton.dataset.defaultProjectId;
-    else taskProjectId = selectedProjectButton.dataset.projectId;
-
-    const taskId = Storage.getNewTaskId(taskProjectId, isProjectDefault);
-    const taskName = taskNameInput.value;
-    const taskDescription = taskDescriptionInput.value;
-    const taskDueDate = dueDatePicker.value;
-    const taskPriority = prioritySelectorIcon.dataset.priority;
-
-    const task = new Task(
-      taskId,
-      taskName,
-      taskDescription,
-      taskDueDate,
-      taskProjectId,
-      taskPriority,
-      isProjectDefault
-    );
-
-    console.log(task);
+    getTaskModalData();
+    toggleModal();
   });
 
+  newTaskModal.addEventListener('submit', (e) => {
+    // TODO: Make pressing enter to submit work.
+    e.preventDefault();
+    if (submitButton.disabled) return;
+    getTaskModalData();
+    toggleModal();
+  });
+
+  dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
   loadProjectSelectorOptions();
 
   return {

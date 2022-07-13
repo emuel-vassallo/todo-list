@@ -164,14 +164,14 @@ header > div {
   z-index: 2;
 }
 
-.add-task-form {
+#add-task-form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
 }
 
-.add-task-form button:hover {
+#add-task-form button:hover {
   cursor: pointer;
 }
 
@@ -559,7 +559,7 @@ svg[data-priority='3'] path {
   text-align: center;
 }
 
-.add-task-form .cancel-submit-container > button:active:not(:disabled) {
+#add-task-form .cancel-submit-container > button:active:not(:disabled) {
   transform: scale(0.96);
 }
 
