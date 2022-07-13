@@ -56,7 +56,8 @@ const NewProjectModal = (() => {
   modalCancelButton.addEventListener('click', () => toggleModal());
 
   projectNameInput.addEventListener('input', () => {
-    if (projectNameInput.value) {
+    const isProjectNameInputFilled = projectNameInput.value.replace(/\s/g, '');
+    if (isProjectNameInputFilled) {
       enableSubmitButton();
       return;
     }

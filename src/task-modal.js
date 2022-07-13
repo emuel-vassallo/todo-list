@@ -158,7 +158,9 @@ const TaskModal = (() => {
   };
 
   const toggleSubmitButtonState = () => {
-    if (dueDatePicker.value && taskNameInput.value) {
+    const isDueDatePickerFilled = dueDatePicker.value;
+    const isTaskNameInputFilled = taskNameInput.value.trim();
+    if (isDueDatePickerFilled && isTaskNameInputFilled) {
       enableSubmitButton();
       return;
     }
@@ -173,8 +175,8 @@ const TaskModal = (() => {
     if (isProjectInbox) taskProjectId = 0;
 
     const taskId = Storage.getNewTaskId(taskProjectId);
-    const taskName = taskNameInput.value;
-    const taskDescription = taskDescriptionInput.value;
+    const taskName = taskNameInput.value.trim();
+    const taskDescription = taskDescriptionInput.value.trim();
     const taskDueDate = dueDatePicker.value;
     const taskPriority = prioritySelectorIcon.dataset.priority;
 
