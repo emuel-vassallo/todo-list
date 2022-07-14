@@ -205,9 +205,6 @@ const Editor = (() => {
   homeButton.addEventListener('click', () => loadTodayContent());
 
   changeContentOnTabChange();
-  updateCurrentDateTitle();
-  addNewAddTaskButton();
-  addNewTaskButtonEventListener();
 
   return {
     addSidebarVisibleClass,

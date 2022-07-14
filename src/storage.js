@@ -22,7 +22,6 @@ const Storage = (() => {
     let projects;
     if (isProjectInbox) projects = getDefaultProjects();
     else projects = getProjects();
-    console.log({ projects, projectId });
     const project = projects[projectId];
     const projectTasks = project.tasks;
     return projectTasks.length;

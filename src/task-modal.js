@@ -68,8 +68,7 @@ const TaskModal = (() => {
   };
 
   const addProjectSelectorOption = (projectName) => {
-    const projectList = Storage.getProjects();
-    const projectId = Object.keys(projectList).length;
+    const projectId = Storage.getNewProjectId();
     const projectOptionElement = getProjectOptionElement(
       projectName,
       projectId
@@ -83,11 +82,6 @@ const TaskModal = (() => {
     );
     document.body.contains(projectSelectorOption) &&
       projectSelectorOption.remove();
-  };
-
-  const removeAllProjectSelectorOptions = () => {
-    const projectsAmount = Storage.getProjects().length;
-    for (let i = 0; i < projectsAmount; i++) removeProjectSelectorOption(i);
   };
 
   const updateProjectSelectorIds = () => {
@@ -257,10 +251,11 @@ const TaskModal = (() => {
 
   dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
 
+  loadProjectSelectorOptions();
+
   return {
     addProjectSelectorOption,
     loadProjectSelectorOptions,
-    removeAllProjectSelectorOptions,
     removeProjectSelectorOption,
     toggleModal,
     updateProjectSelectorIds,

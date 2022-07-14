@@ -108,18 +108,16 @@ const ProjectButton = (() => {
 
     deleteButton.addEventListener('click', () => {
       Sidebar.selectDefaultTab();
-      
+
       const projectButtonId = projectButton.dataset.projectId;
-      console.log(projectButtonId)
-      
+
       removeProjectButton(projectButton);
-      Storage.removeProject(projectButtonId);
       TaskModal.removeProjectSelectorOption(projectButtonId);
-      
+      Storage.removeProject(projectButtonId);
+
       updateProjectButtonIds();
-      Storage.updateProjectIds();
-      
       TaskModal.updateProjectSelectorIds();
+      Storage.updateProjectIds();
     });
   };
 

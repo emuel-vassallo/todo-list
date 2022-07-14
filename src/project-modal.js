@@ -43,9 +43,9 @@ const NewProjectModal = (() => {
     const tasks = [];
     const project = new Project(projectId, projectName, tasks);
 
+    TaskModal.addProjectSelectorOption(projectName);
     Storage.addProject(project);
     ProjectButton.addProjectButton(projectName);
-    TaskModal.addProjectSelectorOption(projectName);
 
     toggleModal();
   };
