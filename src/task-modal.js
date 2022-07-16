@@ -255,9 +255,8 @@ const TaskModal = (() => {
   }
 
   submitButton.addEventListener('click', () => addTaskOnSubmit());
-
+  
   window.addEventListener('keydown', (e) => {
-    e.preventDefault()
     if (e.key !== 'Enter' || !isModalVisible() || !isRequiredDataEntered())
       return;
     addTaskOnSubmit();
