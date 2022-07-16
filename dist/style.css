@@ -82,6 +82,16 @@ header > div {
   fill: var(--header-icon-color);
 }
 
+.reset-data-icon path {
+  fill: unset !important;
+  color: var(--header-icon-color);
+}
+
+.reset-data-icon rect {
+  fill: unset !important;
+  color: var(--header-icon-color);
+}
+
 .header-button {
   display: flex;
   align-items: center;

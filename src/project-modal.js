@@ -2,7 +2,6 @@ import { Project } from './project.js';
 import { ProjectButton } from './project-button.js';
 import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
-import { Editor } from './editor.js';
 
 const NewProjectModal = (() => {
   const addProjectButton = document.querySelector('.add-project-button');
