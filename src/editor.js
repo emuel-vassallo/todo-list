@@ -1,4 +1,5 @@
 import { Sidebar } from './sidebar.js';
+import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
 import { TaskButton } from './task-button.js';
 import { format } from 'date-fns';
@@ -189,6 +190,8 @@ const Editor = (() => {
 
     // TODO: Only load if project doesn't have todos.
     loadEmptyStateContent(sidebarButton);
+
+    addAllProjectTaskButtons(sidebarButton);
   };
 
   const changeContentOnTabChange = () => {
@@ -200,22 +203,28 @@ const Editor = (() => {
     }
   };
 
-  const loadTodayContent = () =>
-    changeContent(todaySidebarButton, todaySidebarButton.dataset.tabName);
+  // Task Buttons
 
-  const addTaskButtonToEditor = (task) => {
-    const taskButton = TaskButton.getTaskButtonElement(task);
+  const addNewTaskButtonToEditor = (task) => {
+    const taskButton = TaskButton.getTaskButton(task);
     const addTaskButton = document.querySelector('.editor-add-task-button');
     editor.insertBefore(taskButton, addTaskButton);
   };
 
-  homeButton.addEventListener('click', () => loadTodayContent());
+  const addAllProjectTaskButtons = (sidebarButton) => {
+    const projects = Storage.getProjects();
+    const projectId = sidebarButton.dataset.projectId;
+    if (projectId === undefined) return; // TODO: Load inbox tasks.
+    const project = projects[projectId];
+    for (const task of project.tasks) addNewTaskButtonToEditor(task);
+  };
 
   changeContentOnTabChange();
+  addAllProjectTaskButtons(todaySidebarButton);
 
   return {
     addSidebarVisibleClass,
-    addTaskButtonToEditor,
+    addNewTaskButtonToEditor,
     changeContent,
     removeSidebarVisibleClass,
     updateCurrentDateTitle,

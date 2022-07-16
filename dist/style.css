@@ -896,6 +896,8 @@ main {
 .task-button {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
   cursor: pointer;
   background-color: unset;
   border-bottom: 1px solid var(--task-button-border-color);
@@ -908,7 +910,6 @@ main {
   justify-content: space-between;
   align-items: center;
   font-size: 0.89rem;
-  height: 21px;
 }
 
 .task-button-top-left {

@@ -167,6 +167,8 @@ const TaskModal = (() => {
     disableSubmitButton();
   };
 
+  const getFormattedDate = (date) => format(date, 'dd LLL');
+
   const getTaskModalData = () => {
     let projectId =
       projectSelector.options[projectSelector.selectedIndex].dataset.id;
@@ -177,8 +179,10 @@ const TaskModal = (() => {
     const taskId = Storage.getNewTaskId(projectId, isProjectInbox);
     const taskName = taskNameInput.value.trim();
     const taskDescription = taskDescriptionInput.value.trim();
-    const taskDueDate = dueDatePicker.valueAsDate;
+    const taskDueDate = getFormattedDate(dueDatePicker.valueAsDate);
     const taskPriority = prioritySelectorIcon.dataset.priority;
+
+    console.log(taskDueDate);
 
     const task = new Task(
       taskId,
@@ -239,7 +243,7 @@ const TaskModal = (() => {
   submitButton.addEventListener('click', () => {
     const task = getTaskModalData();
     Storage.addTaskToProject(task);
-    Editor.addTaskButtonToEditor(task);
+    Editor.addNewTaskButtonToEditor(task);
     toggleModal();
   });
 

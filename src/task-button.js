@@ -34,9 +34,7 @@ const TaskButton = (() => {
     return svg;
   };
 
-  const getFormattedDate = (date) => format(date, 'dd LLL');
-
-  const getTaskButtonElement = (task) => {
+  const getTaskButton = (task) => {
     const button = document.createElement('button');
     const topDiv = document.createElement('div');
     const topLeftDiv = document.createElement('div');
@@ -65,8 +63,7 @@ const TaskButton = (() => {
 
     taskNameText.innerText = task.name;
 
-    const dueDateText = getFormattedDate(task.dueDate);
-    dueDateTextElement.innerText = dueDateText;
+    dueDateTextElement.innerText = task.dueDate;
 
     checkboxButtonDiv.appendChild(checkboxButton);
     checkboxButton.appendChild(checkboxIcon);
@@ -79,7 +76,7 @@ const TaskButton = (() => {
     return button;
   };
 
-  return { getTaskButtonElement };
+  return { getTaskButton };
 })();
 
 export { TaskButton };
