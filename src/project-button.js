@@ -1,4 +1,5 @@
 import { Editor } from './editor.js';
+import { Icons } from './icons.js';
 import { Sidebar } from './sidebar.js';
 import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
@@ -6,65 +7,10 @@ import { TaskModal } from './task-modal.js';
 const ProjectButton = (() => {
   const todaySidebarButton = document.querySelector('.sidebar-button-today');
 
-  const getProjectIcon = () => {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-
-    svg.classList.add('project-icon');
-
-    svg.setAttribute('viewBox', '0 0 24 24');
-    path.setAttribute('d', 'M12 7a5 5 0 110 10 5 5 0 010-10z');
-    path.setAttribute('fill', 'currentColor');
-
-    svg.appendChild(path);
-
-    return svg;
-  };
-
-  const getDeleteButtonIcon = () => {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const path1 = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'path'
-    );
-    const path2 = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'path'
-    );
-    const path3 = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'path'
-    );
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-
-    svg.classList.add('delete-project-icon');
-
-    g.setAttribute('fill', 'none');
-    g.setAttribute('fill-rule', 'evenodd');
-    path1.setAttribute('d', 'M0 0h24v24H0z');
-    rect.setAttribute('x', '5');
-    rect.setAttribute('y', '6');
-    rect.setAttribute('fill', 'currentColor');
-    rect.setAttribute('rx', '.5');
-    path2.setAttribute('fill', 'currentColor');
-    path2.setAttribute('d', 'M10 9h1v8h-1V9zm3 0h1v8h-1V9z');
-    path3.setAttribute('stroke', 'currentColor');
-    path3.setAttribute(
-      'd',
-      'M17.5 6.5h-11V18A1.5 1.5 0 0 0 8 19.5h8a1.5 1.5 0 0 0 1.5-1.5V6.5zm-9 0h7V5A1.5 1.5 0 0 0 14 3.5h-4A1.5 1.5 0 0 0 8.5 5v1.5z'
-    );
-
-    g.append(path1, rect, path2, path3);
-    svg.append(g);
-
-    return svg;
-  };
-
   const getNewProjectButton = (projectIcon, projectName) => {
     const newProjectButton = document.createElement('button');
     const newProjectNameSpan = document.createElement('span');
-    const deleteButton = getDeleteButtonIcon();
+    const deleteButton = Icons.getDeleteIcon();
 
     newProjectButton.classList.add(
       'project-button',
@@ -137,7 +83,7 @@ const ProjectButton = (() => {
   };
 
   const addProjectButton = (projectName) => {
-    const icon = getProjectIcon();
+    const icon = Icons.getProjectIcon();
     const newButton = getNewProjectButton(icon, projectName);
     addProjectButtonToSidebarList(newButton);
     addProjectButtonId(newButton);
