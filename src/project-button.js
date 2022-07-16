@@ -142,6 +142,8 @@ const ProjectButton = (() => {
     addProjectButtonToSidebarList(newButton);
     addProjectButtonId(newButton);
     addButtonEventListener(newButton);
+
+    Editor.changeContent(newButton);
   };
 
   const addExistingProjectButtons = () => {
