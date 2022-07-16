@@ -19,9 +19,7 @@ const Storage = (() => {
   const getNewProjectId = () => Object.keys(getProjects()).length;
 
   const getNewTaskId = (projectId, isProjectInbox) => {
-    let projects;
-    if (isProjectInbox) projects = getDefaultProjects();
-    else projects = getProjects();
+    const projects = isProjectInbox ? getDefaultProjects() : getProjects();
     const project = projects[projectId];
     const projectTasks = project.tasks;
     return projectTasks.length;
@@ -72,17 +70,15 @@ const Storage = (() => {
 
   const addTaskToProject = (task) => {
     const isProjectInbox = task.isProjectInbox;
-    let projectList;
-    if (isProjectInbox) projectList = getDefaultProjects();
-    else projectList = getProjects();
+    const projects = isProjectInbox ? getDefaultProjects() : getProjects();
 
-    const taskProject = projectList[task.projectId];
+    const taskProject = projects[task.projectId];
     taskProject.tasks = [...taskProject.tasks, task];
     if (isProjectInbox) {
-      updateDefaultProjectList(projectList);
+      updateDefaultProjectList(projects);
       return;
     }
-    updateProjectList(projectList);
+    updateProjectList(projects);
   };
 
   createEmptyProjectLists();

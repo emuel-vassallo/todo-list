@@ -170,6 +170,10 @@ const TaskModal = (() => {
   const getFormattedDate = (date) => format(date, 'dd LLL');
 
   const getTaskModalData = () => {
+    const prioritySelectorIcon = document.querySelector(
+      '.selected-priority > svg'
+    );
+
     let projectId =
       projectSelector.options[projectSelector.selectedIndex].dataset.id;
 

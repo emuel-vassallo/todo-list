@@ -21,9 +21,9 @@ const Editor = (() => {
 
   // Empty State
   const getEmptyStateContent = (sidebarButton) => {
-    let tabName;
-    if (sidebarButton.dataset.projectId) tabName = 'Project';
-    else tabName = sidebarButton.dataset.tabName;
+    const tabName = sidebarButton.dataset.projectId
+      ? 'Project'
+      : sidebarButton.dataset.tabName;
 
     const emptyStateContainer = document.createElement('div');
     const emptyStateImage = document.createElement('img');
