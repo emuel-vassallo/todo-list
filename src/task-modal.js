@@ -241,7 +241,10 @@ const TaskModal = (() => {
   submitButton.addEventListener('click', () => {
     const task = getTaskModalData();
     Storage.addTaskToProject(task);
-    Editor.addNewTaskButtonToEditor(task);
+    const selectedSidebarButton = Sidebar.getSelectedButton();
+    const selectedSidebarButtonId = selectedSidebarButton.dataset.projectId;
+    const isTaskProjectSelected = task.projectId === selectedSidebarButtonId;
+    if (isTaskProjectSelected) Editor.addNewTaskButtonToEditor(task);
     toggleModal();
   });
 
