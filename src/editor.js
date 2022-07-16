@@ -239,6 +239,10 @@ const Editor = (() => {
   changeContentOnTabChange();
   addAllProjectTaskButtons(todaySidebarButton);
 
+  homeButton.addEventListener('click', () =>
+    changeContent(todaySidebarButton, todaySidebarButton.dataset.tabName)
+  );
+
   return {
     addSidebarVisibleClass,
     addNewTaskButtonToEditor,

@@ -195,6 +195,17 @@ const TaskModal = (() => {
     return task;
   };
 
+  const addTaskOnSubmit = () => {
+    const task = getTaskModalData();
+    Storage.addTaskToProject(task);
+    const selectedSidebarButton = Sidebar.getSelectedButton();
+    const selectedSidebarButtonId = selectedSidebarButton.dataset.projectId;
+    const isTaskProjectSelected = task.projectId === selectedSidebarButtonId;
+    if (isTaskProjectSelected) Editor.addNewTaskButtonToEditor(task);
+    toggleModal();
+  };
+
+  // Event Listeners
   newTaskModal.addEventListener('transitionend', () => {
     if (isModalVisible()) {
       taskNameInput.focus();
@@ -203,8 +214,6 @@ const TaskModal = (() => {
     resetPrioritySelectorIcon();
     resetPriorityOption();
   });
-
-  // Event Listeners
   addTaskButton.addEventListener('click', () => toggleModal());
 
   modalCancelButton.addEventListener('click', () => toggleModal());
@@ -238,23 +247,11 @@ const TaskModal = (() => {
     });
   }
 
-  submitButton.addEventListener('click', () => {
-    const task = getTaskModalData();
-    Storage.addTaskToProject(task);
-    const selectedSidebarButton = Sidebar.getSelectedButton();
-    const selectedSidebarButtonId = selectedSidebarButton.dataset.projectId;
-    const isTaskProjectSelected = task.projectId === selectedSidebarButtonId;
-    if (isTaskProjectSelected) Editor.addNewTaskButtonToEditor(task);
-    toggleModal();
-  });
+  submitButton.addEventListener('click', () => addTaskOnSubmit());
 
-  // newTaskModal.addEventListener('submit', (e) => {
-  //   // TODO: Make pressing enter to submit work.
-  //   e.preventDefault();
-  //   if (submitButton.disabled) return;
-  //   const task = getTaskModalData();
-  //   toggleModal();
-  // });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && isModalVisible()) addTaskOnSubmit();
+  });
 
   dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
 
