@@ -140,9 +140,6 @@ const TaskModal = (() => {
     defaultPriorityOption.classList.add('active-priority');
   };
 
-  // Due Date
-  const changeDefaultDueDate = () => (dueDatePicker.valueAsDate = new Date());
-
   // Submit Button
   const enableSubmitButton = () => (submitButton.disabled = false);
   const disableSubmitButton = () => (submitButton.disabled = true);
@@ -151,18 +148,14 @@ const TaskModal = (() => {
     toggleNewTaskModal();
     toggleModalOverlay();
     clearModal();
-    changeDefaultDueDate();
     disableSubmitButton();
     hidePriorityDropDown();
     changeSelectedProjectOption();
   };
 
   const isRequiredDataEntered = () => {
-    const isDueDatePickerFilled = dueDatePicker.value;
     const isTaskNameInputFilled = taskNameInput.value.trim();
-    if (isDueDatePickerFilled && isTaskNameInputFilled) {
-      return true;
-    }
+    if (isTaskNameInputFilled) return true;
     return false;
   };
 
@@ -186,7 +179,11 @@ const TaskModal = (() => {
     const taskId = Storage.getNewTaskId(projectId, isProjectInbox);
     const taskName = taskNameInput.value.trim();
     const taskDescription = taskDescriptionInput.value.trim();
-    const taskDueDate = getFormattedDate(dueDatePicker.valueAsDate);
+
+    const dueDateValue = dueDatePicker.valueAsDate;
+    const taskDueDate =
+      dueDateValue === null ? null : getFormattedDate(dueDateValue);
+
     const taskPriority = prioritySelectorIcon.dataset.priority;
 
     const task = new Task(
@@ -255,7 +252,7 @@ const TaskModal = (() => {
   }
 
   submitButton.addEventListener('click', () => addTaskOnSubmit());
-  
+
   window.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' || !isModalVisible() || !isRequiredDataEntered())
       return;

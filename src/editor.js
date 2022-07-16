@@ -222,7 +222,8 @@ const Editor = (() => {
   // Task Buttons
 
   const addNewTaskButtonToEditor = (task) => {
-    const taskButton = TaskButton.getTaskButton(task);
+    const isDueDateEmpty = task.dueDate;
+    const taskButton = TaskButton.getTaskButton(task, isDueDateEmpty);
     const addTaskButton = document.querySelector('.editor-add-task-button');
     editor.insertBefore(taskButton, addTaskButton);
     if (isEmptyStateContentVisible()) removeEmptyStateContent();

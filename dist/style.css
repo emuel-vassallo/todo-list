@@ -911,8 +911,9 @@ main {
   cursor: pointer;
   background-color: unset;
   border-bottom: 1px solid var(--task-button-border-color);
-  padding: 9px 0;
-  gap: 5px;
+  padding: 8px 0;
+  gap: 0px;
+  margin: 0 30px 0 0;
 }
 
 .task-button-top {
@@ -920,6 +921,7 @@ main {
   justify-content: space-between;
   align-items: center;
   font-size: 0.89rem;
+  height: 24px;
 }
 
 .task-button-top-left {
