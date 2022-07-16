@@ -28,6 +28,8 @@ const TaskButton = (() => {
     topDiv.append(topLeftDiv, topRightDiv);
     button.append(topDiv);
 
+    button.dataset.priority = task.priority;
+
     if (!isDueDateEmpty) return button;
 
     const bottomDiv = document.createElement('div');

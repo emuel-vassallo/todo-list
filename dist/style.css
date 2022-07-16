@@ -39,6 +39,12 @@
   --sidebar-button-project-arrow-color: #686868;
   --sidebar-toggle-transition-time: 0.2s;
   --task-button-border-color: #efefef;
+  --priority-1-bg: #fbeceb;
+  --priority-2-bg: #fdf3e5;
+  --priority-3-bg: #e8f0fc;
+  --priority-1-color: #d1453b;
+  --priority-2-color: #eb8909;
+  --priority-3-color: #246fe0;
 }
 
 * {
@@ -910,7 +916,7 @@ main {
   justify-content: space-between;
   cursor: pointer;
   background-color: unset;
-  border-bottom: 1px solid var(--task-button-border-color);
+  border-bottom: 1px solid var(--task-button-color);
   padding: 8px 0;
   gap: 0px;
   margin: 0 30px 0 0;
@@ -971,6 +977,36 @@ main {
 .task-button-checkbox-button:hover .task-button-checkbox-icon {
   opacity: 1;
   transition: opacity 0.15s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.task-button[data-priority='1'] .task-button-checkbox-button {
+  background-color: var(--priority-1-bg);
+  border-width: 2px;
+  border-color: var(--priority-1-color);
+}
+
+.task-button[data-priority='1'] .project-icon {
+  color: var(--priority-1-color);
+}
+
+.task-button[data-priority='2'] .task-button-checkbox-button {
+  background-color: var(--priority-2-bg);
+  border-width: 2px;
+  border-color: var(--priority-2-color);
+}
+
+.task-button[data-priority='2'] .project-icon {
+  color: var(--priority-2-color);
+}
+
+.task-button[data-priority='3'] .task-button-checkbox-button {
+  background-color: var(--priority-3-bg);
+  border-width: 2px;
+  border-color: var(--priority-3-color);
+}
+
+.task-button[data-priority='3'] .project-icon {
+  color: var(--priority-3-color);
 }
 
 .task-button-bottom {
