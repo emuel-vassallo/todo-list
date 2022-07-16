@@ -1,4 +1,4 @@
-import {Icons} from './icons.js'
+import { Icons } from './icons.js';
 
 const TaskButton = (() => {
   const getTaskButton = (task) => {

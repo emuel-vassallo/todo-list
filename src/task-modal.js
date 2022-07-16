@@ -157,10 +157,17 @@ const TaskModal = (() => {
     changeSelectedProjectOption();
   };
 
-  const toggleSubmitButtonState = () => {
+  const isRequiredDataEntered = () => {
     const isDueDatePickerFilled = dueDatePicker.value;
     const isTaskNameInputFilled = taskNameInput.value.trim();
     if (isDueDatePickerFilled && isTaskNameInputFilled) {
+      return true;
+    }
+    return false;
+  };
+
+  const toggleSubmitButtonState = () => {
+    if (isRequiredDataEntered()) {
       enableSubmitButton();
       return;
     }
@@ -250,7 +257,10 @@ const TaskModal = (() => {
   submitButton.addEventListener('click', () => addTaskOnSubmit());
 
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && isModalVisible()) addTaskOnSubmit();
+    e.preventDefault()
+    if (e.key !== 'Enter' || !isModalVisible() || !isRequiredDataEntered())
+      return;
+    addTaskOnSubmit();
   });
 
   dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
