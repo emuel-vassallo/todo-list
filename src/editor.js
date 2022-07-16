@@ -1,5 +1,6 @@
 import { Sidebar } from './sidebar.js';
 import { TaskModal } from './task-modal.js';
+import { TaskButton } from './task-button.js';
 import { format } from 'date-fns';
 
 const Editor = (() => {
@@ -202,15 +203,22 @@ const Editor = (() => {
   const loadTodayContent = () =>
     changeContent(todaySidebarButton, todaySidebarButton.dataset.tabName);
 
+  const addTaskButtonToEditor = (task) => {
+    const taskButton = TaskButton.getTaskButtonElement(task);
+    const addTaskButton = document.querySelector('.editor-add-task-button');
+    editor.insertBefore(taskButton, addTaskButton);
+  };
+
   homeButton.addEventListener('click', () => loadTodayContent());
 
   changeContentOnTabChange();
 
   return {
     addSidebarVisibleClass,
+    addTaskButtonToEditor,
+    changeContent,
     removeSidebarVisibleClass,
     updateCurrentDateTitle,
-    changeContent,
   };
 })();
 

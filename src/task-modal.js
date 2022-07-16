@@ -1,3 +1,4 @@
+import { Editor } from './editor.js';
 import { Sidebar } from './sidebar.js';
 import { Storage } from './storage.js';
 import { Task } from './task.js';
@@ -176,7 +177,7 @@ const TaskModal = (() => {
     const taskId = Storage.getNewTaskId(projectId, isProjectInbox);
     const taskName = taskNameInput.value.trim();
     const taskDescription = taskDescriptionInput.value.trim();
-    const taskDueDate = dueDatePicker.value;
+    const taskDueDate = dueDatePicker.valueAsDate;
     const taskPriority = prioritySelectorIcon.dataset.priority;
 
     const task = new Task(
@@ -238,6 +239,7 @@ const TaskModal = (() => {
   submitButton.addEventListener('click', () => {
     const task = getTaskModalData();
     Storage.addTaskToProject(task);
+    Editor.addTaskButtonToEditor(task);
     toggleModal();
   });
 

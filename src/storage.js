@@ -90,13 +90,13 @@ const Storage = (() => {
 
   return {
     addProject,
+    addTaskToProject,
+    getDefaultProjects,
     getNewProjectId,
     getNewTaskId,
     getProjects,
-    getDefaultProjects,
     removeProject,
     updateProjectIds,
-    addTaskToProject,
   };
 })();
 

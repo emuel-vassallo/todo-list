@@ -1,6 +1,6 @@
 :root {
   --accent-color: #db4c3f;
-  --gray-text: #727272;
+  --gray: #727272;
   --header-height: 44px;
   --header-icon-color: #fff;
   --header-icon-hover-color: hsla(0, 0%, 100%, 0.2);
@@ -38,6 +38,7 @@
   --sidebar-button-add-project-icon-color: #000;
   --sidebar-button-project-arrow-color: #686868;
   --sidebar-toggle-transition-time: 0.2s;
+  --task-button-border-color: #efefef;
 }
 
 * {
@@ -770,7 +771,7 @@ main {
 .editor {
   display: flex;
   flex-direction: column;
-  padding: 36px 55px;
+  padding: 38px 69px;
   background-color: var(--bg);
   transform: translateX(0);
   transition: all var(--sidebar-toggle-transition-time);
@@ -789,20 +790,21 @@ main {
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
-  margin: 0 0 20px 0;
+  margin: 0 0 15px 0;
   height: 36px;
 }
 
 .tab-title {
-  font-size: 1.32rem;
+  font-size: 1.24rem;
   max-width: 100%;
   overflow-wrap: break-word;
 }
 
 .current-date-title {
   font-size: 0.75rem;
-  color: var(--gray-text);
+  color: var(--gray);
   white-space: nowrap;
+  padding: 5px 0 0 0;
 }
 
 /* Add Task Button */
@@ -813,7 +815,8 @@ main {
   justify-content: flex-start;
   background-color: unset;
   height: 33px;
-  gap: 8px;
+  gap: 10px;
+  padding: 8px 0;
 }
 
 .editor-add-task-button:hover {
@@ -821,7 +824,7 @@ main {
 }
 
 .editor-add-task-text {
-  color: var(--gray-text);
+  color: var(--gray);
   font-size: 0.88rem;
   white-space: nowrap;
 }
@@ -884,8 +887,103 @@ main {
 
 .empty-state-body {
   font-size: 0.81rem;
-  color: var(--gray-text);
+  color: var(--gray);
   text-align: center;
+}
+
+/* Task Button */
+
+.task-button {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  background-color: unset;
+  border-bottom: 1px solid var(--task-button-border-color);
+  padding: 9px 0;
+  gap: 5px;
+}
+
+.task-button-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.89rem;
+  height: 21px;
+}
+
+.task-button-top-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-button-task-name {
+  white-space: nowrap;
+  padding: 0 0 1px 0;
+}
+
+.task-button-checkbox-button-div {
+  height: 100%;
+  width: 100%;
+  background-color: unset;
+  border-radius: 50%;
+}
+
+.task-button-checkbox-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: unset;
+  border-width: 1px;
+  border-color: var(--gray);
+  border-style: solid;
+}
+
+.task-button-checkbox-icon {
+  display: inline-block;
+  border: 1px solid transparent;
+  height: 18px;
+  width: 18px;
+  margin-left: -8px;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 1, 1);
+  margin-top: -8px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.task-button-checkbox-button:hover .task-button-checkbox-icon {
+  opacity: 1;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.task-button-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 16px;
+  padding: 0 0 0 26px;
+}
+
+.task-button-bottom-left {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 14px;
+}
+
+.task-button-due-date-text {
+  color: var(--gray);
+  font-size: 0.78rem;
+}
+
+.calendar-icon {
+  width: 12px;
+  height: 12px;
+  color: var(--gray);
 }
 
 /* Media Queries */
