@@ -143,7 +143,7 @@ const ProjectButton = (() => {
     addProjectButtonId(newButton);
     addButtonEventListener(newButton);
 
-    Editor.changeContent(newButton);
+    Editor.changeContent(newButton, projectName);
   };
 
   const addExistingProjectButtons = () => {
