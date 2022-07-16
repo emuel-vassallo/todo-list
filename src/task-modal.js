@@ -182,8 +182,6 @@ const TaskModal = (() => {
     const taskDueDate = getFormattedDate(dueDatePicker.valueAsDate);
     const taskPriority = prioritySelectorIcon.dataset.priority;
 
-    console.log(taskDueDate);
-
     const task = new Task(
       taskId,
       taskName,

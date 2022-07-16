@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-
 const TaskButton = (() => {
   const getCheckboxIcon = () => {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

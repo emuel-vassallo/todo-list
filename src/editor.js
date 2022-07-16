@@ -72,6 +72,12 @@ const Editor = (() => {
     editor.append(emptyStateContent);
   };
 
+  const isEmptyStateContentVisible = () =>
+    document.querySelector('.empty-state-container') !== null;
+
+  const removeEmptyStateContent = () =>
+    document.querySelector('.empty-state-container').remove();
+
   // Tab Heading
   const getNewTabHeadingDiv = () => {
     const tabHeading = document.createElement('div');
@@ -166,6 +172,14 @@ const Editor = (() => {
     for (const tabName of tabNames) editor.classList.remove(tabName);
   };
 
+  const doesSidebarProjectHaveTasks = (sidebarButton) => {
+    const projects = Storage.getProjects();
+    const projectId = sidebarButton.dataset.projectId;
+    if (projectId === undefined) return true;
+    const tasks = projects[projectId].tasks;
+    return tasks.length === 0;
+  };
+
   const changeContent = (sidebarButton, tabName) => {
     Sidebar.changeTabTitle(tabName);
     removeEditorContent();
@@ -188,10 +202,12 @@ const Editor = (() => {
     addNewAddTaskButton();
     addNewTaskButtonEventListener();
 
-    // TODO: Only load if project doesn't have todos.
-    loadEmptyStateContent(sidebarButton);
-
+    // Tasks
     addAllProjectTaskButtons(sidebarButton);
+
+    // Empty State
+    const isProjectEmpty = doesSidebarProjectHaveTasks(sidebarButton);
+    if (isProjectEmpty) loadEmptyStateContent(sidebarButton);
   };
 
   const changeContentOnTabChange = () => {
@@ -209,6 +225,7 @@ const Editor = (() => {
     const taskButton = TaskButton.getTaskButton(task);
     const addTaskButton = document.querySelector('.editor-add-task-button');
     editor.insertBefore(taskButton, addTaskButton);
+    if (isEmptyStateContentVisible()) removeEmptyStateContent();
   };
 
   const addAllProjectTaskButtons = (sidebarButton) => {
