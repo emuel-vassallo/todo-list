@@ -45,9 +45,9 @@
   --priority-1-color: #d1453b;
   --priority-2-color: #eb8909;
   --priority-3-color: #246fe0;
-  --priority-1-clicked-bg: #dc7169;
-  --priority-2-clicked-bg: #f9b45a;
-  --priority-3-clicked-bg: #6b97ea;
+  --priority-1-clicked-bg: #e47d76;
+  --priority-2-clicked-bg: #f4b967;
+  --priority-3-clicked-bg: #6ea0ec;
 }
 
 * {
@@ -969,14 +969,26 @@ main {
   border-width: 1px;
   border-color: var(--gray);
   border-style: solid;
-  transition: transform 0.2s ease-in-out;
-  transform: scale(1);
 }
 
 .task-button-checkbox-button.clicked {
-  transition: transform 0.2s ease-in-out;
-  transform: scale(1.2);
+  animation: pop 0.25s;
   background-color: gray;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.17);
+  }
+  80% {
+    transform: scale(1.17);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .task-button-checkbox-button.clicked .project-icon {

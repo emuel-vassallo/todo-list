@@ -23,9 +23,10 @@ const TaskButton = (() => {
   const addCheckboxButtonEventListener = (taskButton, checkboxButton) => {
     checkboxButton.addEventListener('click', () => {
       checkboxButton.classList.add('clicked');
-      checkboxButton.addEventListener('transitionend', () =>
-        removeTaskCompletely(taskButton)
-      );
+      checkboxButton.addEventListener('animationend', () => {
+        checkboxButton.classList.remove('clicked');
+        removeTaskCompletely(taskButton);
+      });
     });
   };
 
