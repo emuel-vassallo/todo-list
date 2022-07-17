@@ -102,9 +102,15 @@ const TaskModal = (() => {
     const defaultSelectedOption = document.querySelector(
       ".project-selector option[value='inbox']"
     );
-    const projectOptionToSelect =
-      projectSelectorOptions[selectedProjectId] || defaultSelectedOption;
+    const isSelectedProjectDefault =
+      selectedSidebarButton.dataset.isDefaultProject === 'true';
+    const projectOptionToSelect = isSelectedProjectDefault
+      ? defaultSelectedOption
+      : projectSelectorOptions[selectedProjectId];
+
     projectOptionToSelect.selected = 'selected';
+    projectSelector.dataset.selectedProjectId = selectedProjectId;
+    projectSelector.dataset.isProjectDefault = isSelectedProjectDefault;
   };
 
   // Priority
@@ -177,7 +183,7 @@ const TaskModal = (() => {
     let projectId =
       projectSelector.options[projectSelector.selectedIndex].dataset.id;
 
-    const isProjectInbox = projectId === undefined;
+    const isProjectInbox = projectSelector.dataset.isProjectDefault === 'true';
     if (isProjectInbox) projectId = 0;
 
     const taskId = Storage.getNewTaskId(projectId, isProjectInbox);
