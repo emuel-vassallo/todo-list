@@ -45,6 +45,9 @@
   --priority-1-color: #d1453b;
   --priority-2-color: #eb8909;
   --priority-3-color: #246fe0;
+  --priority-1-clicked-bg: #dc7169;
+  --priority-2-clicked-bg: #f9b45a;
+  --priority-3-clicked-bg: #6b97ea;
 }
 
 * {
@@ -966,6 +969,30 @@ main {
   border-width: 1px;
   border-color: var(--gray);
   border-style: solid;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1);
+}
+
+.task-button-checkbox-button.clicked {
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.2);
+  background-color: gray;
+}
+
+.task-button-checkbox-button.clicked .project-icon {
+  color: #fff !important;
+}
+
+.task-button[data-priority='1'] .task-button-checkbox-button.clicked {
+  background-color: var(--priority-1-clicked-bg);
+}
+
+.task-button[data-priority='2'] .task-button-checkbox-button.clicked {
+  background-color: var(--priority-2-clicked-bg);
+}
+
+.task-button[data-priority='3'] .task-button-checkbox-button.clicked {
+  background-color: var(--priority-3-clicked-bg);
 }
 
 .task-button-checkbox-icon {

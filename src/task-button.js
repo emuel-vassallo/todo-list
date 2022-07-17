@@ -9,18 +9,30 @@ const TaskButton = (() => {
     for (let i = 0; i < taskButtons.length; i++) taskButtons[i].dataset.id = i;
   };
 
-  const addDeleteButtonEventListener = (taskButton, deleteButton) => {
-    deleteButton.addEventListener('click', () => {
-      const projectId = taskButton.dataset.projectId;
-      const taskId = taskButton.dataset.id;
-      const isProjectInbox = taskButton.dataset.isProjectInbox === 'true';
-      taskButton.remove();
-      updateTaskButtonIds();
-      Storage.removeTaskFromProject(projectId, taskId, isProjectInbox);
-      const selectedSidebarButton = Sidebar.getSelectedButton();
-      Editor.loadEmptyStateIfProjectEmpty(selectedSidebarButton);
+  const removeTaskCompletely = (taskButton) => {
+    const projectId = taskButton.dataset.projectId;
+    const taskId = taskButton.dataset.id;
+    const isProjectInbox = taskButton.dataset.isProjectInbox === 'true';
+    taskButton.remove();
+    updateTaskButtonIds();
+    Storage.removeTaskFromProject(projectId, taskId, isProjectInbox);
+    const selectedSidebarButton = Sidebar.getSelectedButton();
+    Editor.loadEmptyStateIfProjectEmpty(selectedSidebarButton);
+  };
+
+  const addCheckboxButtonEventListener = (taskButton, checkboxButton) => {
+    checkboxButton.addEventListener('click', () => {
+      checkboxButton.classList.add('clicked');
+      checkboxButton.addEventListener('transitionend', () =>
+        removeTaskCompletely(taskButton)
+      );
     });
   };
+
+  const addDeleteButtonEventListener = (taskButton, deleteButton) =>
+    deleteButton.addEventListener('click', () =>
+      removeTaskCompletely(taskButton)
+    );
 
   const getTaskButton = (task, isDueDateEmpty) => {
     const taskButton = document.createElement('button');
@@ -71,6 +83,7 @@ const TaskButton = (() => {
     taskButton.append(topDiv);
 
     addDeleteButtonEventListener(taskButton, deleteButton);
+    addCheckboxButtonEventListener(taskButton, checkboxButton);
 
     if (!isDueDateEmpty) return taskButton;
 
