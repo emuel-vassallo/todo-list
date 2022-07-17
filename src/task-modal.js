@@ -95,6 +95,9 @@ const TaskModal = (() => {
 
   const changeSelectedProjectOption = () => {
     const selectedSidebarButton = Sidebar.getSelectedButton();
+    const isSelectedButtonDefault =
+      selectedSidebarButton.dataset.isDefaultProject === 'true';
+
     const selectedProjectId = selectedSidebarButton.dataset.projectId;
     const projectSelectorOptions = document.querySelectorAll(
       '.project-selection-option'
@@ -102,15 +105,13 @@ const TaskModal = (() => {
     const defaultSelectedOption = document.querySelector(
       ".project-selector option[value='inbox']"
     );
-    const isSelectedProjectDefault =
-      selectedSidebarButton.dataset.isDefaultProject === 'true';
-    const projectOptionToSelect = isSelectedProjectDefault
+    const projectOptionToSelect = isSelectedButtonDefault
       ? defaultSelectedOption
       : projectSelectorOptions[selectedProjectId];
 
     projectOptionToSelect.selected = 'selected';
     projectSelector.dataset.selectedProjectId = selectedProjectId;
-    projectSelector.dataset.isProjectDefault = isSelectedProjectDefault;
+    projectSelector.dataset.isProjectDefault = isSelectedButtonDefault;
   };
 
   // Priority
@@ -180,11 +181,10 @@ const TaskModal = (() => {
       '.selected-priority > svg'
     );
 
-    let projectId =
-      projectSelector.options[projectSelector.selectedIndex].dataset.id;
+    let projectId = projectSelector.dataset.selectedProjectId;
 
     const isProjectInbox = projectSelector.dataset.isProjectDefault === 'true';
-    if (isProjectInbox) projectId = 0;
+    if (isProjectInbox) projectId = '0'; // TODO: target specific default projects;
 
     const taskId = Storage.getNewTaskId(projectId, isProjectInbox);
     const taskName = taskNameInput.value.trim();
@@ -212,12 +212,23 @@ const TaskModal = (() => {
   const addTaskOnSubmit = () => {
     const task = getTaskModalData();
     Storage.addTaskToProject(task);
+
     const selectedSidebarButton = Sidebar.getSelectedButton();
     const selectedSidebarButtonId = selectedSidebarButton.dataset.projectId;
-    const isProjectSelected =
-      task.projectId.toString() === selectedSidebarButtonId;
-    if (isProjectSelected) Editor.addNewTaskButtonToEditor(task);
+    const selectedProjectOptionId = projectSelector.dataset.selectedProjectId;
+    const isSelectedSidebarButtonDefault =
+      selectedSidebarButton.dataset.isDefaultProject === 'true';
+    const isSelectedButtonDefault =
+      selectedSidebarButton.dataset.isDefaultProject === 'true';
+
     toggleModal();
+
+    if (
+      selectedSidebarButtonId !== selectedProjectOptionId ||
+      isSelectedSidebarButtonDefault === isSelectedButtonDefault
+    )
+      return;
+    Editor.addNewTaskButtonToEditor(task);
   };
 
   // Event Listeners
@@ -268,6 +279,13 @@ const TaskModal = (() => {
     if (e.key !== 'Enter' || !isModalVisible() || !isRequiredDataEntered())
       return;
     addTaskOnSubmit();
+  });
+
+  projectSelector.addEventListener('input', () => {
+    const isSelectedProjectDefault =
+      projectSelector.options[projectSelector.selectedIndex].dataset
+        .isProjectDefault === 'true';
+    projectSelector.dataset.isProjectDefault = isSelectedProjectDefault;
   });
 
   dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');

@@ -29,7 +29,6 @@ const TaskButton = (() => {
     );
   };
 
-
   const getTaskButton = (task) => {
     const isDueDateEmpty = !task.dueDate;
     const isDescriptionEmpty = !task.description;

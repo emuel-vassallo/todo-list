@@ -122,8 +122,14 @@
           <div class="extra-fields">
             <div>
               <input class="due-date-picker" type="date" />
-              <select class="project-selector" name="project_name">
-                <option value="inbox">Inbox</option>
+              <select
+                class="project-selector"
+                name="project_name"
+                data-is-project-default="true"
+              >
+                <option value="inbox" data-is-project-default="true">
+                  Inbox
+                </option>
               </select>
             </div>
             <div class="priority-dropdown">
