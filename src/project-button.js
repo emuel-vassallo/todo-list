@@ -11,6 +11,7 @@ const ProjectButton = (() => {
     const newProjectButton = document.createElement('button');
     const newProjectNameSpan = document.createElement('span');
     const deleteButton = Icons.getDeleteIcon();
+    deleteButton.classList.add('delete-project-icon')
 
     newProjectButton.classList.add(
       'project-button',

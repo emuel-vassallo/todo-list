@@ -31,8 +31,6 @@ const Icons = (() => {
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 
-    svg.classList.add('delete-project-icon');
-
     g.setAttribute('fill', 'none');
     g.setAttribute('fill-rule', 'evenodd');
     path1.setAttribute('d', 'M0 0h24v24H0z');

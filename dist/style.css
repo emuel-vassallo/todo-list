@@ -814,6 +814,7 @@ main {
   font-size: 1.24rem;
   max-width: 100%;
   overflow-wrap: break-word;
+  cursor: default;
 }
 
 .current-date-title {
@@ -916,19 +917,24 @@ main {
   justify-content: space-between;
   cursor: pointer;
   background-color: unset;
-  border-bottom: 1px solid var(--task-button-color);
+  border-bottom: 1px solid var(--task-button-border-color);
   padding: 8px 0;
   gap: 0px;
-  margin: 0 30px 0 0;
+  margin: 0 30px 2px 0;
 }
+
+/* Task Button Top */
 
 .task-button-top {
   display: flex;
   justify-content: space-between;
+  width: 100%;
   align-items: center;
   font-size: 0.89rem;
   height: 24px;
 }
+
+/* Task Button Top Left */
 
 .task-button-top-left {
   display: flex;
@@ -1023,6 +1029,40 @@ main {
   gap: 3px;
   height: 14px;
 }
+
+/* Task Button Top Right */
+
+.task-button-top-right {
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.task-button-action-button {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background-color: unset;
+  color: var(--gray);
+  border-radius: 3px;
+}
+
+.task-button-action-button:hover {
+  background-color: var(--sidebar-button-hover-bg);
+  color: var(--sidebar-fg);
+}
+
+.task-button-action-button > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.task-button:hover .task-button-top-right {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Task Button Bottom */
 
 .task-button-due-date-text {
   color: var(--gray);
