@@ -21,9 +21,11 @@ const Editor = (() => {
 
   // Empty State
   const getEmptyStateContent = (sidebarButton) => {
-    const tabName = sidebarButton.dataset.projectId
-      ? 'Project'
-      : sidebarButton.dataset.tabName;
+    const isProjectDefault = sidebarButton.dataset.isDefaultProject === 'true';
+
+    const tabName = isProjectDefault
+      ? sidebarButton.dataset.tabName
+      : 'Project';
 
     const emptyStateContainer = document.createElement('div');
     const emptyStateImage = document.createElement('img');
@@ -55,8 +57,7 @@ const Editor = (() => {
       Inbox: "Looks like everything's organized in the right place.",
       Today: 'Enjoy the rest of your day.',
       Upcoming: 'All upcoming tasks will show up here.',
-      Project:
-        'Group your tasks by goal or area of your life. Drag and drop to rearrange tasks or create sub-tasks.',
+      Project: 'Group your tasks by goal or area of your life.',
     }[tabName];
 
     emptyStateHeading.textContent = headingText;
@@ -64,10 +65,11 @@ const Editor = (() => {
 
     emptyStateTextContainer.append(emptyStateHeading, emptyStateBody);
     emptyStateContainer.append(emptyStateImage, emptyStateTextContainer);
+
     return emptyStateContainer;
   };
 
-  const loadEmptyStateContent = (sidebarButton) => {
+  const addEmptyStateContent = (sidebarButton) => {
     const emptyStateContent = getEmptyStateContent(sidebarButton);
     editor.append(emptyStateContent);
   };
@@ -173,16 +175,18 @@ const Editor = (() => {
   };
 
   const doesSidebarProjectHaveTasks = (sidebarButton) => {
-    const projects = Storage.getProjects();
+    const isProjectDefault = sidebarButton.dataset.isDefaultProject === 'true';
+    const projects = isProjectDefault
+      ? Storage.getDefaultProjects()
+      : Storage.getProjects();
     const projectId = sidebarButton.dataset.projectId;
-    if (projectId === undefined) return true;
     const tasks = projects[projectId].tasks;
     return tasks.length === 0;
   };
 
   const loadEmptyStateIfProjectEmpty = (sidebarButton) => {
     const isProjectEmpty = doesSidebarProjectHaveTasks(sidebarButton);
-    if (isProjectEmpty) loadEmptyStateContent(sidebarButton);
+    if (isProjectEmpty) addEmptyStateContent(sidebarButton);
   };
 
   const changeContent = (sidebarButton, tabName) => {
@@ -233,11 +237,14 @@ const Editor = (() => {
   };
 
   const addAllProjectTaskButtons = (sidebarButton) => {
-    const projects = Storage.getProjects();
+    const isProjectDefault = sidebarButton.dataset.isDefaultProject === 'true';
+    const projects = isProjectDefault
+      ? Storage.getDefaultProjects()
+      : Storage.getProjects();
     const projectId = sidebarButton.dataset.projectId;
-    if (projectId === undefined) return; // TODO: Load inbox tasks.
     const project = projects[projectId];
-    for (const task of project.tasks) addNewTaskButtonToEditor(task);
+    const tasks = project.tasks;
+    for (const task of tasks) addNewTaskButtonToEditor(task);
   };
 
   changeContentOnTabChange();

@@ -208,8 +208,9 @@ const TaskModal = (() => {
     Storage.addTaskToProject(task);
     const selectedSidebarButton = Sidebar.getSelectedButton();
     const selectedSidebarButtonId = selectedSidebarButton.dataset.projectId;
-    const isTaskProjectSelected = task.projectId === selectedSidebarButtonId;
-    if (isTaskProjectSelected) Editor.addNewTaskButtonToEditor(task);
+    const isProjectSelected =
+      task.projectId.toString() === selectedSidebarButtonId;
+    if (isProjectSelected) Editor.addNewTaskButtonToEditor(task);
     toggleModal();
   };
 
