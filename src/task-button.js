@@ -27,6 +27,8 @@ const TaskButton = (() => {
     const topDiv = document.createElement('div');
     const topLeftDiv = document.createElement('div');
     const topRightDiv = document.createElement('div');
+    const editButton = document.createElement('button');
+    const editIcon = Icons.getEditIcon();
     const deleteButton = document.createElement('button');
     const deleteIcon = Icons.getDeleteIcon();
     const taskNameText = document.createElement('p');
@@ -38,6 +40,10 @@ const TaskButton = (() => {
     topDiv.classList.add('task-button-top');
     topLeftDiv.classList.add('task-button-top-left');
     topRightDiv.classList.add('task-button-top-right');
+    editButton.classList.add(
+      'task-button-edit-button',
+      'task-button-action-button'
+    );
     deleteButton.classList.add(
       'task-button-delete-button',
       'task-button-action-button'
@@ -57,8 +63,10 @@ const TaskButton = (() => {
     checkboxButtonDiv.appendChild(checkboxButton);
     checkboxButton.appendChild(checkboxIcon);
     topLeftDiv.append(checkboxButtonDiv, taskNameText);
+    editButton.appendChild(editIcon);
+    editButton.appendChild(editIcon);
     deleteButton.appendChild(deleteIcon);
-    topRightDiv.append(deleteButton);
+    topRightDiv.append(editButton, deleteButton);
     topDiv.append(topLeftDiv, topRightDiv);
     taskButton.append(topDiv);
 

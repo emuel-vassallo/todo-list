@@ -1036,6 +1036,7 @@ main {
   display: flex;
   visibility: hidden;
   opacity: 0;
+  gap: 8px;
 }
 
 .task-button-action-button {

@@ -85,11 +85,44 @@ const Icons = (() => {
     return svg;
   };
 
+  const getEditIcon = () => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const path1 = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'path'
+    );
+    const path2 = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'path'
+    );
+    const path3 = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'path'
+    );
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+    g.setAttribute('fill', 'none');
+    g.setAttribute('fill-rule', 'evenodd');
+    path1.setAttribute('fill', 'currentColor');
+    path1.setAttribute('d', 'M9.5 19h10a.5.5 0 110 1h-10a.5.5 0 110-1z');
+    path2.setAttribute('stroke', 'currentColor');
+    path2.setAttribute(
+      'd',
+      'M4.42 16.03a1.5 1.5 0 00-.43.9l-.22 2.02a.5.5 0 00.55.55l2.02-.21a1.5 1.5 0 00.9-.44L18.7 7.4a1.5 1.5 0 000-2.12l-.7-.7a1.5 1.5 0 00-2.13 0L4.42 16.02z'
+    );
+
+    g.append(path1, path2, path3);
+    svg.append(g);
+
+    return svg;
+  };
+
   return {
-    getProjectIcon,
-    getDeleteIcon,
-    getCheckboxIcon,
     getCalendarIcon,
+    getCheckboxIcon,
+    getDeleteIcon,
+    getEditIcon,
+    getProjectIcon,
   };
 })();
 
