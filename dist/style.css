@@ -922,7 +922,6 @@ main {
   background-color: unset;
   border-bottom: 1px solid var(--task-button-border-color);
   padding: 8px 0;
-  gap: 0px;
   margin: 0 30px 2px 0;
 }
 
@@ -932,9 +931,9 @@ main {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  height: 18px;
   align-items: center;
   font-size: 0.89rem;
-  height: 24px;
 }
 
 /* Task Button Top Left */
@@ -972,7 +971,7 @@ main {
 }
 
 .task-button-checkbox-button.clicked {
-  animation: pop 0.25s;
+  animation: pop 0.23s;
   background-color: gray;
 }
 
@@ -981,10 +980,10 @@ main {
     transform: scale(1);
   }
   20% {
-    transform: scale(1.17);
+    transform: scale(1.2);
   }
   80% {
-    transform: scale(1.17);
+    transform: scale(1.2);
   }
   100% {
     transform: scale(1);
@@ -1054,15 +1053,16 @@ main {
   color: var(--priority-3-color);
 }
 
-.task-button-bottom {
+.task-button-due-date {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
   height: 16px;
   padding: 0 0 0 26px;
 }
 
-.task-button-bottom-left {
+.task-button-due-date-left {
   display: flex;
   align-items: center;
   gap: 3px;
@@ -1102,11 +1102,23 @@ main {
   opacity: 1;
 }
 
-/* Task Button Bottom */
+/* Task Button Description */
+
+.task-button-description {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  font-size: 0.76rem;
+  color: var(--gray);
+  padding: 0 0 3px 26px;
+}
+
+/* Task Button Due Date */
 
 .task-button-due-date-text {
   color: var(--gray);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
 }
 
 .calendar-icon {

@@ -35,7 +35,10 @@ const TaskButton = (() => {
       removeTaskCompletely(taskButton)
     );
 
-  const getTaskButton = (task, isDueDateEmpty) => {
+  const getTaskButton = (task) => {
+    const isDueDateEmpty = !task.dueDate;
+    const isDescriptionEmpty = !task.description;
+
     const taskButton = document.createElement('button');
     const topDiv = document.createElement('div');
     const topLeftDiv = document.createElement('div');
@@ -86,23 +89,36 @@ const TaskButton = (() => {
     addDeleteButtonEventListener(taskButton, deleteButton);
     addCheckboxButtonEventListener(taskButton, checkboxButton);
 
-    if (!isDueDateEmpty) return taskButton;
+    if (isDueDateEmpty && isDescriptionEmpty) return taskButton;
 
-    const bottomDiv = document.createElement('div');
+    const descriptionDiv = document.createElement('div');
+    const descriptionText = document.createElement('p');
+
+    descriptionDiv.classList.add('task-button-description');
+    descriptionText.classList.add('task-button-description-text');
+
+    descriptionText.innerText = task.description;
+
+    descriptionDiv.append(descriptionText);
+    taskButton.append(descriptionDiv);
+
+    if (isDueDateEmpty) return taskButton;
+
+    const dueDateDiv = document.createElement('div');
     const bottomLefttDiv = document.createElement('div');
     const calendarIcon = Icons.getCalendarIcon();
     const dueDateTextElement = document.createElement('p');
 
-    bottomDiv.classList.add('task-button-bottom');
-    bottomLefttDiv.classList.add('task-button-bottom-left');
+    dueDateDiv.classList.add('task-button-due-date');
+    bottomLefttDiv.classList.add('task-button-due-date-left');
     calendarIcon.classList.add('calendar-icon');
     dueDateTextElement.classList.add('task-button-due-date-text');
 
     dueDateTextElement.innerText = task.dueDate;
 
     bottomLefttDiv.append(calendarIcon, dueDateTextElement);
-    bottomDiv.append(bottomLefttDiv);
-    taskButton.append(bottomDiv);
+    dueDateDiv.append(bottomLefttDiv);
+    taskButton.append(dueDateDiv);
 
     return taskButton;
   };
