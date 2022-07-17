@@ -29,10 +29,6 @@ const TaskButton = (() => {
     );
   };
 
-  const addDeleteButtonEventListener = (taskButton, deleteButton) =>
-    deleteButton.addEventListener('click', () =>
-      removeTaskCompletely(taskButton)
-    );
 
   const getTaskButton = (task) => {
     const isDueDateEmpty = !task.dueDate;
@@ -44,8 +40,6 @@ const TaskButton = (() => {
     const topRightDiv = document.createElement('div');
     const editButton = document.createElement('button');
     const editIcon = Icons.getEditIcon();
-    const deleteButton = document.createElement('button');
-    const deleteIcon = Icons.getDeleteIcon();
     const taskNameText = document.createElement('p');
     const checkboxButtonDiv = document.createElement('div');
     const checkboxButton = document.createElement('button');
@@ -57,10 +51,6 @@ const TaskButton = (() => {
     topRightDiv.classList.add('task-button-top-right');
     editButton.classList.add(
       'task-button-edit-button',
-      'task-button-action-button'
-    );
-    deleteButton.classList.add(
-      'task-button-delete-button',
       'task-button-action-button'
     );
     checkboxButtonDiv.classList.add('task-button-checkbox-button-div');
@@ -80,12 +70,10 @@ const TaskButton = (() => {
     topLeftDiv.append(checkboxButtonDiv, taskNameText);
     editButton.appendChild(editIcon);
     editButton.appendChild(editIcon);
-    deleteButton.appendChild(deleteIcon);
-    topRightDiv.append(editButton, deleteButton);
+    topRightDiv.append(editButton);
     topDiv.append(topLeftDiv, topRightDiv);
     taskButton.append(topDiv);
 
-    addDeleteButtonEventListener(taskButton, deleteButton);
     addCheckboxButtonEventListener(taskButton, checkboxButton);
 
     if (isDueDateEmpty && isDescriptionEmpty) return taskButton;
