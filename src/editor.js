@@ -174,19 +174,13 @@ const Editor = (() => {
     for (const tabName of tabNames) editor.classList.remove(tabName);
   };
 
-  const doesSidebarProjectHaveTasks = (sidebarButton) => {
-    const isProjectDefault = sidebarButton.dataset.isDefaultProject === 'true';
-    const projects = isProjectDefault
-      ? Storage.getDefaultProjects()
-      : Storage.getProjects();
-    const projectId = sidebarButton.dataset.projectId;
-    const tasks = projects[projectId].tasks;
-    return tasks.length === 0;
-  };
+  const isSelectedProjectEmpty = () =>
+    document.querySelectorAll('.task-button').length === 0;
 
   const loadEmptyStateIfProjectEmpty = (sidebarButton) => {
-    const isProjectEmpty = doesSidebarProjectHaveTasks(sidebarButton);
-    if (isProjectEmpty) addEmptyStateContent(sidebarButton);
+    const isProjectEmpty = isSelectedProjectEmpty(sidebarButton);
+    if (!isProjectEmpty) return;
+    addEmptyStateContent(sidebarButton);
   };
 
   const changeContent = (sidebarButton, tabName) => {
