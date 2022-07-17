@@ -1,8 +1,29 @@
 import { Icons } from './icons.js';
+import { Editor } from './editor.js';
+import { Storage } from './storage.js';
+import { Sidebar } from './sidebar.js';
 
 const TaskButton = (() => {
+  const updateTaskButtonIds = () => {
+    const taskButtons = document.querySelectorAll('.task-button');
+    for (let i = 0; i < taskButtons.length; i++) taskButtons[i].dataset.id = i;
+  };
+
+  const addDeleteButtonEventListener = (taskButton, deleteButton) => {
+    deleteButton.addEventListener('click', () => {
+      const projectId = taskButton.dataset.projectId;
+      const taskId = taskButton.dataset.id;
+      const isProjectInbox = taskButton.dataset.isProjectInbox === 'true';
+      taskButton.remove();
+      updateTaskButtonIds();
+      Storage.removeTaskFromProject(projectId, taskId, isProjectInbox);
+      const selectedSidebarButton = Sidebar.getSelectedButton();
+      Editor.loadEmptyStateIfProjectEmpty(selectedSidebarButton);
+    });
+  };
+
   const getTaskButton = (task, isDueDateEmpty) => {
-    const button = document.createElement('button');
+    const taskButton = document.createElement('button');
     const topDiv = document.createElement('div');
     const topLeftDiv = document.createElement('div');
     const topRightDiv = document.createElement('div');
@@ -13,18 +34,25 @@ const TaskButton = (() => {
     const checkboxButton = document.createElement('button');
     const checkboxIcon = Icons.getCheckboxIcon();
 
-    button.classList.add('task-button');
+    taskButton.classList.add('task-button');
     topDiv.classList.add('task-button-top');
     topLeftDiv.classList.add('task-button-top-left');
     topRightDiv.classList.add('task-button-top-right');
-    deleteButton.classList.add('task-button-delete-button', 'task-button-action-button');
+    deleteButton.classList.add(
+      'task-button-delete-button',
+      'task-button-action-button'
+    );
     checkboxButtonDiv.classList.add('task-button-checkbox-button-div');
     checkboxButton.classList.add('task-button-checkbox-button');
     checkboxIcon.classList.add('task-button-checkbox-icon', 'project-icon');
     taskNameText.classList.add('task-button-task-name');
 
     taskNameText.innerText = task.name;
-    button.dataset.priority = task.priority;
+
+    taskButton.dataset.projectId = task.projectId;
+    taskButton.dataset.id = task.id;
+    taskButton.dataset.isProjectInbox = task.isProjectInbox;
+    taskButton.dataset.priority = task.priority;
 
     checkboxButtonDiv.appendChild(checkboxButton);
     checkboxButton.appendChild(checkboxIcon);
@@ -32,9 +60,11 @@ const TaskButton = (() => {
     deleteButton.appendChild(deleteIcon);
     topRightDiv.append(deleteButton);
     topDiv.append(topLeftDiv, topRightDiv);
-    button.append(topDiv);
+    taskButton.append(topDiv);
 
-    if (!isDueDateEmpty) return button;
+    addDeleteButtonEventListener(taskButton, deleteButton);
+
+    if (!isDueDateEmpty) return taskButton;
 
     const bottomDiv = document.createElement('div');
     const bottomLefttDiv = document.createElement('div');
@@ -50,9 +80,9 @@ const TaskButton = (() => {
 
     bottomLefttDiv.append(calendarIcon, dueDateTextElement);
     bottomDiv.append(bottomLefttDiv);
-    button.append(bottomDiv);
+    taskButton.append(bottomDiv);
 
-    return button;
+    return taskButton;
   };
 
   return { getTaskButton };

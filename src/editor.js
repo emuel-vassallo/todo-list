@@ -180,6 +180,11 @@ const Editor = (() => {
     return tasks.length === 0;
   };
 
+  const loadEmptyStateIfProjectEmpty = (sidebarButton) => {
+    const isProjectEmpty = doesSidebarProjectHaveTasks(sidebarButton);
+    if (isProjectEmpty) loadEmptyStateContent(sidebarButton);
+  };
+
   const changeContent = (sidebarButton, tabName) => {
     Sidebar.changeTabTitle(tabName);
     removeEditorContent();
@@ -206,8 +211,7 @@ const Editor = (() => {
     addAllProjectTaskButtons(sidebarButton);
 
     // Empty State
-    const isProjectEmpty = doesSidebarProjectHaveTasks(sidebarButton);
-    if (isProjectEmpty) loadEmptyStateContent(sidebarButton);
+    loadEmptyStateIfProjectEmpty(sidebarButton);
   };
 
   const changeContentOnTabChange = () => {
@@ -250,6 +254,7 @@ const Editor = (() => {
     changeContent,
     removeSidebarVisibleClass,
     updateCurrentDateTitle,
+    loadEmptyStateIfProjectEmpty,
   };
 })();
 

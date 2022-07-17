@@ -68,6 +68,16 @@ const Storage = (() => {
     updateProjectList(projects);
   };
 
+  const updateTaskIds = (projectId, isProjectInbox) => {
+    const projectList = isProjectInbox ? getDefaultProjects() : getProjects();
+    const project = projectList[projectId];
+    const tasks = project.tasks;
+    for (let i = 0; i < tasks.length; i++) tasks[i].id = i;
+    isProjectInbox
+      ? updateDefaultProjectList(projectList)
+      : updateProjectList(projectList);
+  };
+
   const addTaskToProject = (task) => {
     const isProjectInbox = task.isProjectInbox;
     const projects = isProjectInbox ? getDefaultProjects() : getProjects();
@@ -79,6 +89,17 @@ const Storage = (() => {
       return;
     }
     updateProjectList(projects);
+  };
+
+  const removeTaskFromProject = (projectId, taskId, isProjectInbox) => {
+    const projectList = isProjectInbox ? getDefaultProjects() : getProjects();
+    const project = projectList[projectId];
+    const tasks = project.tasks;
+    tasks.splice(taskId, 1);
+    updateTaskIds(projectId, taskId, isProjectInbox);
+    isProjectInbox
+      ? updateDefaultProjectList(projectList)
+      : updateProjectList(projectList);
   };
 
   createEmptyProjectLists();
@@ -93,6 +114,7 @@ const Storage = (() => {
     getProjects,
     removeProject,
     updateProjectIds,
+    removeTaskFromProject,
   };
 })();
 
