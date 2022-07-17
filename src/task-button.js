@@ -1,7 +1,7 @@
-import { Icons } from './icons.js';
 import { Editor } from './editor.js';
-import { Storage } from './storage.js';
+import { Icons } from './icons.js';
 import { Sidebar } from './sidebar.js';
+import { Storage } from './storage.js';
 
 const TaskButton = (() => {
   const updateTaskButtonIds = () => {

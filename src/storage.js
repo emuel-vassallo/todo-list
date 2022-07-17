@@ -56,6 +56,17 @@ const Storage = (() => {
     updateProjectList(projects);
   };
 
+  const updateTaskProjectIds = () => {
+    const projectList = getProjects();
+    for (let i = 0; i < projectList.length; i++) {
+      const project = projectList[i];
+      const projectId = project.id;
+      const projectTasks = project.tasks;
+      for (const task of projectTasks) task.projectId = projectId;
+    }
+    updateProjectList(projectList);
+  };
+
   const removeProject = (id) => {
     let projectList = getProjects();
     projectList.splice(id, 1);
@@ -115,6 +126,7 @@ const Storage = (() => {
     removeProject,
     updateProjectIds,
     removeTaskFromProject,
+    updateTaskProjectIds,
   };
 })();
 
