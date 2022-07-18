@@ -219,16 +219,15 @@ const TaskModal = (() => {
     const isSelectedSidebarButtonDefault =
       selectedSidebarButton.dataset.isDefaultProject === 'true';
     const isSelectedButtonDefault =
-      selectedSidebarButton.dataset.isDefaultProject === 'true';
+      projectSelector.dataset.isProjectDefault === 'true';
 
     toggleModal();
 
     if (
-      selectedSidebarButtonId !== selectedProjectOptionId ||
+      selectedSidebarButtonId === selectedProjectOptionId &&
       isSelectedSidebarButtonDefault === isSelectedButtonDefault
     )
-      return;
-    Editor.addNewTaskButtonToEditor(task);
+      Editor.addNewTaskButtonToEditor(task);
   };
 
   // Event Listeners
@@ -282,6 +281,7 @@ const TaskModal = (() => {
   });
 
   projectSelector.addEventListener('input', () => {
+    // BUG: tasks added to a non-default project when a default project is selected always go to the first non-default project.
     const isSelectedProjectDefault =
       projectSelector.options[projectSelector.selectedIndex].dataset
         .isProjectDefault === 'true';
