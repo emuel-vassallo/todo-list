@@ -280,12 +280,23 @@ const TaskModal = (() => {
     addTaskOnSubmit();
   });
 
-  projectSelector.addEventListener('input', () => {
-    // BUG: tasks added to a non-default project when a default project is selected always go to the first non-default project.
+  const changeIsSelectedProjectDefaultValue = () => {
     const isSelectedProjectDefault =
       projectSelector.options[projectSelector.selectedIndex].dataset
         .isProjectDefault === 'true';
     projectSelector.dataset.isProjectDefault = isSelectedProjectDefault;
+  };
+
+  const changeSelectedProjectIdValue = () => {
+    const projectSelectorSelectedIndex = projectSelector.selectedIndex;
+    const selectedProjectId =
+      projectSelectorSelectedIndex > 0 ? projectSelectorSelectedIndex - 1 : 0;
+    projectSelector.dataset.selectedProjectId = selectedProjectId;
+  };
+
+  projectSelector.addEventListener('input', () => {
+    changeIsSelectedProjectDefaultValue();
+    changeSelectedProjectIdValue();
   });
 
   dueDatePicker.min = format(new Date(), 'yyyy-MM-dd');
