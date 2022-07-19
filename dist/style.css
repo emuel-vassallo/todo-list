@@ -107,6 +107,13 @@ header > div {
   justify-content: center;
   background-color: unset;
   position: relative;
+  opacity: 1;
+  visibility: visible;
+}
+
+.header-button:disabled {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .header-left .header-button {
@@ -1188,6 +1195,6 @@ main {
   }
 
   .editor {
-    width: 0;
+    width: 100%;
   }
 }

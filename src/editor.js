@@ -2,6 +2,7 @@ import { Sidebar } from './sidebar.js';
 import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
 import { TaskButton } from './task-button.js';
+import { Header } from './header.js';
 import { format } from 'date-fns';
 
 const Editor = (() => {
@@ -187,7 +188,7 @@ const Editor = (() => {
     Sidebar.changeTabTitle(tabName);
     removeEditorContent();
 
-    // Selected class
+    // Sidebar Button Selected class
     removeTabNameClass();
     Sidebar.removeSelectedButtonClass();
     Sidebar.addSelectedClassToButton(sidebarButton);
@@ -201,14 +202,22 @@ const Editor = (() => {
       updateCurrentDateTitle();
     }
 
-    // Add task
-    addNewAddTaskButton();
-    addNewTaskButtonEventListener();
+    // 'Add Task' button
+    if (
+      (sidebarButton.dataset.isDefaultProject === 'true' &&
+        sidebarButton.dataset.tabName !== 'Today' &&
+        sidebarButton.dataset.tabName !== 'Upcoming') ||
+      sidebarButton.dataset.isDefaultProject === undefined
+    ) {
+      addNewAddTaskButton();
+      addNewTaskButtonEventListener();
+      Header.enableAddTaskButton();
+    } else Header.disableAddTaskButton();
 
-    // Tasks
+    // Task buttons
     addAllProjectTaskButtons(sidebarButton);
 
-    // Empty State
+    // Empty state
     loadEmptyStateIfProjectEmpty(sidebarButton);
   };
 

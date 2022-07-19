@@ -176,6 +176,8 @@ const TaskModal = (() => {
 
   const getFormattedDate = (date) => format(date, 'dd LLL');
 
+  const getCurrentDate = () => getFormattedDate(new Date());
+
   const getTaskModalData = () => {
     const prioritySelectorIcon = document.querySelector(
       '.selected-priority > svg'
@@ -184,7 +186,10 @@ const TaskModal = (() => {
     let projectId = projectSelector.dataset.selectedProjectId;
 
     const isProjectInbox = projectSelector.dataset.isProjectDefault === 'true';
-    if (isProjectInbox) projectId = '0'; // TODO: target specific default projects;
+    const selectedSidebarButton = Sidebar.getSelectedButton();
+    const selectedSidebarButtonId = selectedSidebarButton.dataset.projectId;
+
+    if (isProjectInbox) projectId = '0';
 
     const taskId = Storage.getNewTaskId(projectId, isProjectInbox);
     const taskName = taskNameInput.value.trim();
@@ -193,6 +198,15 @@ const TaskModal = (() => {
     const dueDateValue = dueDatePicker.valueAsDate;
     const taskDueDate =
       dueDateValue === null ? null : getFormattedDate(dueDateValue);
+
+    const isDateToday = taskDueDate === getCurrentDate();
+
+    const defaultProjectId =
+      !isDateToday && taskDueDate === null
+        ? null
+        : isDateToday || selectedSidebarButtonId === '1'
+        ? '1'
+        : '2';
 
     const taskPriority = prioritySelectorIcon.dataset.priority;
 
@@ -206,28 +220,16 @@ const TaskModal = (() => {
       isProjectInbox
     );
 
+    task.defaultProjectId = defaultProjectId;
+
     return task;
   };
 
   const addTaskOnSubmit = () => {
     const task = getTaskModalData();
     Storage.addTaskToProject(task);
-
-    const selectedSidebarButton = Sidebar.getSelectedButton();
-    const selectedSidebarButtonId = selectedSidebarButton.dataset.projectId;
-    const selectedProjectOptionId = projectSelector.dataset.selectedProjectId;
-    const isSelectedSidebarButtonDefault =
-      selectedSidebarButton.dataset.isDefaultProject === 'true';
-    const isSelectedButtonDefault =
-      projectSelector.dataset.isProjectDefault === 'true';
-
+    Editor.addNewTaskButtonToEditor(task);
     toggleModal();
-
-    if (
-      selectedSidebarButtonId === selectedProjectOptionId &&
-      isSelectedSidebarButtonDefault === isSelectedButtonDefault
-    )
-      Editor.addNewTaskButtonToEditor(task);
   };
 
   // Event Listeners

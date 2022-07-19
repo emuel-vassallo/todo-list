@@ -1,4 +1,5 @@
 import { Project } from './project.js';
+import { format } from 'date-fns';
 
 const Storage = (() => {
   const createEmptyProjectLists = () => {
@@ -90,12 +91,26 @@ const Storage = (() => {
   };
 
   const addTaskToProject = (task) => {
+    const dueDateValue = task.dueDate;
+    const taskDueDate = dueDateValue === null ? null : dueDateValue;
+
+    // Add task to 'Today' or 'Upcoming'.
+    if (dueDateValue !== null && taskDueDate !== null) {
+      console.log('Adding to today/upcoming');
+      const defaultProjectList = getDefaultProjects();
+      const taskDefaultProjectId = task.defaultProjectId;
+
+      const taskProject = defaultProjectList[taskDefaultProjectId];
+      taskProject.tasks = [...taskProject.tasks, task];
+      updateDefaultProjectList(defaultProjectList);
+    }
+
     const isProjectInbox = task.isProjectInbox;
     const projects = isProjectInbox ? getDefaultProjects() : getProjects();
 
     const taskProject = projects[task.projectId];
-    taskProject.tasks = [...taskProject.tasks, task];
     if (isProjectInbox) {
+      taskProject.tasks = [...taskProject.tasks, task];
       updateDefaultProjectList(projects);
       return;
     }
