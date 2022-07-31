@@ -206,10 +206,13 @@ const TaskModal = (() => {
 
     const dueDateValue = dueDatePicker.valueAsDate;
 
-    const taskDueDate = getRegularFormattedDate(dueDateValue);
+    const taskDueDate = dueDateValue
+      ? getRegularFormattedDate(dueDateValue)
+      : null;
 
-    const taskFormattedDueDate =
-      dueDateValue === null ? null : getDisplayFormattedDate(dueDateValue);
+    const taskFormattedDueDate = dueDateValue
+      ? getDisplayFormattedDate(dueDateValue)
+      : null;
 
     const taskPriority = prioritySelectorIcon.dataset.priority;
 
