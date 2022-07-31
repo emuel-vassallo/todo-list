@@ -5,7 +5,7 @@ import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
 
 const ProjectButton = (() => {
-  const todaySidebarButton = document.querySelector('.sidebar-button-today');
+  const inboxSidebarButton = document.querySelector('.sidebar-button-inbox');
 
   const getNewProjectButton = (projectIcon, projectName) => {
     const newProjectButton = document.createElement('button');
@@ -102,7 +102,7 @@ const ProjectButton = (() => {
   };
 
   addExistingProjectButtons();
-  Editor.changeContent(todaySidebarButton, todaySidebarButton.dataset.tabName);
+  Editor.changeContent(inboxSidebarButton, inboxSidebarButton.dataset.tabName);
 
   return { addProjectButton };
 })();

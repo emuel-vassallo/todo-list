@@ -162,7 +162,9 @@ const TaskModal = (() => {
 
   const isRequiredDataEntered = () => {
     const isTaskNameInputFilled = taskNameInput.value.trim();
-    if (isTaskNameInputFilled) return true;
+    if (isTaskNameInputFilled) {
+      return true;
+    }
     return false;
   };
 
@@ -176,7 +178,7 @@ const TaskModal = (() => {
 
   const getFormattedDate = (date) => format(date, 'dd LLL');
 
-  const getCurrentDate = () => getFormattedDate(new Date());
+  // const getCurrentDate = () => getFormattedDate(new Date());
 
   const getTaskModalData = () => {
     const prioritySelectorIcon = document.querySelector(
@@ -186,10 +188,12 @@ const TaskModal = (() => {
     let projectId = projectSelector.dataset.selectedProjectId;
 
     const isProjectInbox = projectSelector.dataset.isProjectDefault === 'true';
-    const selectedSidebarButton = Sidebar.getSelectedButton();
-    const selectedSidebarButtonId = selectedSidebarButton.dataset.projectId;
+    // const selectedSidebarButton = Sidebar.getSelectedButton();
+    // const selectedSidebarButtonId = selectedSidebarButton.dataset.projectId;
 
-    if (isProjectInbox) projectId = '0';
+    if (isProjectInbox) {
+      projectId = '0';
+    }
 
     const taskId = Storage.getNewTaskId(projectId, isProjectInbox);
     const taskName = taskNameInput.value.trim();
@@ -198,15 +202,6 @@ const TaskModal = (() => {
     const dueDateValue = dueDatePicker.valueAsDate;
     const taskDueDate =
       dueDateValue === null ? null : getFormattedDate(dueDateValue);
-
-    const isDateToday = taskDueDate === getCurrentDate();
-
-    const defaultProjectId =
-      !isDateToday && taskDueDate === null
-        ? null
-        : isDateToday || selectedSidebarButtonId === '1'
-        ? '1'
-        : '2';
 
     const taskPriority = prioritySelectorIcon.dataset.priority;
 
@@ -220,7 +215,22 @@ const TaskModal = (() => {
       isProjectInbox
     );
 
-    task.defaultProjectId = defaultProjectId;
+    // const isDateToday = taskDueDate === getCurrentDate();
+    // const defaultProjectId =
+    //   !isDateToday && taskDueDate === null
+    //     ? null
+    //     : isDateToday || selectedSidebarButtonId === '1'
+    //       ? '1'
+    //       : '2';
+    //
+    // const defaultProjectTaskId =
+    //   defaultProjectId === null
+    //     ? null
+    //     : Storage.getNewDefaultProjectTaskId(defaultProjectId);
+    //
+    // task.defaultProjectId = defaultProjectId;
+    //
+    // task.defaultProjectTaskId = defaultProjectTaskId;
 
     return task;
   };
@@ -228,7 +238,8 @@ const TaskModal = (() => {
   const addTaskOnSubmit = () => {
     const task = getTaskModalData();
     Storage.addTaskToProject(task);
-    Editor.addNewTaskButtonToEditor(task);
+    // TODO: Don't add task button to DOM if project selected in modal is not selected sidebar.
+    Editor.addNewTaskButton(task);
     toggleModal();
   };
 
@@ -277,8 +288,9 @@ const TaskModal = (() => {
   submitButton.addEventListener('click', () => addTaskOnSubmit());
 
   window.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter' || !isModalVisible() || !isRequiredDataEntered())
+    if (e.key !== 'Enter' || !isModalVisible() || !isRequiredDataEntered()) {
       return;
+    }
     addTaskOnSubmit();
   });
 

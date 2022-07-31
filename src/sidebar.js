@@ -1,5 +1,6 @@
 import { Editor } from './editor.js';
 import { Tooltip } from './tooltip.js';
+import { TaskButton } from './task-button.js';
 
 const Sidebar = (() => {
   const sidebar = document.querySelector('.sidebar');
@@ -62,14 +63,6 @@ const Sidebar = (() => {
     }
   };
 
-  const getCurrentDay = () => new Date().getDate();
-
-  const getFormattedDay = () => ('0' + getCurrentDay()).slice(-2);
-
-  const updateTodayIconDay = () =>
-    (document.querySelector('.sidebar-today-icon tspan').textContent =
-      getFormattedDay());
-
   const controlSidebarVisibility = () => {
     window.innerWidth > 750 && addVisibleClass();
 
@@ -78,9 +71,16 @@ const Sidebar = (() => {
       const isOverlayVisible = overlay.classList.contains('is-visible');
       const windowWidth = window.innerWidth;
 
-      if (isOverlayVisible) return;
-      if (isSidebarVisible && windowWidth <= 750) removeVisibleClass();
-      else if (!isSidebarVisible && windowWidth > 750) addVisibleClass();
+      if (isOverlayVisible) {
+        return;
+      }
+      if (isSidebarVisible && windowWidth <= 750) {
+        removeVisibleClass();
+        return;
+      }
+      if (!isSidebarVisible && windowWidth > 750) {
+        addVisibleClass();
+      }
     });
   };
 
@@ -93,10 +93,20 @@ const Sidebar = (() => {
     Editor.changeContent(inboxButton, defaultButtonTabName);
   };
 
+  const updateTaskButtonIdsOnTabChange = () => {
+    const sidebarButtons = document.querySelectorAll('.sidebar-button');
+    for (const button of sidebarButtons) {
+      button.addEventListener('click', () => {
+        TaskButton.updateTaskButtonIds();
+        TaskButton.updateTaskButtonDefaultProjectTaskIds();
+      });
+    }
+  };
+
   toggleSidebarVisibility();
   toggleProjectsVisibility();
-  updateTodayIconDay();
   controlSidebarVisibility();
+  updateTaskButtonIdsOnTabChange();
 
   return {
     changeTabTitle,

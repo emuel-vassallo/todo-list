@@ -6,27 +6,73 @@ import { Storage } from './storage.js';
 const TaskButton = (() => {
   const updateTaskButtonIds = () => {
     const taskButtons = document.querySelectorAll('.task-button');
-    for (let i = 0; i < taskButtons.length; i++) taskButtons[i].dataset.id = i;
+    for (let i = 0; i < taskButtons.length; i++) {
+      taskButtons[i].dataset.id = i;
+    }
+  };
+
+  const updateTaskButtonDefaultProjectTaskIds = () => {
+    const taskButtons = document.querySelectorAll('.task-button');
+
+    let todayTasks = [];
+    let upcomingTasks = [];
+
+    for (const button of taskButtons) {
+      const taskDefaultProjectId = button.dataset.defaultProjectId;
+      const isTaskNotInDefaultProject = taskDefaultProjectId === 'null';
+
+      if (isTaskNotInDefaultProject) {
+        continue;
+      }
+
+      if (taskDefaultProjectId === '1') {
+        todayTasks = [...todayTasks, button];
+        continue;
+      }
+      upcomingTasks = [...upcomingTasks, button];
+    }
+
+    for (let i = 0; i < todayTasks.length; i++) {
+      todayTasks[i].dataset.defaultProjectTaskId = i;
+    }
+
+    for (let i = 0; i < upcomingTasks.length; i++) {
+      upcomingTasks[i].dataset.defaultProjectTaskId = i;
+    }
   };
 
   const removeTaskCompletely = (taskButton) => {
-    const projectId = taskButton.dataset.projectId;
-    const taskId = taskButton.dataset.id;
+    const projectId = parseInt(taskButton.dataset.projectId);
+    const taskId = parseInt(taskButton.dataset.id);
     const isProjectInbox = taskButton.dataset.isProjectInbox === 'true';
+    // const defaultProjectId = taskButton.dataset.defaultProjectId;
+    // const defaultProjectTaskId = taskButton.dataset.defaultProjectTaskId;
+    // const isProjectDefault = defaultProjectId === 'null';
+
+    Storage.removeTask(projectId, taskId, isProjectInbox);
+
+    // if (isProjectInbox) {
+    //   Storage.removeTaskFromDefaultProject(
+    //     defaultProjectId,
+    //     defaultProjectTaskId
+    //   );
+    // }
+
     taskButton.remove();
     updateTaskButtonIds();
-    Storage.removeTaskFromProject(projectId, taskId, isProjectInbox);
-    const selectedSidebarButton = Sidebar.getSelectedButton();
-    Editor.loadEmptyStateIfProjectEmpty(selectedSidebarButton);
+    updateTaskButtonDefaultProjectTaskIds();
+    // Storage.updateDefaultProjectTaskIds(defaultProjectId);
   };
 
   const addCheckboxButtonEventListener = (taskButton, checkboxButton) => {
     checkboxButton.addEventListener('click', () => {
       checkboxButton.classList.add('clicked');
     });
-    checkboxButton.addEventListener('animationend', () =>
-      removeTaskCompletely(taskButton)
-    );
+    checkboxButton.addEventListener('animationend', () => {
+      removeTaskCompletely(taskButton);
+      const selectedSidebarButton = Sidebar.getSelectedButton();
+      Editor.loadEmptyStateIfProjectEmpty(selectedSidebarButton);
+    });
   };
 
   const getTaskButton = (task) => {
@@ -63,6 +109,8 @@ const TaskButton = (() => {
     taskButton.dataset.id = task.id;
     taskButton.dataset.isProjectInbox = task.isProjectInbox;
     taskButton.dataset.priority = task.priority;
+    taskButton.dataset.defaultProjectId = task.defaultProjectId;
+    taskButton.dataset.defaultProjectTaskId = task.defaultProjectTaskId;
 
     checkboxButtonDiv.appendChild(checkboxButton);
     checkboxButton.appendChild(checkboxIcon);
@@ -75,7 +123,9 @@ const TaskButton = (() => {
 
     addCheckboxButtonEventListener(taskButton, checkboxButton);
 
-    if (isDueDateEmpty && isDescriptionEmpty) return taskButton;
+    if (isDueDateEmpty && isDescriptionEmpty) {
+      return taskButton;
+    }
 
     const descriptionDiv = document.createElement('div');
     const descriptionText = document.createElement('p');
@@ -88,7 +138,9 @@ const TaskButton = (() => {
     descriptionDiv.append(descriptionText);
     taskButton.append(descriptionDiv);
 
-    if (isDueDateEmpty) return taskButton;
+    if (isDueDateEmpty) {
+      return taskButton;
+    }
 
     const dueDateDiv = document.createElement('div');
     const bottomLefttDiv = document.createElement('div');
@@ -106,10 +158,16 @@ const TaskButton = (() => {
     dueDateDiv.append(bottomLefttDiv);
     taskButton.append(dueDateDiv);
 
+    updateTaskButtonIds();
+
     return taskButton;
   };
 
-  return { getTaskButton };
+  return {
+    getTaskButton,
+    updateTaskButtonIds,
+    updateTaskButtonDefaultProjectTaskIds,
+  };
 })();
 
 export { TaskButton };

@@ -2,13 +2,11 @@ import { Sidebar } from './sidebar.js';
 import { Storage } from './storage.js';
 import { TaskModal } from './task-modal.js';
 import { TaskButton } from './task-button.js';
-import { Header } from './header.js';
-import { format } from 'date-fns';
 
 const Editor = (() => {
   const editor = document.querySelector('.editor');
   const homeButton = document.querySelector('.home-button');
-  const todaySidebarButton = document.querySelector('.sidebar-button-today');
+  const inboxSidebarButton = document.querySelector('.sidebar-button-inbox');
 
   const removeEditorContent = () => {
     while (editor.firstChild) editor.removeChild(editor.lastChild);
@@ -101,36 +99,10 @@ const Editor = (() => {
     return tabTitle;
   };
 
-  const addTabTitle = (tabTitle) => {
+  const addTabTitleToHeading = (tabTitle) => {
     const tabHeadingDiv = document.querySelector('.tab-heading');
     const newTabTitle = getNewTabTitle(tabTitle);
     tabHeadingDiv.append(newTabTitle);
-  };
-
-  // Current Date Title
-  const getCurrentDate = () => new Date();
-
-  const getFormattedDate = (date) => format(date, 'E d MMM');
-
-  const updateCurrentDateTitle = () => {
-    const currentDateTitle = document.querySelector('.current-date-title');
-    const currentDate = getCurrentDate();
-    const formattedDate = getFormattedDate(currentDate);
-    currentDateTitle.textContent = formattedDate;
-  };
-
-  const getNewCurrentDateTitle = () => {
-    const currentDateTitle = document.createElement('p');
-    const currentDate = getCurrentDate();
-    currentDateTitle.innerText = getFormattedDate(currentDate);
-    currentDateTitle.classList.add('current-date-title');
-    return currentDateTitle;
-  };
-
-  const addCurrentDateTitle = () => {
-    const tabHeading = document.querySelector('.tab-heading');
-    const newCurrentDateTitle = getNewCurrentDateTitle();
-    tabHeading.append(newCurrentDateTitle);
   };
 
   // Add task Button
@@ -170,52 +142,35 @@ const Editor = (() => {
   };
 
   // Tabs
-  const removeTabNameClass = () => {
-    const tabNames = ['inbox', 'today', 'upcoming'];
-    for (const tabName of tabNames) editor.classList.remove(tabName);
-  };
-
   const isSelectedProjectEmpty = () =>
     document.querySelectorAll('.task-button').length === 0;
 
   const loadEmptyStateIfProjectEmpty = (sidebarButton) => {
     const isProjectEmpty = isSelectedProjectEmpty(sidebarButton);
-    if (!isProjectEmpty) return;
+    if (!isProjectEmpty) {
+      return;
+    }
     addEmptyStateContent(sidebarButton);
   };
 
   const changeContent = (sidebarButton, tabName) => {
-    Sidebar.changeTabTitle(tabName);
     removeEditorContent();
 
+    Sidebar.changeTabTitle(tabName);
+
     // Sidebar Button Selected class
-    removeTabNameClass();
     Sidebar.removeSelectedButtonClass();
     Sidebar.addSelectedClassToButton(sidebarButton);
 
     // Tab heading
     addEmptyTabHeading();
-    addTabTitle(tabName);
-    const isDefaultProjectButton = sidebarButton.projectId === undefined;
-    if (tabName === 'Today' && isDefaultProjectButton) {
-      addCurrentDateTitle();
-      updateCurrentDateTitle();
-    }
+    addTabTitleToHeading(tabName);
 
-    // 'Add Task' button
-    if (
-      (sidebarButton.dataset.isDefaultProject === 'true' &&
-        sidebarButton.dataset.tabName !== 'Today' &&
-        sidebarButton.dataset.tabName !== 'Upcoming') ||
-      sidebarButton.dataset.isDefaultProject === undefined
-    ) {
-      addNewAddTaskButton();
-      addNewTaskButtonEventListener();
-      Header.enableAddTaskButton();
-    } else Header.disableAddTaskButton();
+    addNewAddTaskButton();
+    addNewTaskButtonEventListener();
 
     // Task buttons
-    addAllProjectTaskButtons(sidebarButton);
+    addCurrentProjectTaskButtons(sidebarButton);
 
     // Empty state
     loadEmptyStateIfProjectEmpty(sidebarButton);
@@ -224,45 +179,44 @@ const Editor = (() => {
   const changeContentOnTabChange = () => {
     const sidebarButtons = document.querySelectorAll('.sidebar-button');
     for (const button of sidebarButtons) {
-      button.addEventListener('click', () =>
-        changeContent(button, button.dataset.tabName)
-      );
+      button.addEventListener('click', () => {
+        changeContent(button, button.dataset.tabName);
+      });
     }
   };
 
   // Task Buttons
-
-  const addNewTaskButtonToEditor = (task) => {
+  const addNewTaskButton = (task) => {
     const taskButton = TaskButton.getTaskButton(task);
     const addTaskButton = document.querySelector('.editor-add-task-button');
     editor.insertBefore(taskButton, addTaskButton);
-    if (isEmptyStateContentVisible()) removeEmptyStateContent();
+    if (isEmptyStateContentVisible()) {
+      removeEmptyStateContent();
+    }
   };
 
-  const addAllProjectTaskButtons = (sidebarButton) => {
+  const addCurrentProjectTaskButtons = (sidebarButton) => {
     const isProjectDefault = sidebarButton.dataset.isDefaultProject === 'true';
+    const projectId = parseInt(sidebarButton.dataset.projectId);
     const projects = isProjectDefault
       ? Storage.getDefaultProjects()
       : Storage.getProjects();
-    const projectId = sidebarButton.dataset.projectId;
     const project = projects[projectId];
     const tasks = project.tasks;
-    for (const task of tasks) addNewTaskButtonToEditor(task);
+    for (const task of tasks) addNewTaskButton(task);
   };
 
   changeContentOnTabChange();
-  addAllProjectTaskButtons(todaySidebarButton);
 
-  homeButton.addEventListener('click', () =>
-    changeContent(todaySidebarButton, todaySidebarButton.dataset.tabName)
-  );
+  homeButton.addEventListener('click', () => {
+    changeContent(inboxSidebarButton, inboxSidebarButton.dataset.tabName);
+  });
 
   return {
     addSidebarVisibleClass,
-    addNewTaskButtonToEditor,
+    addNewTaskButton,
     changeContent,
     removeSidebarVisibleClass,
-    updateCurrentDateTitle,
     loadEmptyStateIfProjectEmpty,
   };
 })();

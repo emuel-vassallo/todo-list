@@ -1,21 +1,30 @@
 import { Project } from './project.js';
-import { format } from 'date-fns';
 
 const Storage = (() => {
   const createEmptyProjectLists = () => {
-    if (localStorage.getItem('defaultProjects')) return;
+    if (localStorage.getItem('defaultProjects')) {
+      return;
+    }
     localStorage.setItem('defaultProjects', JSON.stringify([]));
-    if (localStorage.getItem('projects')) return;
+    if (localStorage.getItem('projects')) {
+      return;
+    }
     localStorage.setItem('projects', JSON.stringify([]));
   };
 
   const getProjects = () => {
-    if (localStorage.getItem('projects') === null) return [];
+    if (localStorage.getItem('projects') === null) {
+      return [];
+    }
     return JSON.parse(localStorage.getItem('projects'));
   };
 
-  const getDefaultProjects = () =>
-    JSON.parse(localStorage.getItem('defaultProjects'));
+  const getDefaultProjects = () => {
+    if (localStorage.getItem('defaultProjects') === null) {
+      return [];
+    }
+    return JSON.parse(localStorage.getItem('defaultProjects'));
+  };
 
   const getNewProjectId = () => Object.keys(getProjects()).length;
 
@@ -26,6 +35,14 @@ const Storage = (() => {
     return projectTasks.length;
   };
 
+  const getNewDefaultProjectTaskId = (defaultProjectId) => {
+    const defaultProjects = getDefaultProjects();
+
+    const defaultProject = defaultProjects[defaultProjectId];
+    const defaultProjectTasks = defaultProject.tasks;
+    return defaultProjectTasks.length;
+  };
+
   const updateProjectList = (newProjectList) =>
     localStorage.setItem('projects', JSON.stringify(newProjectList));
 
@@ -34,9 +51,11 @@ const Storage = (() => {
 
   const addEmptyDefaultProjectsLists = () => {
     let defaultProjects = getDefaultProjects();
-    if (defaultProjects.length > 0) return;
+    if (defaultProjects.length > 0) {
+      return;
+    }
 
-    const tabNames = ['Inbox', 'Today', 'Upcoming'];
+    const tabNames = ['Inbox'];
 
     for (let i = 0; i < tabNames.length; i++) {
       const projectId = i;
@@ -80,52 +99,91 @@ const Storage = (() => {
     updateProjectList(projects);
   };
 
-  const updateTaskIds = (projectId, isProjectInbox) => {
-    const projectList = isProjectInbox ? getDefaultProjects() : getProjects();
+  const updateTaskIds = (projectId, isProjectDefault) => {
+    const projectList = isProjectDefault ? getDefaultProjects() : getProjects();
     const project = projectList[projectId];
     const tasks = project.tasks;
     for (let i = 0; i < tasks.length; i++) tasks[i].id = i;
-    isProjectInbox
+    isProjectDefault
       ? updateDefaultProjectList(projectList)
       : updateProjectList(projectList);
+  };
+
+  const updateDefaultProjectTaskIds = (defaultProjectId) => {
+    const defaultProjectList = getDefaultProjects();
+    const defaultProject = defaultProjectList[defaultProjectId];
+    const tasks = defaultProject.tasks;
+    for (let i = 0; i < tasks.length; i++) tasks[i].defaultProjectTaskId = i;
+    updateDefaultProjectList(defaultProjectList);
   };
 
   const addTaskToProject = (task) => {
-    const dueDateValue = task.dueDate;
-    const taskDueDate = dueDateValue === null ? null : dueDateValue;
-
-    // Add task to 'Today' or 'Upcoming'.
-    if (dueDateValue !== null && taskDueDate !== null) {
-      console.log('Adding to today/upcoming');
-      const defaultProjectList = getDefaultProjects();
-      const taskDefaultProjectId = task.defaultProjectId;
-
-      const taskProject = defaultProjectList[taskDefaultProjectId];
-      taskProject.tasks = [...taskProject.tasks, task];
-      updateDefaultProjectList(defaultProjectList);
-    }
+    // const dueDateValue = task.dueDate;
+    // const taskDueDate = dueDateValue === null ? null : dueDateValue;
+    //
+    // if (dueDateValue !== null && taskDueDate !== null) {
+    //   const defaultProjectList = getDefaultProjects();
+    //   const taskDefaultProjectId = task.defaultProjectId;
+    //   const taskProject = defaultProjectList[taskDefaultProjectId];
+    //
+    //   taskProject.tasks = [...taskProject.tasks, task];
+    //   updateDefaultProjectList(defaultProjectList);
+    // }
 
     const isProjectInbox = task.isProjectInbox;
     const projects = isProjectInbox ? getDefaultProjects() : getProjects();
+    const project = projects[task.projectId];
 
-    const taskProject = projects[task.projectId];
+    project.tasks = [...project.tasks, task];
+
     if (isProjectInbox) {
-      taskProject.tasks = [...taskProject.tasks, task];
       updateDefaultProjectList(projects);
       return;
     }
+
     updateProjectList(projects);
   };
 
-  const removeTaskFromProject = (projectId, taskId, isProjectInbox) => {
-    const projectList = isProjectInbox ? getDefaultProjects() : getProjects();
+  const removeTask = (projectId, taskIdToRemove, isProjectDefault) => {
+    const projectList = isProjectDefault ? getDefaultProjects() : getProjects();
     const project = projectList[projectId];
     const tasks = project.tasks;
-    tasks.splice(taskId, 1);
-    updateTaskIds(projectId, taskId, isProjectInbox);
-    isProjectInbox
+
+    for (let i = 0; i < tasks.length; i++) {
+      const task = tasks[i];
+      const taskId = task.id;
+      console.log({ taskId, taskIdToRemove });
+      if (taskId === taskIdToRemove) {
+        tasks.splice(i, 1);
+        break;
+      }
+    }
+
+    isProjectDefault
       ? updateDefaultProjectList(projectList)
       : updateProjectList(projectList);
+
+    updateTaskIds(projectId, isProjectDefault);
+  };
+
+  const removeTaskFromDefaultProject = (
+    defaultProjectId,
+    defaultProjectTaskId
+  ) => {
+    const defaultProjects = getDefaultProjects();
+    const defaultProject = defaultProjects[defaultProjectId]; // BUG: always undefined
+    const defaultProjectTasks = defaultProject.tasks;
+    const isProjectDefault = true;
+
+    defaultProjectTaskId = parseInt(defaultProjectTaskId);
+    defaultProjectId = parseInt(defaultProjectId);
+
+    defaultProjectTasks.splice(defaultProjectTaskId, 1);
+
+    updateTaskIds(defaultProjectId, isProjectDefault);
+
+    updateProjectList(defaultProjects);
+    updateDefaultProjectList(defaultProjects);
   };
 
   createEmptyProjectLists();
@@ -135,13 +193,16 @@ const Storage = (() => {
     addProject,
     addTaskToProject,
     getDefaultProjects,
+    getNewDefaultProjectTaskId,
     getNewProjectId,
     getNewTaskId,
     getProjects,
     removeProject,
+    removeTask,
+    removeTaskFromDefaultProject,
     updateProjectIds,
-    removeTaskFromProject,
     updateTaskProjectIds,
+    updateDefaultProjectTaskIds,
   };
 })();
 
