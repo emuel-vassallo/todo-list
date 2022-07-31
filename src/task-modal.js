@@ -238,9 +238,20 @@ const TaskModal = (() => {
   const addTaskOnSubmit = () => {
     const task = getTaskModalData();
     Storage.addTaskToProject(task);
-    // TODO: Don't add task button to DOM if project selected in modal is not selected sidebar.
-    Editor.addNewTaskButton(task);
+    const selectedSidebarButton = Sidebar.getSelectedButton();
+    const selectedProjectId = selectedSidebarButton.dataset.projectId;
+    const isSelectedProjectDefault =
+      selectedSidebarButton.dataset.isDefaultProject === 'true';
+    const isTaskProjectDefault = task.isProjectInbox;
+    const taskProjectId = task.projectId;
     toggleModal();
+    if (
+      selectedProjectId !== taskProjectId ||
+      isSelectedProjectDefault !== isTaskProjectDefault
+    ) {
+      return;
+    }
+    Editor.addNewTaskButton(task);
   };
 
   // Event Listeners

@@ -152,7 +152,6 @@ const Storage = (() => {
     for (let i = 0; i < tasks.length; i++) {
       const task = tasks[i];
       const taskId = task.id;
-      console.log({ taskId, taskIdToRemove });
       if (taskId === taskIdToRemove) {
         tasks.splice(i, 1);
         break;
