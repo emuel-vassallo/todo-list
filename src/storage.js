@@ -185,6 +185,20 @@ const Storage = (() => {
     updateDefaultProjectList(defaultProjects);
   };
 
+  const getTaskObj = (taskButton) => {
+    const isTaskProjectDefault = taskButton.dataset.isProjectInbox === 'true';
+    const projectId = taskButton.dataset.projectId;
+    const taskId = taskButton.dataset.id;
+    const projects = isTaskProjectDefault
+      ? getDefaultProjects()
+      : getProjects();
+    const project = projects[projectId];
+    const tasks = project.tasks;
+    const task = tasks[taskId];
+
+    return task;
+  };
+
   createEmptyProjectLists();
   addEmptyDefaultProjectsLists();
 
@@ -196,6 +210,7 @@ const Storage = (() => {
     getNewProjectId,
     getNewTaskId,
     getProjects,
+    getTaskObj,
     removeProject,
     removeTask,
     removeTaskFromDefaultProject,

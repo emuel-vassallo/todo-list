@@ -3,6 +3,7 @@ function Task(
   name,
   description,
   dueDate,
+  formattedDueDate,
   projectId,
   priority,
   isProjectInbox,
@@ -13,6 +14,7 @@ function Task(
   this.name = name;
   this.description = description;
   this.dueDate = dueDate;
+  this.formattedDueDate = formattedDueDate;
   this.projectId = projectId;
   this.priority = priority;
   this.isProjectInbox = isProjectInbox;

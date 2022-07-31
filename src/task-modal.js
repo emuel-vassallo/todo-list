@@ -138,13 +138,14 @@ const TaskModal = (() => {
     selectorIconParent.replaceChild(newIcon, prioritySelectorIcon);
   };
 
-  const resetPrioritySelectorIcon = () =>
-    changePrioritySelectorIcon(prioritySelectorIcon);
-
   const resetPriorityOption = () => {
     const defaultPriorityOption = priorityDropdownOptions[3];
     removeActiveClass();
     defaultPriorityOption.classList.add('active-priority');
+  };
+
+  const resetPrioritySelectorIcon = () => {
+    prioritySelectorIcon.dataset.priority = '4';
   };
 
   // Submit Button
@@ -158,6 +159,8 @@ const TaskModal = (() => {
     disableSubmitButton();
     hidePriorityDropDown();
     changeSelectedProjectOption();
+    resetPriorityOption();
+    resetPrioritySelectorIcon();
   };
 
   const isRequiredDataEntered = () => {
@@ -176,7 +179,9 @@ const TaskModal = (() => {
     disableSubmitButton();
   };
 
-  const getFormattedDate = (date) => format(date, 'dd LLL');
+  const getDisplayFormattedDate = (date) => format(date, 'dd LLL');
+
+  const getRegularFormattedDate = (date) => format(date, 'yyyy-MM-dd');
 
   // const getCurrentDate = () => getFormattedDate(new Date());
 
@@ -200,8 +205,11 @@ const TaskModal = (() => {
     const taskDescription = taskDescriptionInput.value.trim();
 
     const dueDateValue = dueDatePicker.valueAsDate;
-    const taskDueDate =
-      dueDateValue === null ? null : getFormattedDate(dueDateValue);
+
+    const taskDueDate = getRegularFormattedDate(dueDateValue);
+
+    const taskFormattedDueDate =
+      dueDateValue === null ? null : getDisplayFormattedDate(dueDateValue);
 
     const taskPriority = prioritySelectorIcon.dataset.priority;
 
@@ -210,6 +218,7 @@ const TaskModal = (() => {
       taskName,
       taskDescription,
       taskDueDate,
+      taskFormattedDueDate,
       projectId,
       taskPriority,
       isProjectInbox
@@ -260,7 +269,7 @@ const TaskModal = (() => {
       taskNameInput.focus();
       return;
     }
-    resetPrioritySelectorIcon();
+    changePrioritySelectorIcon(prioritySelectorIcon);
     resetPriorityOption();
   });
   addTaskButton.addEventListener('click', () => toggleModal());
@@ -319,6 +328,22 @@ const TaskModal = (() => {
     projectSelector.dataset.selectedProjectId = selectedProjectId;
   };
 
+  const addTaskDataToModal = (taskButton) => {
+    const task = Storage.getTaskObj(taskButton);
+
+    taskNameInput.value = task.name;
+    taskDescriptionInput.value = task.description;
+    prioritySelectorIcon.dataset.priority = task.priority;
+
+    const priorityOptionsId = task.priority - 1;
+    const priorityOption = priorityDropdownOptions[priorityOptionsId];
+    const priorityOptionIcon = priorityOption.firstElementChild.cloneNode(true);
+
+    changePrioritySelectorIcon(priorityOptionIcon);
+
+    dueDatePicker.value = task.dueDate;
+  };
+
   projectSelector.addEventListener('input', () => {
     changeIsSelectedProjectDefaultValue();
     changeSelectedProjectIdValue();
@@ -330,6 +355,8 @@ const TaskModal = (() => {
 
   return {
     addProjectSelectorOption,
+    addTaskDataToModal,
+    enableSubmitButton,
     loadProjectSelectorOptions,
     removeProjectSelectorOption,
     toggleModal,

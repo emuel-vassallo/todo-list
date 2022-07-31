@@ -2,6 +2,7 @@ import { Editor } from './editor.js';
 import { Icons } from './icons.js';
 import { Sidebar } from './sidebar.js';
 import { Storage } from './storage.js';
+import { TaskModal } from './task-modal.js';
 
 const TaskButton = (() => {
   const updateTaskButtonIds = () => {
@@ -75,6 +76,14 @@ const TaskButton = (() => {
     });
   };
 
+  const addEditButtonEventListener = (taskButton, editButton) => {
+    editButton.addEventListener('click', () => {
+      TaskModal.toggleModal();
+      TaskModal.addTaskDataToModal(taskButton);
+      TaskModal.enableSubmitButton();
+    });
+  };
+
   const getTaskButton = (task) => {
     const isDueDateEmpty = !task.dueDate;
     const isDescriptionEmpty = !task.description;
@@ -122,6 +131,7 @@ const TaskButton = (() => {
     taskButton.append(topDiv);
 
     addCheckboxButtonEventListener(taskButton, checkboxButton);
+    addEditButtonEventListener(taskButton, editButton);
 
     if (isDueDateEmpty && isDescriptionEmpty) {
       return taskButton;
@@ -152,7 +162,7 @@ const TaskButton = (() => {
     calendarIcon.classList.add('calendar-icon');
     dueDateTextElement.classList.add('task-button-due-date-text');
 
-    dueDateTextElement.innerText = task.dueDate;
+    dueDateTextElement.innerText = task.formattedDueDate;
 
     bottomLefttDiv.append(calendarIcon, dueDateTextElement);
     dueDateDiv.append(bottomLefttDiv);
