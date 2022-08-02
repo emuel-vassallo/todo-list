@@ -153,6 +153,8 @@ const TaskModal = (() => {
   const disableSubmitButton = () => (submitButton.disabled = true);
 
   const toggleModal = () => {
+    removeEditClass();
+    changeSubmitButtonText('Add task');
     toggleNewTaskModal();
     toggleModalOverlay();
     clearModal();
@@ -248,6 +250,8 @@ const TaskModal = (() => {
   };
 
   const addTaskOnSubmit = () => {
+    // TODO: Check if task is being edited and edit the task in the dom and local storage if it is.
+
     const task = getTaskModalData();
     Storage.addTaskToProject(task);
     const selectedSidebarButton = Sidebar.getSelectedButton();
@@ -347,6 +351,18 @@ const TaskModal = (() => {
     dueDatePicker.value = task.dueDate;
   };
 
+  const addEditClass = () => {
+    newTaskModal.classList.toggle('editing');
+  };
+
+  const removeEditClass = () => {
+    newTaskModal.classList.remove('editing');
+  };
+
+  const changeSubmitButtonText = (text) => {
+    submitButton.textContent = text;
+  };
+
   projectSelector.addEventListener('input', () => {
     changeIsSelectedProjectDefaultValue();
     changeSelectedProjectIdValue();
@@ -357,6 +373,8 @@ const TaskModal = (() => {
   loadProjectSelectorOptions();
 
   return {
+    addEditClass,
+    removeEditClass,
     addProjectSelectorOption,
     addTaskDataToModal,
     enableSubmitButton,
@@ -364,6 +382,7 @@ const TaskModal = (() => {
     removeProjectSelectorOption,
     toggleModal,
     updateProjectSelectorIds,
+    changeSubmitButtonText,
   };
 })(Task);
 

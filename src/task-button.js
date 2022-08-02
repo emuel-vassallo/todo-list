@@ -79,6 +79,10 @@ const TaskButton = (() => {
   const addEditButtonEventListener = (taskButton, editButton) => {
     editButton.addEventListener('click', () => {
       TaskModal.toggleModal();
+      TaskModal.addEditClass();
+
+      TaskModal.changeSubmitButtonText('Save');
+
       TaskModal.addTaskDataToModal(taskButton);
       TaskModal.enableSubmitButton();
     });
