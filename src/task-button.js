@@ -78,6 +78,7 @@ const TaskButton = (() => {
 
   const addEditButtonEventListener = (taskButton, editButton) => {
     editButton.addEventListener('click', () => {
+      TaskModal.addDataAttributesToModal(taskButton);
       TaskModal.toggleModal();
       TaskModal.addEditClass();
 
@@ -177,8 +178,118 @@ const TaskButton = (() => {
     return taskButton;
   };
 
+  const removeTaskButtonDescrition = (taskId) => {
+    const taskButtonDescriptionDiv = document.querySelector(
+      `.task-button[data-id="${taskId}"] .task-button-description`
+    );
+    taskButtonDescriptionDiv.remove();
+  };
+
+  const removeTaskButtonDueDate = (taskId) => {
+    const taskButtonDueDateDiv = document.querySelector(
+      `.task-button[data-id="${taskId}"] .task-button-due-date`
+    );
+    taskButtonDueDateDiv.remove();
+  };
+
+  const getTaskButtonFromId = (taskId) =>
+    document.querySelector(`.task-button[data-id="${taskId}"]`);
+
+  const addDescriptionToTaskButton = (taskButton, description) => {
+    const descriptionDiv = document.createElement('div');
+    const descriptionText = document.createElement('p');
+    const dueDateDiv = document.querySelector(
+      `.task-button[data-id='${taskButton.dataset.id}'] > .task-button-due-date`
+    );
+    const doesTaskHaveDueDate = dueDateDiv !== null;
+
+    descriptionDiv.classList.add('task-button-description');
+    descriptionText.classList.add('task-button-description-text');
+
+    descriptionText.textContent = description;
+
+    descriptionDiv.appendChild(descriptionText);
+
+    if (doesTaskHaveDueDate) {
+      taskButton.insertBefore(descriptionDiv, dueDateDiv);
+      return;
+    }
+    taskButton.appendChild(descriptionDiv);
+  };
+
+  const addDueDateToTaskButton = (taskButton, dueDate) => {
+    const dueDateDiv = document.createElement('div');
+    const bottomLefttDiv = document.createElement('div');
+    const calendarIcon = Icons.getCalendarIcon();
+    const dueDateTextElement = document.createElement('p');
+
+    dueDateDiv.classList.add('task-button-due-date');
+    bottomLefttDiv.classList.add('task-button-due-date-left');
+    calendarIcon.classList.add('calendar-icon');
+    dueDateTextElement.classList.add('task-button-due-date-text');
+
+    dueDateTextElement.innerText = dueDate;
+
+    bottomLefttDiv.append(calendarIcon, dueDateTextElement);
+    dueDateDiv.append(bottomLefttDiv);
+
+    taskButton.appendChild(dueDateDiv);
+  };
+
+  const editTaskButton = (taskId, newTask) => {
+    const taskButton = getTaskButtonFromId(taskId);
+
+    const newTaskName = newTask.name;
+    const newTaskDescription = newTask.description;
+    const newTaskDueDate = newTask.formattedDueDate;
+    const newTaskPriority = newTask.priority;
+
+    const taskButtonNameElement = document.querySelector(
+      `.task-button[data-id="${newTask.id}"] .task-button-task-name`
+    );
+
+    const taskButtonDescriptionElement = document.querySelector(
+      `.task-button[data-id="${newTask.id}"] .task-button-description-text`
+    );
+
+    const taskButtonDueDateElement = document.querySelector(
+      `.task-button[data-id="${newTask.id}"] .task-button-due-date-text`
+    );
+
+    const isDescriptionMissing = taskButtonDescriptionElement === null;
+    const isDueDateMissing = taskButtonDueDateElement === null;
+
+    // Name
+    taskButtonNameElement.innerText = newTaskName;
+
+    // Description
+    if (newTaskDescription && !isDescriptionMissing) {
+      taskButtonDescriptionElement.innerText = newTaskDescription;
+    } else if (newTaskDescription === '' && !isDescriptionMissing) {
+      removeTaskButtonDescrition(taskId);
+    } else if (newTaskDescription && isDescriptionMissing) {
+      addDescriptionToTaskButton(taskButton, newTaskDescription);
+    }
+
+    // Due Date
+    if (newTaskDueDate && !isDueDateMissing) {
+      taskButtonDueDateElement.innerText = newTaskDueDate;
+    } else if (newTaskDueDate === null && !isDueDateMissing) {
+      removeTaskButtonDueDate(taskId);
+    }
+
+    if (newTaskDueDate && isDueDateMissing) {
+      addDueDateToTaskButton(taskButton, newTaskDueDate);
+    }
+
+    // Priority
+    taskButton.dataset.priority = newTaskPriority;
+  };
+
   return {
+    editTaskButton,
     getTaskButton,
+    getTaskButtonFromId,
     updateTaskButtonIds,
     updateTaskButtonDefaultProjectTaskIds,
   };

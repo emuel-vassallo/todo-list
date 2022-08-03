@@ -199,12 +199,28 @@ const Storage = (() => {
     return task;
   };
 
+  const editTask = (taskId, projectId, isProjectInbox, newTask) => {
+    const projects = isProjectInbox ? getDefaultProjects() : getProjects();
+    const project = projects[projectId];
+    const tasks = project.tasks;
+
+    tasks[taskId] = newTask;
+    tasks[taskId].id = taskId;
+
+    const isNewProjectInbox = newTask.isProjectInbox;
+    
+    isNewProjectInbox
+      ? updateDefaultProjectList(projects)
+      : updateProjectList(projects);
+  };
+
   createEmptyProjectLists();
   addEmptyDefaultProjectsLists();
 
   return {
     addProject,
     addTaskToProject,
+    editTask,
     getDefaultProjects,
     getNewDefaultProjectTaskId,
     getNewProjectId,

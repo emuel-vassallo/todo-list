@@ -2,6 +2,7 @@ import { Editor } from './editor.js';
 import { Sidebar } from './sidebar.js';
 import { Storage } from './storage.js';
 import { Task } from './task.js';
+import { TaskButton } from './task-button.js';
 import { format } from 'date-fns';
 
 const TaskModal = (() => {
@@ -249,25 +250,39 @@ const TaskModal = (() => {
     return task;
   };
 
-  const addTaskOnSubmit = () => {
-    // TODO: Check if task is being edited and edit the task in the dom and local storage if it is.
+  const submitTask = () => {
+    // BUG: ids get messed up sometimes
+    const isTaskBeingEdited = newTaskModal.classList.contains('editing');
 
-    const task = getTaskModalData();
-    Storage.addTaskToProject(task);
+    const newTask = getTaskModalData();
+
     const selectedSidebarButton = Sidebar.getSelectedButton();
     const selectedProjectId = selectedSidebarButton.dataset.projectId;
     const isSelectedProjectDefault =
       selectedSidebarButton.dataset.isDefaultProject === 'true';
-    const isTaskProjectDefault = task.isProjectInbox;
-    const taskProjectId = task.projectId;
+    const isTaskProjectDefault = newTask.isProjectInbox;
+    const taskProjectId = newTask.projectId;
+
+    const isProjectSelected =
+      selectedProjectId === taskProjectId &&
+      isSelectedProjectDefault === isTaskProjectDefault;
+
     toggleModal();
-    if (
-      selectedProjectId !== taskProjectId ||
-      isSelectedProjectDefault !== isTaskProjectDefault
-    ) {
+
+    if (isTaskBeingEdited) {
+      const taskId = newTaskModal.dataset.taskId;
+      const projectId = newTaskModal.dataset.projectId;
+      const isProjectInbox = newTaskModal.dataset.isProjectInbox === 'true';
+      Storage.editTask(taskId, projectId, isProjectInbox, newTask);
+      TaskButton.editTaskButton(taskId, newTask);
       return;
     }
-    Editor.addNewTaskButton(task);
+
+    Storage.addTaskToProject(newTask);
+
+    if (isProjectSelected) {
+      Editor.addNewTaskButton(newTask);
+    }
   };
 
   // Event Listeners
@@ -312,13 +327,13 @@ const TaskModal = (() => {
     });
   }
 
-  submitButton.addEventListener('click', () => addTaskOnSubmit());
+  submitButton.addEventListener('click', () => submitTask());
 
   window.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' || !isModalVisible() || !isRequiredDataEntered()) {
       return;
     }
-    addTaskOnSubmit();
+    submitTask();
   });
 
   const changeIsSelectedProjectDefaultValue = () => {
@@ -363,6 +378,12 @@ const TaskModal = (() => {
     submitButton.textContent = text;
   };
 
+  const addDataAttributesToModal = (taskButton) => {
+    newTaskModal.dataset.taskId = taskButton.dataset.id;
+    newTaskModal.dataset.projectId = taskButton.dataset.projectId;
+    newTaskModal.dataset.isProjectInbox = taskButton.dataset.isProjectInbox;
+  };
+
   projectSelector.addEventListener('input', () => {
     changeIsSelectedProjectDefaultValue();
     changeSelectedProjectIdValue();
@@ -374,6 +395,8 @@ const TaskModal = (() => {
 
   return {
     addEditClass,
+    addDataAttributesToModal,
+    getTaskModalData,
     removeEditClass,
     addProjectSelectorOption,
     addTaskDataToModal,
