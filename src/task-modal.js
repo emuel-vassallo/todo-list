@@ -251,21 +251,9 @@ const TaskModal = (() => {
   };
 
   const submitTask = () => {
-    // BUG: ids get messed up sometimes
-    const isTaskBeingEdited = newTaskModal.classList.contains('editing');
-
     const newTask = getTaskModalData();
 
-    const selectedSidebarButton = Sidebar.getSelectedButton();
-    const selectedProjectId = selectedSidebarButton.dataset.projectId;
-    const isSelectedProjectDefault =
-      selectedSidebarButton.dataset.isDefaultProject === 'true';
-    const isTaskProjectDefault = newTask.isProjectInbox;
-    const taskProjectId = newTask.projectId;
-
-    const isProjectSelected =
-      selectedProjectId === taskProjectId &&
-      isSelectedProjectDefault === isTaskProjectDefault;
+    const isTaskBeingEdited = newTaskModal.classList.contains('editing');
 
     toggleModal();
 
@@ -277,6 +265,17 @@ const TaskModal = (() => {
       TaskButton.editTaskButton(taskId, newTask);
       return;
     }
+
+    const selectedSidebarButton = Sidebar.getSelectedButton();
+    const selectedProjectId = selectedSidebarButton.dataset.projectId;
+    const isSelectedProjectDefault =
+      selectedSidebarButton.dataset.isDefaultProject === 'true';
+    const isTaskProjectDefault = newTask.isProjectInbox;
+    const taskProjectId = newTask.projectId;
+
+    const isProjectSelected =
+      selectedProjectId === taskProjectId &&
+      isSelectedProjectDefault === isTaskProjectDefault;
 
     Storage.addTaskToProject(newTask);
 

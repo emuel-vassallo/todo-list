@@ -145,18 +145,12 @@ const Storage = (() => {
   };
 
   const removeTask = (projectId, taskIdToRemove, isProjectDefault) => {
+    console.log({ taskIdToRemove });
     const projectList = isProjectDefault ? getDefaultProjects() : getProjects();
     const project = projectList[projectId];
     const tasks = project.tasks;
 
-    for (let i = 0; i < tasks.length; i++) {
-      const task = tasks[i];
-      const taskId = task.id;
-      if (taskId === taskIdToRemove) {
-        tasks.splice(i, 1);
-        break;
-      }
-    }
+    tasks.splice(taskIdToRemove, 1);
 
     isProjectDefault
       ? updateDefaultProjectList(projectList)
@@ -208,7 +202,7 @@ const Storage = (() => {
     tasks[taskId].id = taskId;
 
     const isNewProjectInbox = newTask.isProjectInbox;
-    
+
     isNewProjectInbox
       ? updateDefaultProjectList(projects)
       : updateProjectList(projects);
