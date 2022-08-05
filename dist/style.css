@@ -447,6 +447,10 @@ header > div {
   border-radius: 5px;
 }
 
+.project-selector:disabled {
+  cursor: not-allowed !important;
+}
+
 .due-date-picker:hover,
 .project-selector:hover {
   background-color: var(--form-extra-fields-button-hover-bg);

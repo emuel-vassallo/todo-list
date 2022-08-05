@@ -82,6 +82,8 @@ const TaskButton = (() => {
       TaskModal.toggleModal();
       TaskModal.addEditClass();
 
+      TaskModal.disableProjectSelector()
+      
       TaskModal.changeSubmitButtonText('Save');
 
       TaskModal.addTaskDataToModal(taskButton);
@@ -236,7 +238,7 @@ const TaskButton = (() => {
     taskButton.appendChild(dueDateDiv);
   };
 
-  const editTaskButton = (taskId, newTask) => {
+  const editTaskButton = (taskId, currentProjectId, newTask) => {
     const taskButton = getTaskButtonFromId(taskId);
 
     const newTaskName = newTask.name;
@@ -258,6 +260,20 @@ const TaskButton = (() => {
 
     const isDescriptionMissing = taskButtonDescriptionElement === null;
     const isDueDateMissing = taskButtonDueDateElement === null;
+
+    const isCurrentProjectInbox = taskButton.dataset.isProjectInbox === 'true';
+
+    // Project
+    const newProjectId = newTask.projectId;
+    const isProjectDifferent =
+      currentProjectId !== newProjectId ||
+      newTask.isProjectInbox !== isCurrentProjectInbox;
+
+    if (isProjectDifferent) {
+      const selectedSidebarButton = Sidebar.getSelectedButton();
+      removeTaskCompletely(taskButton);
+      Editor.loadEmptyStateIfProjectEmpty(selectedSidebarButton);
+    }
 
     // Name
     taskButtonNameElement.innerText = newTaskName;

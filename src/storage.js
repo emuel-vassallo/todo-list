@@ -136,16 +136,12 @@ const Storage = (() => {
 
     project.tasks = [...project.tasks, task];
 
-    if (isProjectInbox) {
-      updateDefaultProjectList(projects);
-      return;
-    }
-
-    updateProjectList(projects);
+    isProjectInbox
+      ? updateDefaultProjectList(projects)
+      : updateProjectList(projects);
   };
 
   const removeTask = (projectId, taskIdToRemove, isProjectDefault) => {
-    console.log({ taskIdToRemove });
     const projectList = isProjectDefault ? getDefaultProjects() : getProjects();
     const project = projectList[projectId];
     const tasks = project.tasks;
@@ -193,15 +189,27 @@ const Storage = (() => {
     return task;
   };
 
-  const editTask = (taskId, projectId, isProjectInbox, newTask) => {
+  const editTask = (taskId, oldProjectId, isOldProjectInbox, newTask) => {
+    const isProjectInbox = newTask.isProjectInbox;
+    const isNewProjectInbox = newTask.isProjectInbox;
+
     const projects = isProjectInbox ? getDefaultProjects() : getProjects();
+
+    const projectId = newTask.projectId;
     const project = projects[projectId];
+
     const tasks = project.tasks;
 
-    tasks[taskId] = newTask;
-    tasks[taskId].id = taskId;
+    const isProjectDifferent =
+      projectId !== oldProjectId || isProjectInbox !== isOldProjectInbox;
 
-    const isNewProjectInbox = newTask.isProjectInbox;
+    if (isProjectDifferent) {
+      // TODO: add the task to the new project
+      // addTaskToProject(newTask);
+    } else {
+      tasks[taskId] = newTask;
+      tasks[taskId].id = taskId;
+    }
 
     isNewProjectInbox
       ? updateDefaultProjectList(projects)

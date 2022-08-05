@@ -153,11 +153,16 @@ const TaskModal = (() => {
   const enableSubmitButton = () => (submitButton.disabled = false);
   const disableSubmitButton = () => (submitButton.disabled = true);
 
+  const enableProjectSelector = () => {
+    projectSelector.disabled = false;
+  };
+
   const toggleModal = () => {
     removeEditClass();
     changeSubmitButtonText('Add task');
     toggleNewTaskModal();
     toggleModalOverlay();
+    enableProjectSelector()
     clearModal();
     disableSubmitButton();
     hidePriorityDropDown();
@@ -262,7 +267,7 @@ const TaskModal = (() => {
       const projectId = newTaskModal.dataset.projectId;
       const isProjectInbox = newTaskModal.dataset.isProjectInbox === 'true';
       Storage.editTask(taskId, projectId, isProjectInbox, newTask);
-      TaskButton.editTaskButton(taskId, newTask);
+      TaskButton.editTaskButton(taskId, projectId, newTask);
       return;
     }
 
@@ -383,6 +388,10 @@ const TaskModal = (() => {
     newTaskModal.dataset.isProjectInbox = taskButton.dataset.isProjectInbox;
   };
 
+  const disableProjectSelector = () => {
+    projectSelector.disabled = true;
+  };
+
   projectSelector.addEventListener('input', () => {
     changeIsSelectedProjectDefaultValue();
     changeSelectedProjectIdValue();
@@ -395,6 +404,7 @@ const TaskModal = (() => {
   return {
     addEditClass,
     addDataAttributesToModal,
+    disableProjectSelector,
     getTaskModalData,
     removeEditClass,
     addProjectSelectorOption,
