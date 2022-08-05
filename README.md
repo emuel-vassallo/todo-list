@@ -1,18 +1,16 @@
 # Todoist Clone
 
-A simple [Todoist](https://todoist.com/) clone built with HTML, CSS, and JavaScript as part of The Odin Project's [curriculum](https://www.theodinproject.com/).
+A simple Todo List app with a UI similar to [Todoist](https://todoist.com/). Built with HTML, CSS, and JavaScript as part of The Odin Project's [curriculum](https://www.theodinproject.com/).
 
 ### [Live Demo](https://emuel-vassallo.github.io/todoist-clone/)
 
-## Showcase
+## Screenshots
 
-### Light Theme
+![screenshot 1](images/screenshot1.png)
 
-![light theme screenshot](images/screenshots/light-theme-screenshot.png)
+![screenshot 2](images/screenshot2.png)
 
-### Dark Theme
-
-![dark theme screenshot](images/screenshots/dark-theme-screenshot.png)
+![screenshot 3](images/screenshot3.png)
 
 ## Built With
 
@@ -20,8 +18,3 @@ A simple [Todoist](https://todoist.com/) clone built with HTML, CSS, and JavaScr
 - CSS
 - JavaScript
 - Webpack
-
-## Credits
-
-- [Google Symbols](https://fonts.google.com/icons?icon.query=plus&icon.style=Rounded)
-- [Todoist Clone](https://todoist-clone.com/) for design ideas
